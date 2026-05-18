@@ -1,3 +1,9 @@
+# Gridmix
+
+**Gridmix** is an independent continuation of the [Gridsome](https://github.com/gridsome/gridsome) — Vue.js static site generator, originally created by Tommy Vedvik and Hans-Jørgen Vedvik. The original project has been inactive since 2022; Gridmix modernizes the codebase for current Node.js and tooling, with the goal of keeping Gridsome-built sites maintainable. This is an independent fork — it has no affiliation with or endorsement from the original Gridsome maintainers. Original code is MIT-licensed and remains so here.
+
+<details>
+<summary><b>Gridsome README.md content</b></summary>
 <p align="center">
   <br>
   <a href="https://www.gridsome.org">
@@ -105,3 +111,4 @@ Licensed under the [MIT License](./LICENSE).
 ## Roadmap for v1.0
 
 Visit the [Gridsome Roadmap](https://github.com/gridsome/gridsome/projects/2) to keep track of which features we are currently working on.
+</details>
