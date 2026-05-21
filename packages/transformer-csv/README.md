@@ -1,9 +1,9 @@
-# @gridsome/transformer-csv
+# @gridmix/transformer-csv
 
-> CSV transformer for Gridsome
+> CSV transformer for Gridmix
 
 ## Install
 
-- `npm install @gridsome/transformer-csv`
-- `yarn add @gridsome/transformer-csv`
-- `pnpm install @gridsome/transformer-csv`
+- `npm install @gridmix/transformer-csv`
+- `yarn add @gridmix/transformer-csv`
+- `pnpm install @gridmix/transformer-csv`

@@ -1,12 +1,12 @@
-# @gridsome/source-airtable
+# @gridmix/source-airtable
 
-> Airtable source for Gridsome.
+> Airtable source for Gridmix.
 
 ## Install
 
-- `npm install @gridsome/source-airtable`
-- `yarn add @gridsome/source-airtable`
-- `pnpm install @gridsome/source-airtable`
+- `npm install @gridmix/source-airtable`
+- `yarn add @gridmix/source-airtable`
+- `pnpm install @gridmix/source-airtable`
 
 ## Usage
 
@@ -14,7 +14,7 @@
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-airtable',
+      use: '@gridmix/source-airtable',
       options: {
         apiKey: 'YOUR_API_KEY', // required
         base: 'YOUR_BASE_ID', // required

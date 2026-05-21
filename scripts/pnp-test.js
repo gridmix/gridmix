@@ -6,7 +6,7 @@ const dirName = 'pnp-e2e'
 const rootDir = path.resolve(__dirname, '..')
 const projectDir = path.join(rootDir, dirName)
 const projectOpts = { cwd: projectDir, stdio: 'inherit' }
-const repo = 'https://github.com/gridsome/gridsome-starter-default.git'
+const repo = 'https://github.com/gridmix/gridmix-starter-default.git'
 
 const tasks = [
   function clone () {

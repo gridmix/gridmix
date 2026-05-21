@@ -1,13 +1,15 @@
 {
   "version": "0.3.0",
-  "name": "@gridsome/source-faker",
-  "description": "Source with fake data for Gridsome",
-  "homepage": "https://github.com/gridsome/gridsome/tree/master/packages/source-faker#readme",
-  "repository": "https://github.com/gridsome/gridsome/tree/master/packages/source-faker",
+  "name": "@gridmix/source-faker",
+  "description": "Source with fake data for Gridmix",
+  "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/source-faker#readme",
+  "repository": "https://github.com/gridmix/gridmix/tree/main/packages/source-faker",
   "main": "index.js",
   "keywords": [
     "gridsome",
+    "gridmix",
     "gridsome-plugin",
+    "gridmix-plugin",
     "faker"
   ],
   "dependencies": {

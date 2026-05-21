@@ -1,9 +1,9 @@
-const { GRIDSOME_TEST = 'unit' } = process.env
+const { GRIDMIX_TEST = 'unit' } = process.env
 
 module.exports = {
   testEnvironment: 'node',
   testMatch: [
-    `**/__tests__/**/*.${GRIDSOME_TEST === 'e2e' ? 'e2e' : 'spec'}.js`
+    `**/__tests__/**/*.${GRIDMIX_TEST === 'e2e' ? 'e2e' : 'spec'}.js`
   ],
   collectCoverageFrom: [
     'gridsome/lib/**/*.js'

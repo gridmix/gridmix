@@ -1,13 +1,13 @@
-# @gridsome/source-wordpress
+# @gridmix/source-wordpress
 
-> WordPress source for Gridsome. This package is under development and
+> WordPress source for Gridmix. This package is under development and
 API might change before v1 is released.
 
 ## Install
 
-- `npm install @gridsome/source-wordpress`
-- `yarn add @gridsome/source-wordpress`
-- `pnpm install @gridsome/source-wordpress`
+- `npm install @gridmix/source-wordpress`
+- `yarn add @gridmix/source-wordpress`
+- `pnpm install @gridmix/source-wordpress`
 
 ## Usage
 
@@ -15,7 +15,7 @@ API might change before v1 is released.
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-wordpress',
+      use: '@gridmix/source-wordpress',
       options: {
         baseUrl: 'WEBSITE_URL', // required
         apiBase: 'wp-json',
@@ -39,7 +39,7 @@ Install the [ACF to REST API](https://github.com/airesvsg/acf-to-rest-api) plugi
 
 **Exclude unnecessary data from ACF fields**
 
-Gridsome needs the `Return format` set to `Post Object` for `Post Object` relations in order to resolve references automatically. But Gridsome only need the `post_type` and `id` to set up a working GraphQL reference. Use the filter below to exclude all other fields.
+Gridmix needs the `Return format` set to `Post Object` for `Post Object` relations in order to resolve references automatically. But Gridmix only need the `post_type` and `id` to set up a working GraphQL reference. Use the filter below to exclude all other fields.
 
 ```php
 add_filter( 'acf/format_value', function ( $value ) {
@@ -59,7 +59,7 @@ add_filter( 'acf/format_value', function ( $value ) {
 To use REST endpoints from plugins or defined in your theme add a `customEndpoints` array to source-wordpress options.
 
 ```js
-  use: '@gridsome/source-wordpress',
+  use: '@gridmix/source-wordpress',
   options: {
     ... // other source-wordpress options
     customEndpoints: [
@@ -85,7 +85,7 @@ If you are trying to query posts, you will need to add the `normalize: true` opt
 
 ## Create Collections based on REST Endpoints
 
-`customEndpoints` allow you to neatly create separate [Collections](https://gridsome.org/docs/collections/#collections) by querying different REST endpoints.
+`customEndpoints` allow you to neatly create separate [Collections](https://gridmix.github.io/docs/collections/#collections) by querying different REST endpoints.
 
 ```js
     customEndpoints: [

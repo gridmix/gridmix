@@ -1,15 +1,18 @@
 {
   "version": "0.2.1",
-  "name": "@gridsome/transformer-json",
-  "description": "JSON transformer for Gridsome",
-  "homepage": "https://github.com/gridsome/gridsome/tree/master/packages/transformer-json#readme",
-  "repository": "https://github.com/gridsome/gridsome/tree/master/packages/transformer-json",
+  "name": "@gridmix/transformer-json",
+  "description": "JSON transformer for Gridmix",
+  "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/transformer-json#readme",
+  "repository": "https://github.com/gridmix/gridmix/tree/main/packages/transformer-json",
   "license": "MIT",
   "main": "index.js",
   "keywords": [
     "gridsome",
+    "gridmix",
     "gridsome-plugin",
+    "gridmix-plugin",
     "gridsome-transformer",
+    "gridmix-transformer",
     "json"
   ],
   "dependencies": {

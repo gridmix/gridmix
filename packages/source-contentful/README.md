@@ -1,13 +1,13 @@
-# @gridsome/source-contentful
+# @gridmix/source-contentful
 
-> Contentful source for Gridsome. This package is under development and
+> Contentful source for Gridmix. This package is under development and
 API might change before v1 is released.
 
 ## Install
 
-- `npm install @gridsome/source-contentful`
-- `yarn add @gridsome/source-contentful`
-- `pnpm install @gridsome/source-contentful`
+- `npm install @gridmix/source-contentful`
+- `yarn add @gridmix/source-contentful`
+- `pnpm install @gridmix/source-contentful`
 
 ## Usage
 
@@ -15,7 +15,7 @@ API might change before v1 is released.
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-contentful',
+      use: '@gridmix/source-contentful',
       options: {
         space: 'YOUR_SPACE', // required
         accessToken: 'YOUR_ACCESS_TOKEN', // required
@@ -30,7 +30,7 @@ module.exports = {
 
 ### Custom Routes
 
-To add custom routes use the [`templates`](https://gridsome.org/docs/templates/) config with the collection type name as the key and the custom route as the value.
+To add custom routes use the [`templates`](https://gridmix.github.io/docs/templates/) config with the collection type name as the key and the custom route as the value.
 
 If you have Contentful ContentTypes named BlogPost and Article you can add new routes like this:
 
@@ -45,7 +45,7 @@ module.exports = {
 
 ## Contentful Content Types
 
-`@gridsome/souce-contentful` currently works with all Contentful Content Types.
+`@gridmix/souce-contentful` currently works with all Contentful Content Types.
 
 ### Rich text
 

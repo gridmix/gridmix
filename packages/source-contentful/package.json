@@ -1,14 +1,17 @@
 {
   "version": "0.6.0",
-  "name": "@gridsome/source-contentful",
-  "description": "Contentful source for Gridsome",
-  "homepage": "https://github.com/gridsome/gridsome/tree/master/packages/source-contentful#readme",
-  "repository": "https://github.com/gridsome/gridsome/tree/master/packages/source-contentful",
+  "name": "@gridmix/source-contentful",
+  "description": "Contentful source for Gridmix",
+  "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/source-contentful#readme",
+  "repository": "https://github.com/gridmix/gridmix/tree/main/packages/source-contentful",
   "main": "index.js",
   "keywords": [
     "gridsome",
+    "gridmix",
     "gridsome-plugin",
+    "gridmix-plugin",
     "gridsome-source",
+    "gridmix-source",
     "contentful"
   ],
   "dependencies": {

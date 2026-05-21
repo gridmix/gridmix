@@ -1,12 +1,12 @@
-# @gridsome/source-ghost
+# @gridmix/source-ghost
 
-> Ghost source for Gridsome. This package is under development and API might change before v1 is released.
+> Ghost source for Gridmix. This package is under development and API might change before v1 is released.
 
 ## Install
 
-- `npm install @gridsome/source-ghost`
-- `yarn add @gridsome/source-ghost`
-- `pnpm install @gridsome/source-ghost`
+- `npm install @gridmix/source-ghost`
+- `yarn add @gridmix/source-ghost`
+- `pnpm install @gridmix/source-ghost`
 
 ## Usage
 
@@ -14,7 +14,7 @@
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-ghost',
+      use: '@gridmix/source-ghost',
       options: {
         typeName: 'Ghost',
         baseUrl: 'http://localhost:2368',

@@ -1,15 +1,18 @@
 {
   "version": "0.2.2",
-  "name": "@gridsome/transformer-csv",
-  "description": "CSV transformer for Gridsome",
-  "homepage": "https://github.com/gridsome/gridsome/tree/master/packages/transformer-csv#readme",
-  "repository": "https://github.com/gridsome/gridsome/tree/master/packages/transformer-csv",
+  "name": "@gridmix/transformer-csv",
+  "description": "CSV transformer for Gridmix",
+  "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/transformer-csv#readme",
+  "repository": "https://github.com/gridmix/gridmix/tree/main/packages/transformer-csv",
   "license": "MIT",
   "main": "index.js",
   "keywords": [
     "gridsome",
+    "gridmix",
     "gridsome-plugin",
+    "gridmix-plugin",
     "gridsome-transformer",
+    "gridmix-transformer",
     "csv"
   ],
   "dependencies": {

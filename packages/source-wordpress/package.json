@@ -1,14 +1,17 @@
 {
   "version": "0.5.3",
-  "name": "@gridsome/source-wordpress",
-  "description": "WordPress source for Gridsome",
-  "homepage": "https://github.com/gridsome/gridsome/tree/master/packages/source-wordpress#readme",
-  "repository": "https://github.com/gridsome/gridsome/tree/master/packages/source-wordpress",
+  "name": "@gridmix/source-wordpress",
+  "description": "WordPress source for Gridmix",
+  "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/source-wordpress#readme",
+  "repository": "https://github.com/gridmix/gridmix/tree/main/packages/source-wordpress",
   "main": "index.js",
   "keywords": [
     "gridsome",
+    "gridmix",
     "gridsome-plugin",
+    "gridmix-plugin",
     "gridsome-source",
+    "gridmix-source",
     "wordpress"
   ],
   "dependencies": {

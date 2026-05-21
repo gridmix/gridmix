@@ -3,7 +3,7 @@ const {
   GraphQLString,
   GraphQLEnumType,
   GraphQLObjectType
-} = require('gridsome/graphql')
+} = require('gridmix/graphql')
 
 const HeadingType = new GraphQLObjectType({
   name: 'VueRemarkHeading',

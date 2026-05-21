@@ -1,14 +1,17 @@
 {
   "version": "0.6.4",
-  "name": "@gridsome/transformer-remark",
-  "description": "Markdown transformer for Gridsome",
-  "homepage": "https://github.com/gridsome/gridsome/tree/master/packages/transformer-remark#readme",
-  "repository": "https://github.com/gridsome/gridsome/tree/master/packages/transformer-remark",
+  "name": "@gridmix/transformer-remark",
+  "description": "Markdown transformer for Gridmix",
+  "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/transformer-remark#readme",
+  "repository": "https://github.com/gridmix/gridmix/tree/main/packages/transformer-remark",
   "main": "index.js",
   "keywords": [
     "gridsome",
+    "gridmix",
     "gridsome-plugin",
+    "gridmix-plugin",
     "gridsome-transformer",
+    "gridmix-transformer",
     "markdown",
     "remark"
   ],

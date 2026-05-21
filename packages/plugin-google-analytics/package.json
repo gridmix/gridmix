@@ -1,17 +1,19 @@
 {
   "version": "0.1.2",
-  "name": "@gridsome/plugin-google-analytics",
+  "name": "@gridmix/plugin-google-analytics",
   "description": "Google Analytics plugin for Gridsome",
-  "homepage": "https://github.com/gridsome/gridsome/tree/master/packages/plugin-google-analytics#readme",
-  "repository": "https://github.com/gridsome/gridsome/tree/master/packages/plugin-google-analytics",
-  "main": "gridsome.client.js",
+  "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/plugin-google-analytics#readme",
+  "repository": "https://github.com/gridmix/gridmix/tree/main/packages/plugin-google-analytics",
+  "main": "gridmix.client.js",
   "license": "MIT",
   "files": [
-    "gridsome.client.js"
+    "gridmix.client.js"
   ],
   "keywords": [
     "gridsome",
+    "gridmix",
     "gridsome-plugin",
+    "gridmix-plugin",
     "analytics"
   ],
   "publishConfig": {

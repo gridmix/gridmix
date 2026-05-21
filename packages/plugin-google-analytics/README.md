@@ -1,24 +1,24 @@
-# @gridsome/plugin-google-analytics
+# @gridmix/plugin-google-analytics
 
-> Google Analytics plugin for Gridsome
+> Google Analytics plugin for Gridmix
 
 See [VueAnalytics](https://github.com/MatteoGabriele/vue-analytics/blob/master/README.md) for possible options.
 
 ## Install
 
-- `npm install @gridsome/plugin-google-analytics`
-- `yarn add @gridsome/plugin-google-analytics`
-- `pnpm install @gridsome/plugin-google-analytics`
+- `npm install @gridmix/plugin-google-analytics`
+- `yarn add @gridmix/plugin-google-analytics`
+- `pnpm install @gridmix/plugin-google-analytics`
 
 ## Usage
 
-Add the below config in your `gridsome.config.js`
+Add the below config in your `gridmix.config.js`
 
 ```js
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/plugin-google-analytics',
+      use: '@gridmix/plugin-google-analytics',
       options: {
         id: 'UA-XXXXXXXXX-X'
       }

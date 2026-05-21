@@ -1,5 +1,5 @@
 const fetch = require('node-fetch')
-const { print, GraphQLNonNull, GraphQLObjectType } = require('gridsome/graphql')
+const { print, GraphQLNonNull, GraphQLObjectType } = require('gridmix/graphql')
 const { introspectSchema, wrapSchema, RenameTypes } = require('@graphql-tools/wrap')
 
 const {

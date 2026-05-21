@@ -1,14 +1,17 @@
 {
   "version": "0.2.1",
-  "name": "@gridsome/transformer-yaml",
-  "description": "Yaml transformer for Gridsome",
-  "homepage": "https://github.com/gridsome/gridsome/tree/master/packages/transformer-yaml",
-  "repository": "https://github.com/gridsome/gridsome/tree/master/packages/transformer-yaml",
+  "name": "@gridmix/transformer-yaml",
+  "description": "Yaml transformer for Gridmix",
+  "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/transformer-yaml",
+  "repository": "https://github.com/gridmix/gridmix/tree/main/packages/transformer-yaml",
   "main": "index.js",
   "keywords": [
     "gridsome",
+    "gridmix",
     "gridsome-plugin",
+    "gridmix-plugin",
     "gridsome-transformer",
+    "gridmix-transformer",
     "yaml"
   ],
   "dependencies": {

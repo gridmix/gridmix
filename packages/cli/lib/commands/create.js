@@ -115,10 +115,10 @@ module.exports = async (name, starter = '') => {
     if (/^([a-z0-9_-]+)\//i.test(starter)) {
       starter = `https://github.com/${starter}.git`
     } else if (officialTemplates.includes(starter)) {
-      starter = `https://github.com/gridsome/gridsome-starter-${starter}.git`
+      starter = `https://github.com/gridmix/gridmix-starter-${starter}.git`
     }
   } else {
-    starter = 'https://github.com/gridsome/gridsome-starter-default'
+    starter = 'https://github.com/gridmix/gridmix-starter-default'
   }
 
   if (answers.packageManager) {
@@ -191,7 +191,7 @@ module.exports = async (name, starter = '') => {
 
 async function fetchStarters () {
   try {
-    const res = await axios('https://raw.githubusercontent.com/gridsome/gridsome.org/master/starters/starters.yaml')
+    const res = await axios('https://raw.githubusercontent.com/gridmix/gridmix-website/main/starters/starters.yaml')
     return jsYaml.load(res.data)
   } catch (err) {
     return []

@@ -1,12 +1,12 @@
-# @gridsome/source-faker
+# @gridmix/source-faker
 
-> [Faker.js](https://github.com/marak/Faker.js/) source for Gridsome
+> [Faker.js](https://github.com/marak/Faker.js/) source for Gridmix
 
 ## Install
 
-- `npm install @gridsome/source-faker`
-- `yarn add @gridsome/source-faker`
-- `pnpm install @gridsome/source-faker`
+- `npm install @gridmix/source-faker`
+- `yarn add @gridmix/source-faker`
+- `pnpm install @gridmix/source-faker`
 
 ## Usage
 
@@ -14,7 +14,7 @@
 export default {
   plugins: [
     {
-      use: '@gridsome/source-faker',
+      use: '@gridmix/source-faker',
       options: {
         numNodes: 100
       }

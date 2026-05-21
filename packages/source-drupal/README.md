@@ -1,19 +1,19 @@
-# @gridsome/source-drupal
+# @gridmix/source-drupal
 
-> Drupal source for Gridsome.
+> Drupal source for Gridmix.
 
 ## Quick Overview
 
 **BREAKING CHANGE FROM 0.2.1 to 0.3.0**
 The shape for accessing relationships on a node via GraphQL has changed. See [Example Page Queries](#example-page-queries).
 
-This is the source plugin for pulling in data from the Drupal content management system for Gridsome. The Drupal module [JSON:API](https://www.drupal.org/project/jsonapi) is required for this plugin to work correctly.
+This is the source plugin for pulling in data from the Drupal content management system for Gridmix. The Drupal module [JSON:API](https://www.drupal.org/project/jsonapi) is required for this plugin to work correctly.
 
 ## Install
 
-- `npm install @gridsome/source-drupal`
-- `yarn add @gridsome/source-drupal`
-- `pnpm install @gridsome/source-drupal`
+- `npm install @gridmix/source-drupal`
+- `yarn add @gridmix/source-drupal`
+- `pnpm install @gridmix/source-drupal`
 
 ## Usage
 
@@ -23,7 +23,7 @@ Depending on your Drupal and JSON:API configuration, you only need to specify `b
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-drupal',
+      use: '@gridmix/source-drupal',
       options: {
         baseUrl: 'https://somedrupalsite.pantheon.io'
       }
@@ -88,21 +88,21 @@ user--user -> DrupalUser
 
 > The `keys` above are the defaults, but can be changed using [JSON:API
 > Extras](https://www.drupal.org/project/jsonapi_extras) (i.e. `node--article` can become just `article`
-> Note: JSON:API can return an attribute `path` that contains an object. This `path` attribute conflicts with Gridsome's GraphQL `path` field. To avoid conflict the Drupal data contained in `path` has been renamed to `drupal_path`.
+> Note: JSON:API can return an attribute `path` that contains an object. This `path` attribute conflicts with Gridmix's GraphQL `path` field. To avoid conflict the Drupal data contained in `path` has been renamed to `drupal_path`.
 
-The url `values` of the `links` object get looped over and requested via `axios` and each response becomes processed, converted into `nodes` on each respective GraphQL Type. Each entity response comes with a `relationship` object which is merged into each `node` - the Gridsome Core then intelligently creates all the GraphQL Connects. [See example page queries below](#example-page-queries).
+The url `values` of the `links` object get looped over and requested via `axios` and each response becomes processed, converted into `nodes` on each respective GraphQL Type. Each entity response comes with a `relationship` object which is merged into each `node` - the Gridmix Core then intelligently creates all the GraphQL Connects. [See example page queries below](#example-page-queries).
 
-Within your Gridsome project, run `gridsome develop` and access `http://localhost:8080/___explore` to see all the relationships.
+Within your Gridmix project, run `gridmix develop` and access `http://localhost:8080/___explore` to see all the relationships.
 
 ### Routing
 
-Use the `templates` option in `gridsome.config.js` to specify the url schema for each entity type individually:
+Use the `templates` option in `gridmix.config.js` to specify the url schema for each entity type individually:
 
 ```js
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-drupal',
+      use: '@gridmix/source-drupal',
       options: {
         typeName: 'Drupal',
         baseUrl: 'https://somedrupalsite.pantheonsite.io'
@@ -116,20 +116,20 @@ module.exports = {
 }
 ```
 
-[Read more about templates in Gridsome](https://gridsome.org/docs/templates/)
+[Read more about templates in Gridmix](https://gridmix.github.io/docs/templates/)
 
 Path parameters can be any GraphQL field on that node:
 `DrupalNodeArticle: 'aritlces/:langcode/:title/' -> /aritcles/en/lorem-ipsum/`
 
 ### Contenta CMS
 
-[Contenta CMS](https://github.com/contentacms/contenta_jsonapi#--contenta-cms--) should work out-of-the-box with @gridsome/source-drupal. The main difference being, Contenta CMS is by default already using [JSON:API Extras](https://www.drupal.org/project/jsonapi_extras). This gives the user more flexibility and control over resources returned by the api.
+[Contenta CMS](https://github.com/contentacms/contenta_jsonapi#--contenta-cms--) should work out-of-the-box with @gridmix/source-drupal. The main difference being, Contenta CMS is by default already using [JSON:API Extras](https://www.drupal.org/project/jsonapi_extras). This gives the user more flexibility and control over resources returned by the api.
 
 JSON:API has a clear finite list of features which are listed on its [Drupal project page](https://www.drupal.org/project/jsonapi_extras).
 
-This has the biggest impact in regards to the [API Schema to GraphQL Conversion](#api-schema-to-graphql-conversion) mentioned above. Custom types/nodes won't be return with the prefixed `node--`, which will affect your `routes` configuration in `gridsome.config.js`. Look closely at the payload returned by `/api` and make adjustments accordingly.
+This has the biggest impact in regards to the [API Schema to GraphQL Conversion](#api-schema-to-graphql-conversion) mentioned above. Custom types/nodes won't be return with the prefixed `node--`, which will affect your `routes` configuration in `gridmix.config.js`. Look closely at the payload returned by `/api` and make adjustments accordingly.
 
-Here is an [example `gridsome.config.js`](https://github.com/matt-e-king/gridsome-starter-drupal/blob/master/gridsome.config.js) in the Drupal Source Starter, see the commented out section at the bottom for Contenta CMS.
+Here is an [example `gridmix.config.js`](https://github.com/matt-e-king/gridsome-starter-drupal/blob/master/gridsome.config.js) in the Drupal Source Starter, see the commented out section at the bottom for Contenta CMS.
 
 **NOTE:** This will also affect your GraphQL queries:
 
@@ -140,19 +140,19 @@ recipies -> DrupalRecipes
 
 ### Excludes
 
-A majority of the endpoints returned in the api schema are not necessary so `@gridsome/source-drupal` exclude some by default. See those defaults in `lib/constants.js`.
+A majority of the endpoints returned in the api schema are not necessary so `@gridmix/source-drupal` exclude some by default. See those defaults in `lib/constants.js`.
 
 > WARNING: A majority of JSON:API endpoints will throw 401/403s unless permissions are granted
 > If you provide your own excludes, the defaults will not be used
 
 ```js
 // default exclude can be imported
-const { defaultExcludes } = require('@gridsome/source-drupal')
+const { defaultExcludes } = require('@gridmix/source-drupal')
 
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-drupal',
+      use: '@gridmix/source-drupal',
       options: {
         baseUrl: 'https://somedrupalsite.pantheon.io',
         exclude: [ ...defaultExcludes, 'user--user' ], // include the defaults
@@ -164,7 +164,7 @@ module.exports = {
 
 ### Auth
 
-Currently `@gridsome/source-drupal` only supports Basic Auth:
+Currently `@gridmix/source-drupal` only supports Basic Auth:
 
 ```js
 require('dotenv').config() // use dotenv for env variables
@@ -175,7 +175,7 @@ require('dotenv').config() // use dotenv for env variables
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-drupal',
+      use: '@gridmix/source-drupal',
       options: {
         baseUrl: 'https://somedrupalsite.pantheon.io',
         requestConfig: {
@@ -194,7 +194,7 @@ Cookie Auth and OAuth coming soon...
 
 ### Example Page Queries
 
-List all `DrupalNodeArticle` using `<page-query>` in a Gridsome page:
+List all `DrupalNodeArticle` using `<page-query>` in a Gridmix page:
 
 ```
 <page-query>
@@ -212,7 +212,7 @@ List all `DrupalNodeArticle` using `<page-query>` in a Gridsome page:
 </page-query>
 ```
 
-Get the details of an individual `DrupalNodeArticle` using `<page-query>` in a Gridsome template. GraphQL Connections are named after the relationship `key` in the XHR response:
+Get the details of an individual `DrupalNodeArticle` using `<page-query>` in a Gridmix template. GraphQL Connections are named after the relationship `key` in the XHR response:
 
 ```
 <page-query>

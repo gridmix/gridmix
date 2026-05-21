@@ -1,14 +1,17 @@
 {
   "version": "0.1.0",
-  "name": "@gridsome/source-graphql",
-  "description": "GraphQL source for Gridsome",
-  "homepage": "https://github.com/gridsome/gridsome/tree/master/packages/source-graphql#readme",
-  "repository": "https://github.com/gridsome/gridsome/tree/master/packages/source-graphql",
+  "name": "@gridmix/source-graphql",
+  "description": "GraphQL source for Gridmix",
+  "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/source-graphql#readme",
+  "repository": "https://github.com/gridmix/gridmix/tree/main/packages/source-graphql",
   "main": "index.js",
   "keywords": [
     "gridsome",
+    "gridmix",
     "gridsome-plugin",
-    "gridsome-source"
+    "gridmix-plugin",
+    "gridsome-source",
+    "gridmix-source"
   ],
   "dependencies": {
     "@graphql-tools/utils": "^8.5.3",

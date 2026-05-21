@@ -1,14 +1,16 @@
 {
   "version": "0.4.0",
-  "name": "@gridsome/plugin-sitemap",
-  "description": "Generate sitemap for Gridsome sites",
-  "homepage": "https://github.com/gridsome/gridsome/tree/master/packages/plugin-sitemap#readme",
-  "repository": "https://github.com/gridsome/gridsome/tree/master/packages/plugin-sitemap",
+  "name": "@gridmix/plugin-sitemap",
+  "description": "Generate sitemap for Gridmix sites",
+  "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/plugin-sitemap#readme",
+  "repository": "https://github.com/gridmix/gridmix/tree/main/packages/plugin-sitemap",
   "main": "index.js",
   "license": "MIT",
   "keywords": [
     "gridsome",
+    "gridmix",
     "gridsome-plugin",
+    "gridmix-plugin",
     "sitemap",
     "seo"
   ],

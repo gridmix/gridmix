@@ -1,9 +1,9 @@
-# @gridsome/transformer-yaml
+# @gridmix/transformer-yaml
 
-> YAML transformer for Gridsome
+> YAML transformer for Gridmix
 
 ## Install
 
-- `npm install @gridsome/transformer-yaml`
-- `yarn add @gridsome/transformer-yaml`
-- `pnpm install @gridsome/transformer-yaml`
+- `npm install @gridmix/transformer-yaml`
+- `yarn add @gridmix/transformer-yaml`
+- `pnpm install @gridmix/transformer-yaml`

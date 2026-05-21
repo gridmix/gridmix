@@ -1,23 +1,23 @@
-# @gridsome/transformer-remark
+# @gridmix/transformer-remark
 
-> Markdown transformer for Gridsome with [Remark](https://remark.js.org/).
+> Markdown transformer for Gridmix with [Remark](https://remark.js.org/).
 
 ## Install
 
-- `npm install @gridsome/transformer-remark`
-- `yarn add @gridsome/transformer-remark`
-- `pnpm install @gridsome/transformer-remark`
+- `npm install @gridmix/transformer-remark`
+- `yarn add @gridmix/transformer-remark`
+- `pnpm install @gridmix/transformer-remark`
 
 ## Basic usage
 
 The transformer is automatically used if installed in your project. Custom transformer options can either be set for each source plugin or globally.
 
 ```js
-//gridsome.config.js
+//gridmix.config.js
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-filesystem',
+      use: '@gridmix/source-filesystem',
       options: {
         path: 'blog/**/*.md',
         typeName: 'Post',

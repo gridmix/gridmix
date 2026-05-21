@@ -1,12 +1,12 @@
-# @gridsome/source-strapi
+# @gridmix/source-strapi
 
-> [Strapi](https://strapi.io/) source for Gridsome
+> [Strapi](https://strapi.io/) source for Gridmix
 
 ## Install
 
-- `npm install @gridsome/source-strapi`
-- `yarn add @gridsome/source-strapi`
-- `pnpm install @gridsome/source-strapi`
+- `npm install @gridmix/source-strapi`
+- `yarn add @gridmix/source-strapi`
+- `pnpm install @gridmix/source-strapi`
 
 ## Usage
 
@@ -14,7 +14,7 @@
 export default {
   plugins: [
     {
-      use: '@gridsome/source-strapi',
+      use: '@gridmix/source-strapi',
       options: {
         apiURL: 'http://localhost:1337',
         queryLimit: 1000, // Defaults to 100

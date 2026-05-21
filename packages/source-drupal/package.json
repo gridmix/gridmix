@@ -1,14 +1,17 @@
 {
   "version": "0.4.1",
-  "name": "@gridsome/source-drupal",
-  "description": "Drupal source for Gridsome",
-  "homepage": "https://github.com/gridsome/gridsome/tree/master/packages/source-drupal#readme",
-  "repository": "https://github.com/gridsome/gridsome/tree/master/packages/source-drupal",
+  "name": "@gridmix/source-drupal",
+  "description": "Drupal source for Gridmix",
+  "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/source-drupal#readme",
+  "repository": "https://github.com/gridmix/gridmix/tree/main/packages/source-drupal",
   "main": "index.js",
   "keywords": [
     "gridsome",
+    "gridmix",
     "gridsome-plugin",
+    "gridmix-plugin",
     "gridsome-source",
+    "gridmix-source",
     "drupal"
   ],
   "dependencies": {

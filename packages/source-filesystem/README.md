@@ -1,12 +1,12 @@
-# @gridsome/source-filesystem
+# @gridmix/source-filesystem
 
 > Transform files into content that can be fetched with GraphQL in your components.
 
 ## Install
 
-- `npm install @gridsome/source-filesystem`
-- `yarn add @gridsome/source-filesystem`
-- `pnpm install @gridsome/source-filesystem`
+- `npm install @gridmix/source-filesystem`
+- `yarn add @gridmix/source-filesystem`
+- `pnpm install @gridmix/source-filesystem`
 
 ## Usage
 
@@ -14,7 +14,7 @@
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-filesystem',
+      use: '@gridmix/source-filesystem',
       options: {
         typeName: 'BlogPost',
         path: './content/blog/**/*.md',
@@ -27,7 +27,7 @@ module.exports = {
 }
 ```
 
-A filesystem source will also require a transformer in order to parse the files. The example above is looking for a set of [Markdown](https://en.wikipedia.org/wiki/Markdown) files, so in order to let [Gridsome](https://gridsome.org) understand the content of the files, you must install [@gridsome/transformer-remark](https://www.npmjs.com/package/@gridsome/transformer-remark) as a dev dependency in your project. Gridsome will automatically transform the files for you as long as a transformer that supports your files is found in your `package.json`.
+A filesystem source will also require a transformer in order to parse the files. The example above is looking for a set of [Markdown](https://en.wikipedia.org/wiki/Markdown) files, so in order to let [Gridmix](https://gridmix.github.io) understand the content of the files, you must install [@gridmix/transformer-remark](https://www.npmjs.com/package/@gridmix/transformer-remark) as a dev dependency in your project. Gridmix will automatically transform the files for you as long as a transformer that supports your files is found in your `package.json`.
 
 ### Options
 
@@ -56,7 +56,7 @@ The following example will look for all markdown files inside the `/content/blog
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-filesystem',
+      use: '@gridmix/source-filesystem',
       options: {
         baseDir: './content/blog',
         path: '*.md'
@@ -76,7 +76,7 @@ Prefix paths generated from the file location. The example below looks for markd
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-filesystem',
+      use: '@gridmix/source-filesystem',
       options: {
         baseDir: './content/blog',
         pathPrefix: '/blog',
@@ -91,13 +91,13 @@ module.exports = {
 
 - Type: `object`
 
-Define fields that will have a reference to another node. The referenced `typeName` is expected to exist. But a content type can also be created automatically if you set `create: true`. Read more about [references](https://gridsome.org/docs/data-store-api#collectionaddreferencefieldname-typename).
+Define fields that will have a reference to another node. The referenced `typeName` is expected to exist. But a content type can also be created automatically if you set `create: true`. Read more about [references](https://gridmix.github.io/docs/data-store-api#collectionaddreferencefieldname-typename).
 
 ```js
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-filesystem',
+      use: '@gridmix/source-filesystem',
       options: {
         refs: {
           // Reference to existing authors by id.

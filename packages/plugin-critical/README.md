@@ -1,12 +1,12 @@
-# @gridsome/plugin-critical
+# @gridmix/plugin-critical
 
 > Extracts & inlines critical-path (above-the-fold) CSS
 
 ## Install
 
-- `npm install @gridsome/plugin-critical`
-- `yarn add @gridsome/plugin-critical`
-- `pnpm install @gridsome/plugin-critical`
+- `npm install @gridmix/plugin-critical`
+- `yarn add @gridmix/plugin-critical`
+- `pnpm install @gridmix/plugin-critical`
 
 ## Usage
 
@@ -14,7 +14,7 @@
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/plugin-critical',
+      use: '@gridmix/plugin-critical',
       options: {
         paths: ['/'],
         width: 1300,

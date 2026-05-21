@@ -1,22 +1,22 @@
-# @gridsome/plugin-sitemap
+# @gridmix/plugin-sitemap
 
-> Generate sitemap for Gridsome sites
+> Generate sitemap for Gridmix sites
 
 ## Install
 
-- `npm install @gridsome/plugin-sitemap`
-- `yarn add @gridsome/plugin-sitemap`
-- `pnpm install @gridsome/plugin-sitemap`
+- `npm install @gridmix/plugin-sitemap`
+- `yarn add @gridmix/plugin-sitemap`
+- `pnpm install @gridmix/plugin-sitemap`
 
 ## Usage
 
-Make sure [`siteUrl`](https://gridsome.org/docs/config/#siteurl) is set in your project config. All rendered pages (except `/404`) are included in the resulting XML. The `config` option can be used to set a custom `changefreq` or `priority` per path or a glob pattern for multiple paths.
+Make sure [`siteUrl`](https://gridmix.github.io/docs/config/#siteurl) is set in your project config. All rendered pages (except `/404`) are included in the resulting XML. The `config` option can be used to set a custom `changefreq` or `priority` per path or a glob pattern for multiple paths.
 
 ```js
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/plugin-sitemap',
+      use: '@gridmix/plugin-sitemap',
       options: {
         exclude: ['/exclude-me'],
         config: {
@@ -93,7 +93,7 @@ Add custom URLs to the sitemap.
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/plugin-sitemap',
+      use: '@gridmix/plugin-sitemap',
       options: {
         staticUrls: [
           {

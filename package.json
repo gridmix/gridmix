@@ -1,18 +1,18 @@
 {
   "private": true,
   "workspaces": [
-    "gridsome",
+    "gridmix",
     "playground",
     "packages/*",
     "projects/*"
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "test:unit": "GRIDSOME_TEST=unit jest --runInBand",
-    "test:e2e": "GRIDSOME_TEST=e2e jest --runInBand",
+    "test:unit": "GRIDMIX_TEST=unit jest --runInBand",
+    "test:e2e": "GRIDMIX_TEST=e2e jest --runInBand",
     "test:pnp": "node scripts/pnp-test.js",
     "changelog": "node scripts/changelog.js",
-    "lint": "eslint \"@(gridsome|packages)/**/*.js\""
+    "lint": "eslint \"@(gridmix|packages)/**/*.js\""
   },
   "devDependencies": {
     "@lerna/conventional-commits": "^3.22.0",

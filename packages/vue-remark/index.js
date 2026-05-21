@@ -1,9 +1,9 @@
 const path = require('path')
 const pathToRegexp = require('path-to-regexp')
-const Filesystem = require('@gridsome/source-filesystem')
-const RemarkTransformer = require('@gridsome/transformer-remark')
+const Filesystem = require('@gridmix/source-filesystem')
+const RemarkTransformer = require('@gridmix/transformer-remark')
 const { omit, trimEnd, kebabCase } = require('lodash')
-const { GraphQLList, GraphQLBoolean } = require('gridsome/graphql')
+const { GraphQLList, GraphQLBoolean } = require('gridmix/graphql')
 
 const toSFC = require('./lib/toSfc')
 const sfcSyntax = require('./lib/sfcSyntax')

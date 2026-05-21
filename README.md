@@ -6,7 +6,7 @@
 <summary><b>Gridsome README.md content</b></summary>
 <p align="center">
   <br>
-  <a href="https://www.gridsome.org">
+  <a href="https://www.gridmix.github.io">
     <img src="https://raw.githubusercontent.com/gridsome/gridsome/master/.github/assets/logo.png" width="90"/>
   </a>
 </p>
@@ -82,8 +82,8 @@ Gridsome sites are usually not connected to any database and can be hosted entir
 
 ### Learn more
 
-- [How it works](https://gridsome.org/docs/how-it-works/)
-- [How to deploy](https://gridsome.org/docs/deployment/)
+- [How it works](https://gridmix.github.io/docs/how-it-works/)
+- [How to deploy](https://gridmix.github.io/docs/deployment/)
 
 ## How to Contribute
 

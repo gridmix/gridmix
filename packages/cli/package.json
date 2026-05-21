@@ -1,16 +1,17 @@
 {
   "version": "0.3.4",
-  "name": "@gridsome/cli",
-  "description": "A command-line tool for creating new Gridsome projects.",
-  "homepage": "https://github.com/gridsome/gridsome/tree/master/packages/cli#readme",
-  "repository": "https://github.com/gridsome/gridsome/tree/master/packages/cli",
-  "main": "bin/gridsome.js",
+  "name": "@gridmix/cli",
+  "description": "A command-line tool for creating new Gridmix projects.",
+  "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/cli#readme",
+  "repository": "https://github.com/gridmix/gridmix/tree/main/packages/cli",
+  "main": "bin/gridmix.js",
   "license": "MIT",
   "bin": {
-    "gridsome": "./bin/gridsome.js"
+    "gridmix": "./bin/gridmix.js"
   },
   "keywords": [
     "gridsome",
+    "gridmix",
     "cli"
   ],
   "dependencies": {
@@ -37,10 +38,7 @@
   },
   "contributors": [
     {
-      "name": "Tommy Vedvik (@tomtev)"
-    },
-    {
-      "name": "Hans-Jørgen Vedvik (@hjvedvik)"
+      "name": "Fyodor (@fyodorio)"
     }
   ],
   "engines": {

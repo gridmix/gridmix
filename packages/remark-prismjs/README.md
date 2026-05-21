@@ -1,12 +1,12 @@
-# @gridsome/remark-prismjs
+# @gridmix/remark-prismjs
 
 > Syntax highlighter for markdown code blocks
 
 ## Install
 
-- `npm install @gridsome/remark-prismjs`
-- `yarn add @gridsome/remark-prismjs`
-- `pnpm install @gridsome/remark-prismjs`
+- `npm install @gridmix/remark-prismjs`
+- `yarn add @gridmix/remark-prismjs`
+- `pnpm install @gridmix/remark-prismjs`
 
 ## Usage
 
@@ -20,19 +20,19 @@ export default function (Vue) {
 }
 ```
 
-In `gridsome.config.js`, add syntax highlighter to a single markdown source:
+In `gridmix.config.js`, add syntax highlighter to a single markdown source:
 
 ```js
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-filesystem',
+      use: '@gridmix/source-filesystem',
       options: {
         path: 'blog/**/*.md',
         route: '/blog/:year/:month/:day/:slug',
         remark: {
           plugins: [
-            '@gridsome/remark-prismjs'
+            '@gridmix/remark-prismjs'
           ]
         }
       }
@@ -47,7 +47,7 @@ Or add syntax highlighter to all markdown sources:
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-filesystem',
+      use: '@gridmix/source-filesystem',
       options: {}
     }
   ],
@@ -55,7 +55,7 @@ module.exports = {
   transformers: {
     remark: {
       plugins: [
-        '@gridsome/remark-prismjs'
+        '@gridmix/remark-prismjs'
       ]
     }
   }

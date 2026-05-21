@@ -1,9 +1,9 @@
-# @gridsome/transformer-json
+# @gridmix/transformer-json
 
-> JSON transformer for Gridsome
+> JSON transformer for Gridmix
 
 ## Install
 
-- `npm install @gridsome/transformer-json`
-- `yarn add @gridsome/transformer-json`
-- `pnpm install @gridsome/transformer-json`
+- `npm install @gridmix/transformer-json`
+- `yarn add @gridmix/transformer-json`
+- `pnpm install @gridmix/transformer-json`

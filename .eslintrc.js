@@ -11,7 +11,7 @@ module.exports = {
   overrides: [
     {
       files: [
-        'gridsome.client.js'
+        'gridmix.client.js'
       ],
       rules: {
         'node/no-unsupported-features/es-syntax': 'off'

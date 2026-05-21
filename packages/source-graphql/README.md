@@ -1,12 +1,12 @@
-# @gridsome/source-graphql
+# @gridmix/source-graphql
 
 > Pull a remote GraphQL schema in locally
 
 ## Install
 
-- `npm install @gridsome/source-graphql`
-- `yarn add @gridsome/source-graphql`
-- `pnpm install @gridsome/source-graphql`
+- `npm install @gridmix/source-graphql`
+- `yarn add @gridmix/source-graphql`
+- `pnpm install @gridmix/source-graphql`
 
 ## Usage
 
@@ -14,7 +14,7 @@
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/source-graphql',
+      use: '@gridmix/source-graphql',
       options: {
         url: 'https://example.com/api',
         fieldName: 'puppies',
@@ -66,4 +66,4 @@ The prefix to be used for your imported schema's field types.
 
 An object of headers to be passed along with your request to the API endpoint. This will generally be used to authenticate your request.
 
-**Note**: For safety, you should pass any sensitive tokens/passwords as environmental variables. To learn more, see the [Gridsome Docs on Environmental Variables](https://gridsome.org/docs/environment-variables/).
+**Note**: For safety, you should pass any sensitive tokens/passwords as environmental variables. To learn more, see the [Gridmix Docs on Environmental Variables](https://gridmix.github.io/docs/environment-variables/).

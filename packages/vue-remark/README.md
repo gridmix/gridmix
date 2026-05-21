@@ -1,22 +1,22 @@
-# @gridsome/vue-remark
+# @gridmix/vue-remark
 
 > Create pages with Vue components in Markdown. Perfect for building Documentation, Design Systems, Portfolios, Blogs, etc.
 
 ## Install
 
-- `npm install @gridsome/vue-remark`
-- `yarn add @gridsome/vue-remark`
-- `pnpm install @gridsome/vue-remark`
+- `npm install @gridmix/vue-remark`
+- `yarn add @gridmix/vue-remark`
+- `pnpm install @gridmix/vue-remark`
 
 ## Usage
 
-**1.** Add configs to `gridsome.config.js`.
+**1.** Add configs to `gridmix.config.js`.
 
 ```js
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/vue-remark',
+      use: '@gridmix/vue-remark',
       options: {
         typeName: 'Documentation', // Required
         baseDir: './content/docs', // Where .md files are located
@@ -102,7 +102,7 @@ Use a template for every page created by this plugin. This option is useful if y
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/vue-remark',
+      use: '@gridmix/vue-remark',
       options: {
         typeName: 'MarkdownPage',
         baseDir: './content',
@@ -160,7 +160,7 @@ By default, each markdown file will get a path based on the file location. Use t
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/vue-remark',
+      use: '@gridmix/vue-remark',
       options: {
         typeName: 'MarkdownPage',
         baseDir: './content',
@@ -207,13 +207,13 @@ Add additional [Remark](https://remark.js.org/) plugins. [Read more](https://git
 
 - Type: `object`
 
-Define fields that will have a reference to another node. The referenced `typeName` is expected to exist. But a content type can also be created automatically if you set `create: true`. Read more about [references](https://gridsome.org/docs/data-store-api#collectionaddreferencefieldname-typename).
+Define fields that will have a reference to another node. The referenced `typeName` is expected to exist. But a content type can also be created automatically if you set `create: true`. Read more about [references](https://gridmix.github.io/docs/data-store-api#collectionaddreferencefieldname-typename).
 
 ```js
 module.exports = {
   plugins: [
     {
-      use: '@gridsome/vue-remark',
+      use: '@gridmix/vue-remark',
       options: {
         typeName: 'Documentation',
         baseDir: './docs',
@@ -234,7 +234,7 @@ module.exports = {
 
 #### remark
 
-Custom [Remark](https://remark.js.org/) options. [Read more](https://github.com/gridsome/gridsome/tree/master/packages/transformer-remark#options).
+Custom [Remark](https://remark.js.org/) options. [Read more](https://github.com/gridmix/gridmix/tree/main/packages/transformer-remark#options).
 
 ## Set layout for specific page in front matter
 
