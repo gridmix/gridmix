@@ -1,0 +1,12 @@
+packages:
+  - 'gridmix'
+  - 'playground'
+  - 'packages/*'
+  - 'projects/*'
+allowBuilds:
+  core-js: false
+  es5-ext: false
+  esbuild: true
+  fsevents: true
+  puppeteer: true
+  sharp: true

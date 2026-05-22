@@ -33,12 +33,12 @@
     "vfile": "^4.0.0"
   },
   "peerDependencies": {
-    "gridmix": "0.x"
+    "gridmix": "workspace:^0.x"
   },
   "publishConfig": {
     "access": "public"
   },
   "engines": {
-    "node": "^12.13.0 || ^14.0.0 || >=16.0.0"
+    "node": ">=22.0.0"
   }
 }

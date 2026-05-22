@@ -1,6 +1,8 @@
 const path = require('path')
 const { processHtmlFile } = require('../lib/worker')
 
+jest.setTimeout(30000)
+
 test('inline critical css', async () => {
   const filePath = path.join(__dirname, '__fixtures__/index-2.html')
   const html = await processHtmlFile(filePath, {

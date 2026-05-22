@@ -7,18 +7,14 @@
     "projects/*"
   ],
   "scripts": {
-    "bootstrap": "lerna bootstrap",
     "test:unit": "GRIDMIX_TEST=unit jest --runInBand",
     "test:e2e": "GRIDMIX_TEST=e2e jest --runInBand",
-    "test:pnp": "node scripts/pnp-test.js",
-    "changelog": "node scripts/changelog.js",
     "lint": "eslint \"@(gridmix|packages)/**/*.js\""
   },
   "devDependencies": {
-    "@lerna/conventional-commits": "^3.22.0",
+    "@changesets/cli": "^2.31.0",
     "babel-eslint": "^10.0.1",
     "cheerio": "^1.0.0-rc.2",
-    "conventional-changelog": "^3.1.21",
     "eslint": "^5.2.0",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-node": "^7.0.1",
@@ -26,14 +22,12 @@
     "eslint-plugin-vue-libs": "^3.0.0",
     "execa": "^6.0.0",
     "jest": "^27.4.7",
-    "lerna": "^3.22.0",
     "minimist": "^1.2.0",
     "puppeteer": "^13.1.3",
     "supertest": "^6.2.2"
   },
   "engines": {
-    "node": "^12.13.0 || ^14.0.0 || >=16.0.0",
-    "yarn": "^1.5.1"
+    "node": ">=22.0.0"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "pnpm@11.2.2"
 }
