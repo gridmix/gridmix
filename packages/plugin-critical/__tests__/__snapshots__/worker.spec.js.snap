@@ -5,9 +5,9 @@ exports[`inline critical css 1`] = `
 <html lang=\\"en\\">
 
 <head>
-  <title>Gridsome</title>
+  <title>Gridmix</title>
   <meta charset=\\"utf-8\\" />
-  <meta name=\\"generator\\" content=\\"Gridsome v0.0.1\\" />
+  <meta name=\\"generator\\" content=\\"Gridmix v0.0.1\\" />
   <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1, viewport-fit=cover\\" />
   <style id=\\"___critical-css\\">h1{font-size:6rem}h2{font-size:4rem}</style>
   <link rel=\\"preload\\" href=\\"/css/styles.css\\" as=\\"style\\" onload=\\"this.onload=null;this.rel='stylesheet'\\"><noscript><link rel=\\"stylesheet\\" href=\\"/css/styles.css\\"></noscript>
@@ -31,9 +31,9 @@ exports[`inline critical with publicPath 1`] = `
 <html lang=\\"en\\">
 
 <head>
-  <title>Gridsome</title>
+  <title>Gridmix</title>
   <meta charset=\\"utf-8\\" />
-  <meta name=\\"generator\\" content=\\"Gridsome v0.0.1\\" />
+  <meta name=\\"generator\\" content=\\"Gridmix v0.0.1\\" />
   <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1, viewport-fit=cover\\" />
   <style id=\\"___critical-css\\">h1{font-size:6rem}h3{font-size:2rem}</style>
   <link rel=\\"preload\\" href=\\"/path/to/subdir/css/styles.css\\" as=\\"style\\" onload=\\"this.onload=null;this.rel='stylesheet'\\"><noscript><link rel=\\"stylesheet\\" href=\\"/path/to/subdir/css/styles.css\\"></noscript>
