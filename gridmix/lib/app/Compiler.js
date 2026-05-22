@@ -144,7 +144,7 @@ class Compiler {
     if (config.output.publicPath !== this._app.config.publicPath) {
       throw new Error(
         `Do not modify webpack output.publicPath directly. ` +
-        `Use the "pathPrefix" option in gridsome.config.js instead.`
+        `Use the "pathPrefix" option in gridmix.config.js instead.`
       )
     }
 

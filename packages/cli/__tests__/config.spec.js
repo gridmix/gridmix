@@ -10,5 +10,5 @@ test('warns if unkown package manager', async () => {
   const { stdout } = await runCLI(['config', '--set', 'packageManager', 'asdf'], { cwd: __dirname })
 
   expect(stdout).toMatch('Unsupported package manager: asdf')
-  expect(stdout).toMatch('gridsome config --set packageManager none')
+  expect(stdout).toMatch('gridmix config --set packageManager none')
 })

@@ -43,7 +43,7 @@ class DrupalSource {
   async fetchJsonApiSchema () {
     const { typeName, baseUrl, apiBase, requestConfig } = this.options
 
-    if (!baseUrl || !typeName) throw new Error('Missing required fields in gridsome.config.js')
+    if (!baseUrl || !typeName) throw new Error('Missing required fields in gridmix.config.js')
 
     const fullBaseUrl = baseUrl.endsWith('/')
       ? `${baseUrl}${apiBase}`

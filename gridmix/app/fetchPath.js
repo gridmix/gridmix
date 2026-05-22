@@ -1,6 +1,6 @@
 import fetch from './fetch'
 import router from './router'
-import { NOT_FOUND_NAME } from '#gridsome/constants'
+import { NOT_FOUND_NAME } from '#gridmix/constants'
 
 import {
   getResults,

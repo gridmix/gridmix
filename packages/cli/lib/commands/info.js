@@ -6,8 +6,8 @@ module.exports = async () => {
       System: ['OS', 'CPU'],
       Binaries: ['Node', 'Yarn', 'npm'],
       Browsers: ['Chrome', 'Edge', 'Firefox', 'Safari'],
-      npmPackages: '?(@)gridsome{-*,/*,}',
-      npmGlobalPackages: ['@gridsome/cli']
+      npmPackages: '?(@)gridmix{-*,/*,}',
+      npmGlobalPackages: ['@gridmix/cli']
     })
   console.log(data)
 }

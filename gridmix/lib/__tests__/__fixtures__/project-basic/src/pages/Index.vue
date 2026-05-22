@@ -1,6 +1,6 @@
 <template>
   <Layout class="home">
-    <h1>Gridsome</h1>
+    <h1>Gridmix</h1>
     <h2 class="meta-data">{{ $page.metadata.myTest.value }}</h2>
 
     <g-link href="http://outsidelink1.com">External Links</g-link>
@@ -78,7 +78,7 @@ export default {
       TEST_1,
       TEST_2,
       TEST_3,
-      GRIDSOME_PROD_VARIABLE: process.env.GRIDSOME_PROD_VARIABLE,
+      GRIDMIX_PROD_VARIABLE: process.env.GRIDMIX_PROD_VARIABLE,
       PROD_VARIABLE: 'process' in global && process.env.SECRET_VALUE
     }
   },

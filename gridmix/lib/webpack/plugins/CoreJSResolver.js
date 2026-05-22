@@ -23,7 +23,7 @@ class CoreJSResolver {
           return resolver.doResolve(
             target,
             { ...req, request: require.resolve(request) },
-            `resolve gridsome's core-js package`,
+            `resolve gridmix's core-js package`,
             resolveContext,
             callback
           )

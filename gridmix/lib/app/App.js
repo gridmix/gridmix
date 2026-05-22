@@ -10,7 +10,7 @@ const { BOOTSTRAP_FULL } = require('../utils/constants')
 
 class App {
   constructor (context, options = {}) {
-    process.GRIDSOME = this
+    process.GRIDMIX = this
 
     this.clients = {}
     this.context = context
@@ -31,7 +31,7 @@ class App {
   async bootstrap (phase = BOOTSTRAP_FULL) {
     const timer = hirestime()
 
-    info(`Gridsome v${version}\n`)
+    info(`Gridmix v${version}\n`)
 
     await this.init()
     await this.hooks.beforeBootstrap.promise()

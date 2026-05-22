@@ -181,5 +181,5 @@ exports.logAllWarnings = context => {
   logUtil(renderedColumns)
 }
 
-exports.deprecate = exports.createDeprecator('gridsome')
+exports.deprecate = exports.createDeprecator('gridmix')
 

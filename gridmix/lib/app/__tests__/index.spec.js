@@ -24,7 +24,7 @@ test('setup basic config', async () => {
   expect(config.publicPath).toEqual('/')
   expect(config.runtimeCompiler).toEqual(false)
   expect(config.siteUrl).toEqual('https://www.gridmix.github.io')
-  expect(config.siteName).toEqual('Gridsome')
+  expect(config.siteName).toEqual('Gridmix')
   expect(config.titleTemplate).toEqual('%s | Test')
   expect(config.icon.favicon).toHaveProperty('sizes')
   expect(config.icon.favicon).toHaveProperty('src', './src/favicon.png')
@@ -55,7 +55,7 @@ test('load env variables by NODE_ENV', async () => {
 
   await loadConfig(context)
 
-  expect(process.env.GRIDSOME_PROD_VARIABLE).toEqual('PROD_1')
+  expect(process.env.GRIDMIX_PROD_VARIABLE).toEqual('PROD_1')
   expect(process.env.PROD_VARIABLE).toEqual('PROD_2')
 })
 
@@ -268,7 +268,7 @@ test('setup webpack client config', async () => {
   expect(config.entry.app[0]).toMatch(/entry\.client\.js$/)
   expect(config.resolve.alias['~']).toEqual(path.join(context, 'src'))
   expect(config.resolve.alias['@']).toEqual(path.join(context, 'src'))
-  expect(config.resolve.alias['gridsome$']).toEqual(path.resolve(__dirname, '../../../app/index.js'))
+  expect(config.resolve.alias['gridmix$']).toEqual(path.resolve(__dirname, '../../../app/index.js'))
 
   const chain = await app.compiler.resolveChainableWebpackConfig()
   const postcss = chain.module.rule('postcss').oneOf('normal').use('postcss-loader').toConfig()
@@ -288,7 +288,7 @@ test('setup webpack server config', async () => {
   expect(config.entry.app[0]).toMatch(/entry\.server\.js$/)
   expect(config.resolve.alias['~']).toEqual(path.join(context, 'src'))
   expect(config.resolve.alias['@']).toEqual(path.join(context, 'src'))
-  expect(config.resolve.alias['gridsome$']).toEqual(path.resolve(__dirname, '../../../app/index.js'))
+  expect(config.resolve.alias['gridmix$']).toEqual(path.resolve(__dirname, '../../../app/index.js'))
 })
 
 test('setup style loader options', async () => {

@@ -87,16 +87,16 @@ class VueRemark {
 
   constructor (api, options) {
     if (!options.baseDir) {
-      throw new Error(`@gridsome/vue-remark requires the 'baseDir' option.`)
+      throw new Error(`@gridmix/vue-remark requires the 'baseDir' option.`)
     }
 
     if (!options.typeName) {
-      throw new Error(`@gridsome/vue-remark requires the 'typeName' option.`)
+      throw new Error(`@gridmix/vue-remark requires the 'typeName' option.`)
     }
 
     if (api.config.templates[options.typeName]) {
       throw new Error(
-        `@gridsome/vue-remark does not work with a template. ` +
+        `@gridmix/vue-remark does not work with a template. ` +
         `Remove "${options.typeName}" from the global templates config ` +
         `and use the "template" option for the plugin instead.`
       )

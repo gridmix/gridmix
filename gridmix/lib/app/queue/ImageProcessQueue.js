@@ -22,7 +22,7 @@ class ImageProcessQueue {
   async add (filePath, options = {}) {
     const asset = await this.preProcess(filePath, options)
 
-    if (process.env.GRIDSOME_MODE === 'serve') {
+    if (process.env.GRIDMIX_MODE === 'serve') {
       return asset
     }
 
@@ -119,7 +119,7 @@ class ImageProcessQueue {
     const cacheKey = genHash(filePath + hash + JSON.stringify(options)).substr(0, 7)
 
     const createDestPath = (filename, imageOptions) => {
-      if (process.env.GRIDSOME_MODE === 'serve') {
+      if (process.env.GRIDMIX_MODE === 'serve') {
         const key = process.env.GRIDMIX_TEST ? 'test' : cacheKey
         const query = '?' + createOptionsQuery(imageOptions.concat({ key: 'key', value: key }))
         return path.join('/', imagesDir, forwardSlash(relPath)) + query

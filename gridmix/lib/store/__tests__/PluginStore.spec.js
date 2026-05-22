@@ -591,7 +591,7 @@ test('resolve file paths', async () => {
     filepath: 'dir/to/image.png',
     url: 'https://example.com/image.jpg',
     url2: '//example.com/image.jpg',
-    url3: 'git@github.com:gridsome/gridsome.git',
+    url3: 'git@github.com:gridmix/gridmix.git',
     url4: 'ftp://ftp.example.com',
     email: 'email@example.com',
     email2: 'mailto:email@example.me',
@@ -609,7 +609,7 @@ test('resolve file paths', async () => {
   expect(node.filepath).toEqual('dir/to/image.png')
   expect(node.url).toEqual('https://example.com/image.jpg')
   expect(node.url2).toEqual('//example.com/image.jpg')
-  expect(node.url3).toEqual('git@github.com:gridsome/gridsome.git')
+  expect(node.url3).toEqual('git@github.com:gridmix/gridmix.git')
   expect(node.url4).toEqual('ftp://ftp.example.com')
   expect(node.email).toEqual('email@example.com')
   expect(node.email2).toEqual('mailto:email@example.me')

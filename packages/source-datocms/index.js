@@ -53,7 +53,7 @@ class DatoCmsSource {
 
     const clientHeaders = {
       'X-Reason': 'dump',
-      'X-SSG': 'gridsome'
+      'X-SSG': 'gridmix'
     }
 
     const client = apiUrl

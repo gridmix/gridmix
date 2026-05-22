@@ -1,7 +1,7 @@
 const chalk = require('chalk')
 const Configstore = require('configstore')
 
-const config = new Configstore('gridsome', {}, {
+const config = new Configstore('gridmix', {}, {
   globalConfigPath: true
 })
 
@@ -54,7 +54,7 @@ function setPackageManager (packageManager) {
       console.log(`  Supported package managers are: ${available.map(value => chalk.bold(value)).join(', ')}`),
       console.log(),
       console.log(`  Disable auto-installing by running:`),
-      console.log(`  $ ${chalk.green.bold('gridsome config --set packageManager none')}`),
+      console.log(`  $ ${chalk.green.bold('gridmix config --set packageManager none')}`),
       console.log()
     )
   }
@@ -64,6 +64,6 @@ function setPackageManager (packageManager) {
   if (packageManager !== 'none') {
     console.log(`From now on, ${chalk.bold(packageManager)} will install dependencies automatically.`)
   } else {
-    console.log(`Gridsome will not install dependencies automatically.`)
+    console.log(`Gridmix will not install dependencies automatically.`)
   }
 }

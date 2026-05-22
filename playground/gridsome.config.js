@@ -1,5 +1,5 @@
 module.exports = {
-  siteName: 'Gridsome',
+  siteName: 'Gridmix',
   plugins: [],
   templates: {
     Post: '/posts/:slug'

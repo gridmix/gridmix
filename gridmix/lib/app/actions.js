@@ -124,7 +124,7 @@ function createSchemaActions (api, app) {
   const { GraphQLJSON } = require('graphql-compose')
   const graphql = require('graphql')
 
-  // TODO: these should just be imported from gridsome/graphql instead
+  // TODO: these should just be imported from gridmix/graphql instead
   const graphqlTypes = pick(graphql, [
     // Definitions
     'GraphQLSchema',

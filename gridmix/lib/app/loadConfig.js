@@ -56,8 +56,8 @@ module.exports = async (context, options = {}) => {
     }
   }
 
-  const configEntryPath = tryResolve(context, './gridsome.config')
-  const serverEntryPath = tryResolve(context, './gridsome.server')
+  const configEntryPath = tryResolve(context, './gridmix.config')
+  const serverEntryPath = tryResolve(context, './gridmix.server')
   const isTS = string => /\.ts$/.test(String(string))
 
   if ([configEntryPath, serverEntryPath].filter(isTS).length) {
@@ -126,11 +126,11 @@ module.exports = async (context, options = {}) => {
   if (localConfig._tmpDir) {
     config.cacheDir = path.resolve(context, localConfig._tmpDir)
   } else if (process.versions.pnp === '1') {
-    config.cacheDir = resolve('.pnp/.cache/gridsome')
+    config.cacheDir = resolve('.pnp/.cache/gridmix')
   } else if (process.versions.pnp === '3') {
-    config.cacheDir = resolve('.yarn/.cache/gridsome')
+    config.cacheDir = resolve('.yarn/.cache/gridmix')
   } else {
-    config.cacheDir = resolve('node_modules/.cache/gridsome')
+    config.cacheDir = resolve('node_modules/.cache/gridmix')
   }
 
   config.appCacheDir = path.join(config.cacheDir, 'app')
@@ -257,10 +257,10 @@ function resolvePkg (context) {
   })
 
   if (
-    !dependencies.includes('gridsome') &&
+    !dependencies.includes('gridmix') &&
     !process.env.GRIDMIX_TEST
   ) {
-    throw new Error('This is not a Gridsome project.')
+    throw new Error('This is not a Gridmix project.')
   }
 
   return pkg
@@ -455,7 +455,7 @@ function resolvePluginEntries (id, context) {
   } else if (id.startsWith('~/')) {
     dirName = path.join(context, id.replace(/^~\//, ''))
     deprecate(`The ~ alias for plugin paths is deprecated. Use a relative path instead.`, {
-      customCaller: ['gridsome.config.js']
+      customCaller: ['gridmix.config.js']
     })
   } else if (id.startsWith('.')) {
     dirName = resolve(context, id)
@@ -480,8 +480,8 @@ function resolvePluginEntries (id, context) {
   }
 
   return Object.freeze({
-    clientEntry: entryPath('gridsome.client.js'),
-    serverEntry: entryPath('gridsome.server.js') || entryPath('index.js')
+    clientEntry: entryPath('gridmix.client.js'),
+    serverEntry: entryPath('gridmix.server.js') || entryPath('index.js')
   })
 }
 
@@ -504,10 +504,10 @@ function resolveTransformers (pkg, config) {
 
     if (!matches) continue
 
-    // TODO: transformers looks for base config in gridsome.config.js
-    // - @gridsome/transformer-remark -> config.transformers.remark
-    // - @foo/gridsome-transformer-remark -> config.transformers.remark
-    // - gridsome-transformer-foo-bar -> config.transformers.fooBar
+    // TODO: transformers looks for base config in gridmix.config.js
+    // - @gridmix/transformer-remark -> config.transformers.remark
+    // - @foo/gridmix-transformer-remark -> config.transformers.remark
+    // - gridmix-transformer-foo-bar -> config.transformers.fooBar
 
     const [, suffix] = matches
     const name = camelCase(suffix)
@@ -541,7 +541,7 @@ function normalizeImages (config = {}) {
       ...config.placeholder
     }
     deprecate(`The images.defaultBlur option has moved to images.placeholder.defaultBlur.`, {
-      customCaller: ['gridsome.config.js']
+      customCaller: ['gridmix.config.js']
     })
   }
 

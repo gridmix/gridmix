@@ -3,13 +3,13 @@ const resolveCwd = require('resolve-cwd')
 
 module.exports = function resolveVersions (pkgPath) {
   const cliVersion = require('../../package.json').version
-  const versions = [`@gridsome/cli v${cliVersion}`]
+  const versions = [`@gridmix/cli v${cliVersion}`]
 
   if (pkgPath) {
     try {
       versions.push(...resolveProjectVersions(pkgPath))
     } catch (err) {
-      versions.push('\nFailed to read installed gridsome version:')
+      versions.push('\nFailed to read installed gridmix version:')
       versions.push(chalk.red(err.message))
     }
   }
@@ -24,13 +24,13 @@ function resolveProjectVersions (pkgPath) {
   const { devDependencies = {}, dependencies = {}} = projectPkgJson
   const packages = { ...devDependencies, ...dependencies }
 
-  if (packages.gridsome) {
-    const version = resolvePackageVersion('gridsome')
-    if (version) versions.push(`gridsome v${version}`)
+  if (packages.gridmix) {
+    const version = resolvePackageVersion('gridmix')
+    if (version) versions.push(`gridmix v${version}`)
   }
 
   // for (const name in packages) {
-  //   if (/^@?gridsome[-|\/]/.test(name)) {
+  //   if (/^@?gridmix[-|\/]/.test(name)) {
   //     const version = resolvePackageVersion(name)
   //     if (version) versions.push(`- ${name} v${version}`)
   //   }

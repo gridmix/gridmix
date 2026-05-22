@@ -2,7 +2,7 @@ const path = require('path')
 
 // Override the compiler resolver in `vue-loader` to make pnpm work.
 // Because `vue/compiler-sfc` and `vue-template-compiler` etc. are
-// dependencies of `gridsome` instead of the project.
+// dependencies of `gridmix` instead of the project.
 const compiler = require('vue-loader/lib/compiler')
 const orgResolveCompiler = compiler.resolveCompiler
 compiler.resolveCompiler = (ctx, loaderContext) => {
@@ -21,8 +21,8 @@ const CSSExtractPlugin = require('mini-css-extract-plugin')
 
 const resolve = (p, c) => path.resolve(c || __dirname, p)
 const resolveExists = (path) => fs.existsSync(path) ? path : false
-const gridsomeEnv = () => {
-  return pick(process.env, Object.keys(process.env).filter(key => key.startsWith('GRIDSOME_')))
+const gridmixEnv = () => {
+  return pick(process.env, Object.keys(process.env).filter(key => key.startsWith('GRIDMIX_')))
 }
 const hasCoreJS = (root) => {
   const pkgPath = path.join(root, 'package.json')
@@ -56,8 +56,8 @@ module.exports = (app, { isProd, isServer }) => {
     .alias
     .set('~', resolve('src', app.context))
     .set('@', resolve('src', app.context))
-    .set('#gridsome', projectConfig.appCacheDir)
-    .set('gridsome$', path.resolve(projectConfig.appPath, 'index.js'))
+    .set('#gridmix', projectConfig.appCacheDir)
+    .set('gridmix$', path.resolve(projectConfig.appPath, 'index.js'))
     .end()
     .extensions
     .merge(['.js', '.vue'])
@@ -113,7 +113,7 @@ module.exports = (app, { isProd, isServer }) => {
   ;['js', 'ts'].forEach((loader) => {
     const testRE = new RegExp(`.${loader}x?$`)
     const vueRE = new RegExp(`.vue.${loader}x?$`)
-    const clientRE = new RegExp(`gridsome.client.${loader}$`)
+    const clientRE = new RegExp(`gridmix.client.${loader}$`)
 
     const rule = config.module.rule(loader)
       .test(testRE)
@@ -345,9 +345,9 @@ module.exports = (app, { isProd, isServer }) => {
       'process.isClient': !isServer,
       'process.isServer': isServer,
       'process.isProduction': process.env.NODE_ENV === 'production',
-      'process.isStatic': process.env.GRIDSOME_MODE === 'static',
-      // add environment variables starting with GRIDSOME_ to process.env
-      ...Object.entries(gridsomeEnv()).reduce((acc, [key, value]) => {
+      'process.isStatic': process.env.GRIDMIX_MODE === 'static',
+      // add environment variables starting with GRIDMIX_ to process.env
+      ...Object.entries(gridmixEnv()).reduce((acc, [key, value]) => {
         acc[`process.env.${key}`] = ['boolean', 'number'].includes(typeof value) ? value : JSON.stringify(value)
         return acc
       }, {})
@@ -384,10 +384,10 @@ module.exports = (app, { isProd, isServer }) => {
         type: 'filesystem',
         version: hash(
           app.compiler.hooks.cacheIdentifier.call({
-            'gridsome': require('../../package.json').version,
+            'gridmix': require('../../package.json').version,
             'vue-loader': require('vue-loader/package.json').version,
             'context': app.context,
-            'env': gridsomeEnv()
+            'env': gridmixEnv()
           })
         ),
         buildDependencies: {

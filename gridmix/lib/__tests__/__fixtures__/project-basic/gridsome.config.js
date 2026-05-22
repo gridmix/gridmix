@@ -1,5 +1,5 @@
 module.exports = {
-  siteName: 'Gridsome',
+  siteName: 'Gridmix',
   siteUrl: 'https://www.gridmix.github.io',
   titleTemplate: '%s | Test',
 

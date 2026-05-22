@@ -17,7 +17,7 @@ class FileProcessQueue {
   async add (filePath, options = {}) {
     const asset = await this.preProcess(filePath, options)
 
-    if (process.env.GRIDSOME_MODE === 'serve') {
+    if (process.env.GRIDMIX_MODE === 'serve') {
       return asset
     }
 
@@ -42,7 +42,7 @@ class FileProcessQueue {
 
     let filename = ''
 
-    if (process.env.GRIDSOME_MODE === 'serve') {
+    if (process.env.GRIDMIX_MODE === 'serve') {
       filename = forwardSlash(relPath)
     } else {
       const { name, ext } = path.parse(relPath)
@@ -53,7 +53,7 @@ class FileProcessQueue {
     }
 
     const src = forwardSlash(path.join(pathPrefix || '/', filesDir, filename))
-    const destPath = process.env.GRIDSOME_MODE !== 'serve'
+    const destPath = process.env.GRIDMIX_MODE !== 'serve'
       ? path.join(this.config.filesDir, filename)
       : undefined
 

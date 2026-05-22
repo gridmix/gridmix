@@ -1,4 +1,4 @@
-import config from '#gridsome/config'
+import config from '#gridmix/config'
 
 const re = new RegExp(`^${config.pathPrefix}/?`)
 

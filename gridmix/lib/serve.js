@@ -11,7 +11,7 @@ const compileAssets = require('./webpack/compileAssets')
 
 module.exports = async (context, args) => {
   process.env.NODE_ENV = 'production'
-  process.env.GRIDSOME_MODE = 'serve'
+  process.env.GRIDMIX_MODE = 'serve'
 
   const app = await createApp(context, { args })
   const port = await resolvePort(app.config.port)

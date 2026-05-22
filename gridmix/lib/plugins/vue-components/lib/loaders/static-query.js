@@ -8,7 +8,7 @@ const { deprecate } = require('../../../../utils/deprecate')
 const cache = new LRU({ max: 1000 })
 
 module.exports = async function (source, map) {
-  const { config, store, schema } = process.GRIDSOME
+  const { config, store, schema } = process.GRIDMIX
   const resourcePath = this.resourcePath
 
   this.cacheable(false)

@@ -24,7 +24,7 @@ function corePlugin (api, config) {
   })
 
   // Flags the `/404` page to detect it in the router guard.
-  api._app.pages.hooks.createPage.tap('Gridsome', (options) => {
+  api._app.pages.hooks.createPage.tap('Gridmix', (options) => {
     if (options.path === '/404') {
       const context = { ...options.context, __notFound: true }
       return { ...options, context }
@@ -32,7 +32,7 @@ function corePlugin (api, config) {
     return options
   })
 
-  api._app.pages.hooks.createRoute.tap('Gridsome', (options) => {
+  api._app.pages.hooks.createRoute.tap('Gridmix', (options) => {
     if (/\/404\/?/.test(options.path)) {
       options.name = NOT_FOUND_NAME
     }
@@ -40,7 +40,7 @@ function corePlugin (api, config) {
     return options
   })
 
-  api._app.hooks.renderQueue.tap('Gridsome', (renderQueue) => {
+  api._app.hooks.renderQueue.tap('Gridmix', (renderQueue) => {
     const { outputDir, dataDir, pathPrefix } = config
 
     for (const entry of renderQueue) {

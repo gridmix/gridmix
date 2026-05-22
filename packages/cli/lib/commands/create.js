@@ -16,8 +16,8 @@ module.exports = async (name, starter = '') => {
   const dir = absolutePath(name)
   const projectName = path.basename(dir)
   const commandName = {
-    develop: 'gridsome develop',
-    build: 'gridsome build'
+    develop: 'gridmix develop',
+    build: 'gridmix build'
   }
 
   if (fs.existsSync(dir) && fs.readdirSync(dir).length) {
@@ -95,7 +95,7 @@ module.exports = async (name, starter = '') => {
       default: false,
       when: (answers) => answers.packageManager,
       message: (answers) => answers.packageManager !== 'none'
-        ? `Do you want to use ${answers.packageManager} for all future Gridsome projects?`
+        ? `Do you want to use ${answers.packageManager} for all future Gridmix projects?`
         : 'Do you always want to install dependencies manually?',
       prefix: ' '
     }
@@ -108,7 +108,7 @@ module.exports = async (name, starter = '') => {
   if (starter) {
     const officialTemplates = starters
       // Official starter kit entries
-      .filter(({ author }) => author === 'gridsome')
+      .filter(({ author }) => author === 'gridmix')
       // Extract the starter kit name
       .map(({ repo }) => repo.split('-').pop())
 
@@ -128,9 +128,9 @@ module.exports = async (name, starter = '') => {
       config.set('packageManager', answers.packageManager)
       console.log('')
       console.log(
-        `  - Run ${chalk.green(chalk.bold('gridsome config --set packageManager yarn'))} to install\n` +
+        `  - Run ${chalk.green(chalk.bold('gridmix config --set packageManager yarn'))} to install\n` +
         `    with Yarn or other supported package managers by default.\n` +
-        `  - Run ${chalk.green(chalk.bold('gridsome config --delete packageManager'))} to clear\n` +
+        `  - Run ${chalk.green(chalk.bold('gridmix config --delete packageManager'))} to clear\n` +
         `    the preferred package manager.\n`
       )
     }
@@ -175,7 +175,7 @@ module.exports = async (name, starter = '') => {
   const context = await tasks.run({ didInstall: false })
 
   console.log()
-  console.log('A new Gridsome project was created successfully!')
+  console.log('A new Gridmix project was created successfully!')
   console.log('Follow these steps to get started:')
   console.log()
   if (process.cwd() !== dir) {

@@ -5,7 +5,7 @@ const validate = require('../validate')
 const cache = new LRU({ max: 1000 })
 
 module.exports = function (source, map) {
-  const { schema } = process.GRIDSOME
+  const { schema } = process.GRIDMIX
   const resourcePath = this.resourcePath
 
   // Must have a default export or else webpack will randomly

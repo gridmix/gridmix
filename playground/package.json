@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "gridsome develop",
-    "build": "gridsome build",
-    "explore": "gridsome explore"
+    "dev": "gridmix develop",
+    "build": "gridmix build",
+    "explore": "gridmix explore"
   },
   "dependencies": {
-    "gridsome": "^0.7.0"
+    "gridmix": "^0.7.0"
   }
 }

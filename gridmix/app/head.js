@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Meta from 'vue-meta'
-import icons from '#gridsome/icons.js'
-import config from '#gridsome/config.js'
+import icons from '#gridmix/icons.js'
+import config from '#gridmix/config.js'
 
 Vue.use(Meta, {
   attribute: 'data-vue-tag',
@@ -18,7 +18,7 @@ const head = {
   },
   meta: [
     { charset: 'utf-8' },
-    { name: 'generator', content: `Gridsome v${config.version}` },
+    { name: 'generator', content: `Gridmix v${config.version}` },
     { key: 'viewport', name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
 
     // do not convert telephone numbers

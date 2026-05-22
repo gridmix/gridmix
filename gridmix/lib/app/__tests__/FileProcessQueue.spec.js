@@ -39,13 +39,13 @@ test('encode src', async () => {
 test('encode src in serve mode', async () => {
   const filePath = path.resolve(context, 'assets/folder name/dummy document.pdf')
   const queue = new AssetsQueue({ context, config: baseconfig })
-  const mode = process.env.GRIDSOME_MODE
+  const mode = process.env.GRIDMIX_MODE
 
-  process.env.GRIDSOME_MODE = 'serve'
+  process.env.GRIDMIX_MODE = 'serve'
 
   const result = await queue.add(filePath)
 
-  process.env.GRIDSOME_MODE = mode
+  process.env.GRIDMIX_MODE = mode
 
   expect(result.destPath).toBeUndefined()
   expect(result.filePath).toEqual(filePath)

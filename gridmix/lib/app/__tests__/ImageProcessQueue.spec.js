@@ -69,13 +69,13 @@ test('encode src', async () => {
 test('encode src in serve mode', async () => {
   const filePath = path.resolve(context, 'assets/folder name/350 250.png')
   const queue = new AssetsQueue({ context, config: baseconfig })
-  const mode = process.env.GRIDSOME_MODE
+  const mode = process.env.GRIDMIX_MODE
 
-  process.env.GRIDSOME_MODE = 'serve'
+  process.env.GRIDMIX_MODE = 'serve'
 
   const result = await queue.add(filePath)
 
-  process.env.GRIDSOME_MODE = mode
+  process.env.GRIDMIX_MODE = mode
 
   expect(result.filePath).toEqual(filePath)
   expect(result.src).toEqual('/assets/static/assets/folder%20name/350%20250.png?width=350&key=test')
@@ -403,14 +403,14 @@ test('get url for server in serve mode', async () => {
   const absPath = path.resolve(context, relPath)
   const config = { ...baseconfig, maxImageWidth: 500 }
   const queue = new AssetsQueue({ config, context: context })
-  const mode = process.env.GRIDSOME_MODE
+  const mode = process.env.GRIDMIX_MODE
 
-  process.env.GRIDSOME_MODE = 'serve'
+  process.env.GRIDMIX_MODE = 'serve'
 
   const result = await queue.add(absPath)
   const result2 = await queue.add(absPath, { quality: 50, width: 200 })
 
-  process.env.GRIDSOME_MODE = mode
+  process.env.GRIDMIX_MODE = mode
 
   expect(queue.images.queue).toHaveLength(0)
   expect(result.src).toEqual('/assets/static/assets/1000x600.png?width=500&key=test')

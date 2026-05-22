@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import routes from '#gridsome/routes.js'
+import routes from '#gridmix/routes.js'
 
 Vue.use(Router)
 

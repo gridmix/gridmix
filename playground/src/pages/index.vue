@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useMetaInfo, usePageQuery } from 'gridsome'
+import { useMetaInfo, usePageQuery } from 'gridmix'
 
 const data = usePageQuery()
 

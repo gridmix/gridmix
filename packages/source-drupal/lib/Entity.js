@@ -8,7 +8,7 @@ class Entity {
     this.actions = actions
 
     this.entityType = entityType
-    this.collection // gridsome store api addCollection
+    this.collection // gridmix store api addCollection
     this.url = url // url to fetch, pulled from apiSchema
     this.response = [] // response from this.fetchData
   }

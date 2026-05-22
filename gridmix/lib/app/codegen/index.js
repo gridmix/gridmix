@@ -33,7 +33,7 @@ class Codegen {
 
     app.hooks.bootstrap.tapPromise(
       {
-        name: 'GridsomeCodegen',
+        name: 'GridmixCodegen',
         label: 'Generate temporary code',
         phase: BOOTSTRAP_FULL
       },

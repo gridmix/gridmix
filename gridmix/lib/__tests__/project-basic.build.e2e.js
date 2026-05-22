@@ -59,7 +59,7 @@ test('build basic project', () => {
 
 test('set title in custom App.vue', () => {
   const $home = load('dist/index.html')
-  expect($home('head > title').text()).toEqual('Gridsome [basic] | Test')
+  expect($home('head > title').text()).toEqual('Gridmix [basic] | Test')
 })
 
 test('render custom html template', () => {
@@ -195,7 +195,7 @@ test('compile scripts correctly', () => {
   expect(homeJS).not.toMatch('Component =>') // page-query
 
   // env variables
-  expect(homeJS).toMatch('GRIDSOME_PROD_VARIABLE: "PROD_1"')
+  expect(homeJS).toMatch('GRIDMIX_PROD_VARIABLE: "PROD_1"')
   expect(homeJS).toMatch('process.env.SECRET_VALUE')
   expect(homeJS).not.toMatch('secret_value')
 })
@@ -299,8 +299,8 @@ test('navigate to /custom-route/foo/bar', async () => {
   const title = await page.$eval('.custom-route-title', el => el.textContent)
   const heading = await page.$eval('.custom-child-route-heading', el => el.textContent)
 
-  expect(trim(title)).toEqual('Gridsome')
-  expect(trim(heading)).toEqual('Gridsome')
+  expect(trim(title)).toEqual('Gridmix')
+  expect(trim(heading)).toEqual('Gridmix')
 })
 
 test('navigate to /', async () => {

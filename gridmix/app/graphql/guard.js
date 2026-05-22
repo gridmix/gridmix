@@ -1,6 +1,6 @@
 import fetch from '../fetch'
-import config from '#gridsome/config'
-import { NOT_FOUND_NAME } from '#gridsome/constants'
+import config from '#gridmix/config'
+import { NOT_FOUND_NAME } from '#gridmix/constants'
 import { getResults, setResults, formatError } from './shared'
 
 export default (to, from, next) => {

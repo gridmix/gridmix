@@ -7,7 +7,7 @@ const { prepareUrls } = require('./server/utils')
 
 module.exports = async (context, args) => {
   process.env.NODE_ENV = 'development'
-  process.env.GRIDSOME_MODE = 'serve'
+  process.env.GRIDMIX_MODE = 'serve'
 
   const app = await createApp(context, { args }, BOOTSTRAP_PAGES)
   const port = await resolvePort(app.config.port)

@@ -22,4 +22,4 @@ What happened.
 
 ### Environment
 
-Paste the information here as shown by `gridsome info`
+Paste the information here as shown by `gridmix info`

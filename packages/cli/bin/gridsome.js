@@ -28,13 +28,13 @@ program
   })
 
 try {
-  const commandsPath = resolveCwd.silent('gridsome/commands')
-  const gridsomePath = resolveCwd.silent('gridsome')
+  const commandsPath = resolveCwd.silent('gridmix/commands')
+  const gridmixPath = resolveCwd.silent('gridmix')
 
   if (commandsPath) {
     require(commandsPath)({ context, program })
-  } else if (gridsomePath) {
-    require(gridsomePath)({ context, program })
+  } else if (gridmixPath) {
+    require(gridmixPath)({ context, program })
   }
 } catch (err) {
   console.log(err)
@@ -62,7 +62,7 @@ program
 
 // show a warning if the command does not exist
 program.arguments('<command>').action(async command => {
-  const { isGridsomeProject } = require('../lib/utils')
+  const { isGridmixProject } = require('../lib/utils')
   const availableCommands = program.commands.map(cmd => cmd._name)
   const suggestion = availableCommands.find(cmd => {
     const steps = distance(cmd, command)
@@ -71,7 +71,7 @@ program.arguments('<command>').action(async command => {
 
   console.log(chalk.red(`Unknown command ${chalk.bold(command)}`))
 
-  if (isGridsomeProject(pkgPath) && !suggestion) {
+  if (isGridmixProject(pkgPath) && !suggestion) {
     console.log()
     console.log()
     program.outputHelp()
@@ -83,7 +83,7 @@ program.arguments('<command>').action(async command => {
 
 program.on('--help', () => {
   console.log()
-  console.log(`  Run ${chalk.cyan('gridsome <command> --help')} for detailed usage of given command.`)
+  console.log(`  Run ${chalk.cyan('gridmix <command> --help')} for detailed usage of given command.`)
   console.log()
 })
 

@@ -1,6 +1,6 @@
 import router from '../router'
-import config from '#gridsome/config'
-import { NOT_FOUND_NAME } from '#gridsome/constants'
+import config from '#gridmix/config'
+import { NOT_FOUND_NAME } from '#gridmix/constants'
 import { stripPathPrefix } from '../utils/helpers'
 
 export function onCatchLink(event) {

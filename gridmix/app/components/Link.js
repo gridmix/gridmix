@@ -1,4 +1,4 @@
-import config from '#gridsome/config.js'
+import config from '#gridmix/config.js'
 import { normalizePath, isMailtoLink, isTelLink } from '../utils/helpers'
 
 // @vue/component

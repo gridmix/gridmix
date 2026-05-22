@@ -11,7 +11,7 @@ const { log, info, writeLine } = require('./utils/log')
 
 module.exports = async (context, args) => {
   process.env.NODE_ENV = 'production'
-  process.env.GRIDSOME_MODE = 'static'
+  process.env.GRIDMIX_MODE = 'static'
 
   const buildTime = hirestime()
   const createApp = require('./app')
@@ -25,7 +25,7 @@ module.exports = async (context, args) => {
   }
 
   const stats = await runWebpack(app)
-  const hashString = config.cacheBusting ? stats.hash : 'gridsome'
+  const hashString = config.cacheBusting ? stats.hash : 'gridmix'
 
   const queue = createRenderQueue(app)
   const redirects = app.hooks.redirects.call([], queue)

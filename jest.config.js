@@ -6,7 +6,7 @@ module.exports = {
     `**/__tests__/**/*.${GRIDMIX_TEST === 'e2e' ? 'e2e' : 'spec'}.js`
   ],
   collectCoverageFrom: [
-    'gridsome/lib/**/*.js'
+    'gridmix/lib/**/*.js'
   ],
   testPathIgnorePatterns: [
     '/__fixtures__/',

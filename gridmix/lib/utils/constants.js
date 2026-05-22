@@ -16,7 +16,7 @@ module.exports = {
   BOOTSTRAP_FULL: Number.MAX_SAFE_INTEGER,
 
   internalRE: /^internal:\/\//,
-  transformerRE: /(?:^@?gridsome[/-]|\/)transformer-([\w-]+)/,
+  transformerRE: /(?:^@?gridmix[/-]|\/)transformer-([\w-]+)/,
 
   NODE_FIELDS: ['$uid', '$loki', 'internal', 'id'],
 

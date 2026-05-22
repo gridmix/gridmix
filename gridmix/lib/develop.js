@@ -7,7 +7,7 @@ const { forwardSlash } = require('./utils')
 
 module.exports = async (context, args) => {
   process.env.NODE_ENV = 'development'
-  process.env.GRIDSOME_MODE = 'serve'
+  process.env.GRIDMIX_MODE = 'serve'
 
   const createApp = require('./app')
   const app = await createApp(context, { args, mode: 'development' })
@@ -18,7 +18,7 @@ module.exports = async (context, args) => {
   const server = await createDevServer(app, compiler)
   let isDone = false
 
-  compiler.hooks.infrastructureLog.tap('gridsome', (name, type, messages) => {
+  compiler.hooks.infrastructureLog.tap('gridmix', (name, type, messages) => {
     if (name !== 'webpack.Progress' && !isDone) {
       return false // Prevents logging until webpack is ready.
     }
@@ -49,7 +49,7 @@ module.exports = async (context, args) => {
     }
   })
 
-  compiler.hooks.done.tap('gridsome', stats => {
+  compiler.hooks.done.tap('gridmix', stats => {
     if (stats.hasErrors()) {
       return
     }
@@ -120,17 +120,17 @@ function setupGraphQLMiddleware(middlewares, app) {
   const index = middlewares.findIndex((m) => m.name === 'connect-history-api-fallback')
 
   middlewares.splice(index, 0, {
-    name: 'gridsome-explore',
+    name: 'gridmix-explore',
     path: '/___explore',
     middleware: playground({
       endpoint: '/___graphql',
-      title: 'Gridsome GraphQL Explorer',
+      title: 'Gridmix GraphQL Explorer',
       faviconUrl: 'https://avatars0.githubusercontent.com/u/17981963?s=200&v=4'
     })
   })
 
   middlewares.splice(index, 0, {
-    name: 'gridsome-graphql',
+    name: 'gridmix-graphql',
     path: '/___graphql',
     middleware: [
       express.json(),
@@ -167,7 +167,7 @@ function setupAssetsMiddleware(middlewares, app) {
   const assetsRE = new RegExp(`^/${assetsPath}/(files|static)/(.*)`)
 
   middlewares.push({
-    name: 'gridsome-assets',
+    name: 'gridmix-assets',
     path: assetsRE,
     middleware: assetsMiddleware(app)
   })
