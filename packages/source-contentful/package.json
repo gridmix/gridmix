@@ -20,7 +20,7 @@
     "contentful": "^6.1.1"
   },
   "peerDependencies": {
-    "gridsome": ">= 0.6.0"
+    "gridmix": ">= 0.6.0"
   },
   "publishConfig": {
     "access": "public"

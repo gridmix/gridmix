@@ -33,7 +33,7 @@
     "vfile": "^4.0.0"
   },
   "peerDependencies": {
-    "gridsome": "0.x"
+    "gridmix": "0.x"
   },
   "publishConfig": {
     "access": "public"

@@ -20,7 +20,7 @@
     "graphql": "^16.0.1"
   },
   "peerDependencies": {
-    "gridsome": "0.x"
+    "gridmix": "0.x"
   },
   "publishConfig": {
     "access": "public"
