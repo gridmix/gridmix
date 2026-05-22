@@ -9,14 +9,14 @@ module.exports = {
     'gridmix/lib/**/*.js'
   ],
   testPathIgnorePatterns: [
-    '/__fixtures__/',
-    '/projects/',
-    '/scripts/'
+    '<rootDir>/__fixtures__/',
+    '<rootDir>/projects/',
+    '<rootDir>/scripts/'
   ],
   watchPathIgnorePatterns: [
-    '/__fixtures__/',
+    '<rootDir>/__fixtures__/',
     '/node_modules/',
-    '/projects/',
+    '<rootDir>/projects/',
     '/.git/'
   ]
 }
