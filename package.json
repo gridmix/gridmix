@@ -9,7 +9,10 @@
   "scripts": {
     "test:unit": "GRIDMIX_TEST=unit jest --runInBand",
     "test:e2e": "GRIDMIX_TEST=e2e jest --runInBand",
-    "lint": "eslint \"@(gridmix|packages)/**/*.js\""
+    "lint": "eslint \"@(gridmix|packages)/**/*.js\"",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
