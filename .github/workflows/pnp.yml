@@ -3,14 +3,14 @@ name: PnP
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - 'yarn.lock'
       - 'gridmix/**'
       - '.github/workflows/pnp.yml'
   pull_request:
     branches:
-      - master
+      - main
     paths:
       - 'yarn.lock'
       - 'gridmix/**'
