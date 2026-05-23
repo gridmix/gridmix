@@ -1,7 +1,7 @@
 const { GRIDMIX_TEST = 'unit' } = process.env
 
 module.exports = {
-  testEnvironment: '<rootDir>/jest.env.js',
+  testEnvironment: 'node',
   testMatch: [
     `**/__tests__/**/*.${GRIDMIX_TEST === 'e2e' ? 'e2e' : 'spec'}.js`
   ],

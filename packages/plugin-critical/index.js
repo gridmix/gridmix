@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const micromatch = require('micromatch')
-const Worker = require('jest-worker').default
+const { Worker } = require('jest-worker')
 
 const normalize = p => p.replace(/\/+$/, '') || '/'
 

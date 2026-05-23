@@ -1,6 +1,6 @@
 const path = require('path')
 const sysinfo = require('../utils/sysinfo')
-const Worker = require('jest-worker').default
+const { Worker } = require('jest-worker')
 
 function createWorker (filename) {
   const filepath = path.join(__dirname, filename)
