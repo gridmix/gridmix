@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'yarn.lock'
+      - 'pnpm-lock.yaml'
       - 'jest.config.js'
       - 'gridmix/**/*.js'
       - 'packages/**/*.js'
@@ -14,7 +14,7 @@ on:
     branches:
       - main
     paths:
-      - 'yarn.lock'
+      - 'pnpm-lock.yaml'
       - 'jest.config.js'
       - 'gridmix/**/*.js'
       - 'packages/**/*.js'
@@ -26,19 +26,21 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: ['12', '14', '16']
+        node-version: ['22', '24']
         os: [ubuntu-latest]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-      - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/checkout@v6
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
         with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-${{ runner.node-version }}-modules-${{ hashFiles('**/yarn.lock') }}
+          version: 11
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Run tests
-        run: yarn test:unit --ci
+        run: pnpm test:unit --ci
