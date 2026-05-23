@@ -203,9 +203,6 @@ importers:
       path-to-regexp:
         specifier: ^2.2.1
         version: 2.4.0
-      physical-cpu-count:
-        specifier: ^2.0.0
-        version: 2.0.0
       portfinder:
         specifier: ^1.0.20
         version: 1.0.38
@@ -6687,9 +6684,6 @@ packages:
     resolution: {integrity: sha512-GEazpTWwTZaEQ9RhL7Nyz0WwqilbqgLahDM3D0hxWwmVDI52nXEybHqiN6/elwpkJBhcuj+WbBu+QfT0uhPGfQ==}
     engines: {node: '>= 8'}
     deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
-
-  physical-cpu-count@2.0.0:
-    resolution: {integrity: sha512-rxJOljMuWtYlvREBmd6TZYanfcPhNUKtGDZBjBBS8WG1dpN2iwPsRJZgQqN/OtJuiQckdRFOfzogqJClTrsi7g==}
 
   picocolors@0.2.1:
     resolution: {integrity: sha512-cMlDqaLEqfSaW8Z7N5Jw+lyIW869EzT73/F5lhtY9cLGoVxSXznfgfXMO0Z5K0o0Q2TkTXq+0KFsdnSe3jDViA==}
@@ -16129,8 +16123,6 @@ snapshots:
       centra: 2.7.0
     transitivePeerDependencies:
       - debug
-
-  physical-cpu-count@2.0.0: {}
 
   picocolors@0.2.1: {}
 

@@ -73,7 +73,6 @@
     "moment": "^2.24.0",
     "p-map": "^2.0.0",
     "path-to-regexp": "^2.2.1",
-    "physical-cpu-count": "^2.0.0",
     "portfinder": "^1.0.20",
     "postcss": "^8.4.5",
     "postcss-loader": "^6.2.1",
