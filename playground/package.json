@@ -8,6 +8,6 @@
     "explore": "gridmix explore"
   },
   "dependencies": {
-    "gridmix": "workspace:^0.7.0"
+    "gridmix": "workspace:^"
   }
 }

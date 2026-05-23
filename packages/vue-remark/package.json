@@ -18,8 +18,8 @@
     "@babel/parser": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/traverse": "^7.0.0",
-    "@gridmix/source-filesystem": "workspace:^0.6.2",
-    "@gridmix/transformer-remark": "workspace:^0.6.4",
+    "@gridmix/source-filesystem": "workspace:^",
+    "@gridmix/transformer-remark": "workspace:^",
     "babel-loader": "8.0.5",
     "hash-sum": "^1.0.2",
     "hast-util-to-html": "^5.0.0",
@@ -38,7 +38,7 @@
     "vue-loader": "^15.10.0"
   },
   "peerDependencies": {
-    "gridmix": "workspace:^0.x"
+    "gridmix": "workspace:^"
   },
   "publishConfig": {
     "access": "public"

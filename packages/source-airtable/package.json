@@ -18,7 +18,7 @@
     "airtable": "^0.7.2"
   },
   "peerDependencies": {
-    "gridmix": "workspace:^0.x"
+    "gridmix": "workspace:^"
   },
   "publishConfig": {
     "access": "public"

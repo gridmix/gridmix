@@ -4,37 +4,17 @@
 
 ## Versioning & releases
 
-This monorepo uses [Changesets](https://github.com/changesets/changesets) with **independent versioning** — each package in `packages/*` (and the `gridmix` core) ships on its own version cadence, like the old Lerna `"independent"` setup. The `playground` workspace is private and never published.
+This monorepo uses [Changesets](https://github.com/changesets/changesets) with **independent per-package versioning**, released locally from `main` by a maintainer. The `playground` workspace is private and never published.
 
-The release flow has three steps, each exposed as a root script:
+If your change should ship, author a changeset alongside it:
 
-1. **Author a changeset alongside your change.** After making code changes that should ship, run:
+```bash
+pnpm changeset
+```
 
-   ```bash
-   pnpm changeset
-   ```
+Pick the affected packages, choose `patch` / `minor` / `major` per package, write a short user-facing summary, and commit the generated `.changeset/*.md` file with your code change.
 
-   This prompts you to pick the affected packages, choose `patch` / `minor` / `major` per package, and write a short user-facing summary. It produces a markdown file in `.changeset/` — commit it with your code in the same PR. PRs without a changeset only land if the change is genuinely release-irrelevant (docs, internal tests, CI config).
-
-2. **Version packages when cutting a release.** On `main`, after merging one or more PRs with changesets, run:
-
-   ```bash
-   pnpm version
-   ```
-
-   This consumes every pending changeset: bumps each affected package's `package.json`, updates internal `@gridmix/*` dependents by a patch, regenerates per-package `CHANGELOG.md` files, and deletes the consumed changesets. Review the diff and commit it (typically as `chore(release): version packages`).
-
-3. **Publish to npm.** From the same commit, with an authenticated npm session:
-
-   ```bash
-   pnpm release
-   ```
-
-   This runs `changeset publish`, which only publishes packages whose new versions are not already on the registry, honours `access: "public"` from `.changeset/config.json`, and creates a git tag per published package. Push the tags afterwards with `git push --follow-tags`.
-
-> The script is named `release` (not `publish`) on purpose — `pnpm publish` is a built-in pnpm command, and shadowing it is a footgun. Use `pnpm release` for npm releases.
-
-Bump levels are now **explicit** (set in the changeset file), not inferred from commit messages. Conventional Commits are still welcome for repo hygiene but no longer influence what ships. See [`.changeset/README.md`](./.changeset/README.md) for the full migration notes from Lerna and a list of future improvements (richer changelogs, automated release PRs, prerelease channels).
+See [**RELEASING.md**](./RELEASING.md) for the full flow: cutting releases, alpha/beta prerelease channels, conventions, migration notes from Lerna, and the path to automated release CI.
 
 <details>
 <summary><b>Gridsome README.md content</b></summary>

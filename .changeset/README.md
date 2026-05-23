@@ -7,38 +7,7 @@ find the full documentation for it [in our repository](https://github.com/change
 We have a quick list of common questions to get you started engaging with this project in
 [our documentation](https://github.com/changesets/changesets/blob/main/docs/common-questions.md).
 
-## Migration from Lerna: what changed
+---
 
-This repo previously used Lerna (`version: "independent"`, `conventionalCommits: true`) to drive versioning
-and changelog generation. We now use changesets. The behavioural differences worth knowing:
-
-- **Bump level is explicit, not inferred.** Lerna read commit messages (`feat:` → minor, `fix:` → patch,
-  `BREAKING CHANGE` → major). Changesets requires the author to declare the bump in a markdown file
-  via `pnpm changeset` — commit prefixes no longer affect the released version. Conventional Commits
-  remain useful for repo hygiene, but they are no longer load-bearing for releases.
-- **Changelogs are written from changeset summaries, not commits.** Each `.changeset/*.md` file's body
-  becomes the changelog entry. Write summaries for end users, not for reviewers.
-- **No more `ignoreChanges` file globs.** Lerna used file-path patterns (`**/__tests__/**`,
-  `**/__fixtures__/**`, non-README `*.md`) to decide whether a change warranted a version bump. With
-  changesets you simply don't create a changeset for changes that shouldn't ship — the equivalent is
-  reviewer discipline, not config.
-- **Independent versioning is preserved.** Empty `fixed` and `linked` arrays in `config.json` give the
-  same per-package version cadence Lerna's `"independent"` mode did.
-- **`playground` is excluded from releases** via `ignore`. Other private packages are auto-skipped by
-  changesets, but listing it keeps the intent explicit.
-- **Publish access is `public`.** Required for `@gridmix/*` scoped packages; Lerna inherited this from
-  each package's `publishConfig`, changesets sets a workspace-wide default.
-
-## Potential future updates
-
-- **Richer changelogs.** Swap `@changesets/cli/changelog` for [`@changesets/changelog-github`](https://github.com/changesets/changesets/tree/main/packages/changelog-github)
-  to auto-link PRs and contributors. Requires a `repo` option and a GitHub token in CI.
-- **Automated release PRs.** Add the [`changesets/action`](https://github.com/changesets/action) GitHub
-  workflow to open a "Version Packages" PR that aggregates pending changesets and publishes on merge —
-  the closest equivalent to `lerna publish` in CI.
-- **Branch protection on release.** The Lerna `allowBranch: "master"` guard has no direct config in
-  changesets; enforce it via the release workflow (only run on `main`) or branch protection rules.
-- **Snapshot/prerelease channels.** If we ever need canary builds, `changeset version --snapshot` and
-  the `pre enter`/`pre exit` flow cover what Lerna's `--canary` and `--preid` used to do.
-- **Linked groups.** If a subset of packages ever needs to version in lockstep (e.g. `@gridmix/cli` and
-  `gridmix` core), add them to `linked` in `config.json` without losing independence elsewhere.
+For this repo's release process — authoring changesets, cutting local releases, alpha/beta channels,
+migration notes from Lerna, and future CI — see [`../RELEASING.md`](../RELEASING.md).
