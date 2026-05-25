@@ -60,7 +60,15 @@ class FilesystemSource {
   async createNodes (actions) {
     const glob = require('globby')
 
-    const files = await glob(this.options.path, { cwd: this.context })
+    // We normalize to POSIX separators: globby 11 uses fast-glob 3, which
+    // treats backslashes in patterns as escapes rather than Windows path
+    // separators. Users normally pass POSIX-style patterns (e.g. '**/*.md'),
+    // but composing with path.join() on Windows would silently match nothing.
+    // Also see gridmix/lib/plugins/TemplatesPlugin.js for additional context.
+    const pattern = Array.isArray(this.options.path)
+      ? this.options.path.map(slash)
+      : slash(this.options.path)
+    const files = await glob(pattern, { cwd: this.context })
 
     await Promise.all(files.map(async file => {
       const options = await this.createNodeOptions(file, actions)

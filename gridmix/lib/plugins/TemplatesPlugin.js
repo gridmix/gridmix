@@ -1,5 +1,6 @@
 const path = require('path')
 const glob = require('globby')
+const slash = require('slash')
 const fs = require('fs-extra')
 const { distance } = require('fastest-levenshtein')
 const crypto = require('crypto')
@@ -324,8 +325,15 @@ class TemplatesPlugin {
        * Find component files and create pages for components
        * that matches any of the template paths. Watch the paths
        * in development to act on new or deleted files.
+       *
+       * Dev note for globby package update guardrails:
+       * We normalize to POSIX separators: globby 11 uses fast-glob 3,
+       * which treats backslashes in patterns as escapes
+       * rather than Windows path separators. Without this (presumably!),
+       * template discovery would silently match nothing on Windows.
+       * Also see packages/source-filesystem/index.js for additional context.
        */
-      const paths = Array.from(byComponent.keys())
+      const paths = Array.from(byComponent.keys()).map(slash)
       const files = await glob(paths, { globstar: false, extglob: false })
 
       for (const filePath of files) {
