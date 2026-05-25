@@ -1,0 +1,37 @@
+name: E2E Test
+
+# Heavier than the unit suite; runs on a schedule + manual trigger to catch
+# OS-specific drift (path separators, case-sensitive FS, file watching) without
+# slowing down every PR.
+on:
+  schedule:
+    # 06:00 UTC every Monday.
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    name: E2E Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ['22', '24']
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run e2e tests
+        # `shell: bash` resolves to Git Bash on Windows runners, so the
+        # POSIX-style env-var prefix in the test:e2e script works on all OSes.
+        shell: bash
+        run: pnpm test:e2e --ci
