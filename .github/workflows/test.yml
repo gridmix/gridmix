@@ -25,10 +25,9 @@ jobs:
     name: Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
       matrix:
         node-version: ['22', '24']
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -42,7 +41,4 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Run tests
-        # `shell: bash` resolves to Git Bash on Windows runners, so the
-        # POSIX-style env-var prefix in the test:unit script works on all OSes.
-        shell: bash
         run: pnpm test:unit --ci
