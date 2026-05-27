@@ -54,9 +54,7 @@ class Pages {
   }
 
   createWatcher() {
-    this._watcher = new FSWatcher({
-      disableGlobbing: true
-    })
+    this._watcher = new FSWatcher({})
 
     if (!process.env.GRIDMIX_TEST) {
       initWatcher(this.app, this)

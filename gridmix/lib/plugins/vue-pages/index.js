@@ -31,10 +31,10 @@ class VuePages {
     }
 
     if (process.env.NODE_ENV === 'development') {
-      // Watch pages directory without globbing to make
-      // dynamic route params work in folder names.
+      // Watch the pages directory directly (not a glob pattern) so that
+      // dynamic route params in folder names aren't misinterpreted. chokidar 4
+      // dropped glob support entirely, so this is now the only mode.
       const watcher = chokidar.watch(this.pagesDir, {
-        disableGlobbing: true,
         ignoreInitial: true
       })
 

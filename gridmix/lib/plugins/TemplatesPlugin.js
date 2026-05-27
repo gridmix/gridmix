@@ -342,7 +342,6 @@ class TemplatesPlugin {
 
       if (isDev) {
         const watcher = chokidar.watch(paths, {
-          disableGlobbing: true,
           ignoreInitial: true
         })
 

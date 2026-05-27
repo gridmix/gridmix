@@ -48,3 +48,40 @@ after it expires.
 **Future automation:** promote to `pnpm test:e2e` — build a fixture site, start
 the serve middleware, and assert the `return cached` log (or response timing)
 across the TTL boundary.
+
+### Dev hot-reload file watching (chokidar 3 → 4)
+
+**Why manual:** the live file watchers run only under `gridmix develop`
+(`NODE_ENV === 'development'`). Two of them — `chokidar.watch()` in
+`gridmix/lib/plugins/vue-pages/index.js` and
+`gridmix/lib/plugins/TemplatesPlugin.js` — are never reached by the unit suite,
+and the route-change handler wired in `gridmix/lib/pages/watch.js` is skipped
+whenever `GRIDMIX_TEST` is set (`gridmix/lib/pages/pages.js` `createWatcher()`).
+`pages.spec.js` covers the low-level `FSWatcher` (add/unwatch/`getWatched`) but
+not the end-to-end dev-server reload.
+
+**What it guards:** that chokidar 4 still delivers add/unlink/change events for
+files watched **by literal path** (chokidar 4 removed glob support and the
+`disableGlobbing` option — all three watch sites here pass real paths/dirs, not
+patterns, so behavior should be unchanged). Specifically that, with a dev server
+running, the page/route graph updates live without a restart.
+
+**Steps:**
+
+1. In a Gridmix site, run `gridmix develop`.
+2. **Pages watcher:** add a new file `src/pages/Watch-test.vue` (with minimal
+   `<template><div/></template>`). Then delete it.
+3. **Templates watcher:** with a content type that has a template component, add
+   a matching template file under the configured templates path, then delete it.
+4. **Change handler:** edit and save an existing component already rendered by a
+   route (e.g. change static text in a `.vue` page).
+
+**Expected:** step 2 makes `/watch-test` resolve (200) moments after the file is
+added and 404 after it's deleted, with no server restart; step 3 makes the
+template's route appear/disappear the same way; step 4 hot-reloads the page with
+the edited content. No `Cannot use import statement` / module-load errors in the
+dev console (the chokidar 4 CJS build loads cleanly under Node's require).
+
+**Future automation:** promote to `pnpm test:e2e` — start `develop` against a
+fixture site, mutate files on disk, and poll the dev server for the route
+appearing/disappearing and the changed content being served.
