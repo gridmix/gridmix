@@ -204,6 +204,51 @@ test('cache parsed components', async () => {
   expect(parseComponent).toHaveBeenCalledTimes(1)
 })
 
+test('clearComponentCache() evicts a single component and forces a re-parse', async () => {
+  const { pages } = await createApp(api => {
+    api.loadSource(store => {
+      store.addCollection('Post')
+    })
+  })
+
+  const parseComponent = jest.spyOn(pages.hooks.parseComponent.for('vue')._x, 0)
+  const component = './__fixtures__/PagedPage.vue'
+  const resolved = path.join(__dirname, '__fixtures__', 'PagedPage.vue')
+
+  pages.createPage({ path: '/page/1', component })
+  pages.createPage({ path: '/page/2', component })
+
+  expect(parseComponent).toHaveBeenCalledTimes(1) // second page served from cache
+
+  pages.clearComponentCache(resolved)
+
+  pages.createPage({ path: '/page/3', component })
+
+  expect(parseComponent).toHaveBeenCalledTimes(2) // re-parsed after eviction
+})
+
+test('clearCache() evicts all cached components', async () => {
+  const { pages } = await createApp(api => {
+    api.loadSource(store => {
+      store.addCollection('Post')
+    })
+  })
+
+  const parseComponent = jest.spyOn(pages.hooks.parseComponent.for('vue')._x, 0)
+
+  pages.createPage({ path: '/a', component: './__fixtures__/DefaultPage.vue' })
+  pages.createPage({ path: '/b', component: './__fixtures__/PagedPage.vue' })
+
+  expect(parseComponent).toHaveBeenCalledTimes(2) // one parse per distinct component
+
+  pages.clearCache()
+
+  pages.createPage({ path: '/a2', component: './__fixtures__/DefaultPage.vue' })
+  pages.createPage({ path: '/b2', component: './__fixtures__/PagedPage.vue' })
+
+  expect(parseComponent).toHaveBeenCalledTimes(4) // both re-parsed after clear
+})
+
 test('update page', async () => {
   const { pages } = await createApp(api => {
     api.loadSource(store => {

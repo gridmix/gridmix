@@ -189,8 +189,8 @@ importers:
         specifier: ^1.5.6
         version: 1.5.12
       lru-cache:
-        specifier: ^5.1.1
-        version: 5.1.1
+        specifier: ^10.4.3
+        version: 10.4.3
       md5-file:
         specifier: ^4.0.0
         version: 4.0.0
@@ -561,8 +561,8 @@ importers:
         specifier: ^4.17.11
         version: 4.18.1
       lru-cache:
-        specifier: ^5.1.1
-        version: 5.1.1
+        specifier: ^10.4.3
+        version: 10.4.3
       remark-autolink-headings:
         specifier: ^5.0.0
         version: 5.2.2
@@ -654,8 +654,8 @@ importers:
         specifier: ^4.17.11
         version: 4.18.1
       lru-cache:
-        specifier: ^5.1.1
-        version: 5.1.1
+        specifier: ^10.4.3
+        version: 10.4.3
       mdast-util-to-hast:
         specifier: ^4.0.0
         version: 4.0.0

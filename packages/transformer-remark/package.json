@@ -19,7 +19,7 @@
     "gray-matter": "^4.0.2",
     "hash-sum": "^1.0.2",
     "lodash": "^4.17.11",
-    "lru-cache": "^5.1.1",
+    "lru-cache": "^10.4.3",
     "remark-autolink-headings": "^5.0.0",
     "remark-external-links": "^3.0.0",
     "remark-fix-guillemets": "^1.0.15",
