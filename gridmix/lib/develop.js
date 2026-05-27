@@ -1,6 +1,6 @@
 const path = require('path')
 const fs = require('fs-extra')
-const chalk = require('chalk')
+const chalk = require('./utils/chalk')
 const sockjs = require('sockjs')
 const { hasWarnings, logAllWarnings } = require('./utils/deprecate')
 const { forwardSlash } = require('./utils')

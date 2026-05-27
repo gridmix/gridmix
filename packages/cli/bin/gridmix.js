@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const path = require('path')
-const chalk = require('chalk')
+const chalk = require('../lib/utils/chalk')
 const program = require('commander')
 const { distance } = require('fastest-levenshtein')
 const resolveCwd = require('resolve-cwd')

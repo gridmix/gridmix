@@ -1,5 +1,5 @@
 const fs = require('fs-extra')
-const chalk = require('chalk')
+const chalk = require('../utils/chalk')
 const createHTMLRenderer = require('./createHTMLRenderer')
 const { createBundleRenderer } = require('vue-server-renderer')
 const { error } = require('../utils/log')

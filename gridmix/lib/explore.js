@@ -1,4 +1,4 @@
-const chalk = require('chalk')
+const chalk = require('./utils/chalk')
 const createApp = require('./app')
 const Server = require('./server/Server')
 const resolvePort = require('./server/resolvePort')

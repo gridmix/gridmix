@@ -1,6 +1,6 @@
 const path = require('path')
 const fs = require('fs-extra')
-const chalk = require('chalk')
+const chalk = require('../utils/chalk')
 const execa = require('execa')
 const axios = require('axios')
 const jsYaml = require('js-yaml')

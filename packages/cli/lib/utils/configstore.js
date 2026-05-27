@@ -1,4 +1,4 @@
-const chalk = require('chalk')
+const chalk = require('./chalk')
 const Configstore = require('configstore')
 
 const config = new Configstore('gridmix', {}, {

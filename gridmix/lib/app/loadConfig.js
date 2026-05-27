@@ -1,5 +1,5 @@
 const path = require('path')
-const chalk = require('chalk')
+const chalk = require('../utils/chalk')
 const fs = require('fs-extra')
 const Joi = require('@hapi/joi')
 const crypto = require('crypto')

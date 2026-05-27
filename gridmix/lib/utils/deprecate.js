@@ -1,5 +1,5 @@
 const path = require('path')
-const chalk = require('chalk')
+const chalk = require('./chalk')
 const columnify = require('columnify')
 const stackTrace = require('stack-trace')
 const { log: logUtil } = require('./log')

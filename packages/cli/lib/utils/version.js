@@ -1,4 +1,4 @@
-const chalk = require('chalk')
+const chalk = require('./chalk')
 const resolveCwd = require('resolve-cwd')
 
 module.exports = function resolveVersions (pkgPath) {

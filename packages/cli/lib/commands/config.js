@@ -1,4 +1,4 @@
-const chalk = require('chalk')
+const chalk = require('../utils/chalk')
 const config = require('../utils/configstore')
 
 /**
