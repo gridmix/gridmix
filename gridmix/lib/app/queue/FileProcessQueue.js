@@ -32,7 +32,7 @@ class FileProcessQueue {
   }
 
   async preProcess (filePath) {
-    if (!await fs.exists(filePath)) {
+    if (!await fs.pathExists(filePath)) {
       throw new Error(`${filePath} was not found. `)
     }
 
@@ -40,9 +40,9 @@ class FileProcessQueue {
     const filesDir = path.relative(outputDir, this.config.filesDir)
     const relPath = path.relative(this.context, filePath)
 
-    let filename = ''
+    let filename
 
-    if (process.env.GRIDMIX_MODE === 'serve') {
+      if (process.env.GRIDMIX_MODE === 'serve') {
       filename = forwardSlash(relPath)
     } else {
       const { name, ext } = path.parse(relPath)

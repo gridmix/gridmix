@@ -91,3 +91,10 @@ test('handle external file paths', async () => {
   expect(result.mimeType).toEqual('application/pdf')
   expect(result.filePath).toEqual(filePath)
 })
+
+test('fail if file is missing', async () => {
+  const filePath = path.resolve(context, 'assets/missing-file.pdf')
+  const queue = new AssetsQueue({ context, config: baseconfig })
+
+  await expect(queue.add(filePath)).rejects.toThrow(/was not found/)
+})

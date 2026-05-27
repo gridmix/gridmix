@@ -59,7 +59,7 @@ class ImageProcessQueue {
       )
     }
 
-    if (!await fs.exists(filePath)) {
+    if (!await fs.pathExists(filePath)) {
       throw new Error(`${filePath} was not found.`)
     }
 
@@ -84,8 +84,10 @@ class ImageProcessQueue {
 
     // https://www.impulseadventure.com/photo/exif-orientation.html
     if (metadata.orientation && metadata.orientation >= 5) {
-      originalSize.width = metadata.height
-      originalSize.height = metadata.width
+      // noinspection JSSuspiciousNameCombination
+        originalSize.width = metadata.height
+      // noinspection JSSuspiciousNameCombination
+        originalSize.height = metadata.width
     }
 
     const { imageWidth, imageHeight } = computeScaledImageSize(originalSize, options, maxImageWidth)
@@ -145,7 +147,7 @@ class ImageProcessQueue {
     })
 
     const results = {
-      src: sets.length != 0 ? sets[sets.length - 1].src : '',
+      src: sets.length !== 0 ? sets[sets.length - 1].src : '',
       size: { width: imageWidth, height: imageHeight },
       width: originalSize.width,
       height: originalSize.height,

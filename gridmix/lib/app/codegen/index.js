@@ -48,7 +48,7 @@ class Codegen {
       const filepath = path.join(outputDir, filename)
       const content = await this.files[filename](this.app, ...args)
 
-      if (await fs.exists(filepath)) {
+      if (await fs.pathExists(filepath)) {
         await fs.remove(filepath)
       }
 

@@ -59,6 +59,17 @@ test('load env variables by NODE_ENV', async () => {
   expect(process.env.PROD_VARIABLE).toEqual('PROD_2')
 })
 
+test('dotenv v15+: unquoted # starts an inline comment', async () => {
+  process.env.NODE_ENV = 'development'
+
+  await loadConfig(context)
+
+  // dotenv >=15 treats '#' as a comment delimiter in unquoted values
+  expect(process.env.INLINE_COMMENT_VALUE).toEqual('before-hash')
+  // quoted values preserve '#' literally
+  expect(process.env.QUOTED_HASH_VALUE).toEqual('keep#this')
+})
+
 test('setup custom favicon and touchicon config', async () => {
   const config = await loadConfig(context, {
     localConfig: {
