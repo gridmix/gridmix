@@ -1,6 +1,5 @@
 const { log, info, warn, error } = require('../log')
-
-const ANSI_ESCAPE = /\u001b\[[0-9;]*m/
+const ANSI_ESCAPE = require('../../../../test-utils/ansi-escape-regexp')
 
 describe('log utilities', () => {
   let gridmixTest

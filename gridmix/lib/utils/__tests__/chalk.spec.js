@@ -1,8 +1,8 @@
 const { execFileSync } = require('child_process')
 const path = require('path')
+const ANSI_ESCAPE = require('../../../../test-utils/ansi-escape-regexp')
 
 const wrapperPath = path.resolve(__dirname, '../chalk.js')
-const ANSI_ESCAPE = /\u001b\[[0-9;]*m/
 
 function runInNode (script) {
   return execFileSync(process.execPath, ['-e', script], {
