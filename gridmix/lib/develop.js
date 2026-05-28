@@ -114,7 +114,8 @@ function createSocketServer(app, server) {
 
 function setupGraphQLMiddleware(middlewares, app) {
   const express = require('express')
-  const { graphqlHTTP } = require('express-graphql')
+  const { GraphQLError } = require('graphql')
+  const { createHandler } = require('graphql-http/lib/use/express')
   const { default: playground } = require('graphql-playground-middleware-express')
   const graphqlMiddleware = require('./server/middlewares/graphql')
   const index = middlewares.findIndex((m) => m.name === 'connect-history-api-fallback')
@@ -135,14 +136,17 @@ function setupGraphQLMiddleware(middlewares, app) {
     middleware: [
       express.json(),
       graphqlMiddleware(app),
-      graphqlHTTP({
+      createHandler({
         schema: app.schema.getSchema(),
         context: app.schema.createContext(),
-        customFormatErrorFn: err => ({
-          message: err.message,
-          stringified: err.toString()
-        }),
-        extensions: ({ variables }) => {
+        formatError: (err) => {
+          if (err instanceof GraphQLError) {
+            err.extensions = { ...err.extensions, stringified: err.toString() }
+          }
+          return err
+        },
+        onOperation: (_req, args, result) => {
+          const variables = args.variableValues
           if (variables && variables.__path) {
             const page = app.pages._pages.findOne({
               path: variables.__path
@@ -152,7 +156,7 @@ function setupGraphQLMiddleware(middlewares, app) {
               ? app.pages._createPageContext(page, variables)
               : {}
 
-            return { context }
+            return { ...result, extensions: { ...result.extensions, context } }
           }
         }
       })

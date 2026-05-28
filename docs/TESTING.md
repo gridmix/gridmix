@@ -86,6 +86,54 @@ dev console (the chokidar 4 CJS build loads cleanly under Node's require).
 fixture site, mutate files on disk, and poll the dev server for the route
 appearing/disappearing and the changed content being served.
 
+### Dev GraphQL endpoint — `express-graphql` → `graphql-http`
+
+**Why manual:** the swap lives in `setupGraphQLMiddleware`
+(`gridmix/lib/develop.js`), which only runs under `gridmix develop` and is wired
+into the webpack-dev-server middleware chain. No unit suite touches
+`/___graphql`; the `project-*.build.e2e.js` runs `build`, not `develop`. Asserting
+the new handler in isolation would require extracting a factory from
+`develop.js`.
+
+**What it guards:** that `graphql-http`'s `createHandler` correctly takes over
+the three things `express-graphql`'s `graphqlHTTP` did for Gridmix's dev server:
+(1) executes queries against `app.schema`; (2) emits the per-request
+`extensions.context` payload that `gridmix/app/fetch.js:46` reads to populate
+page context; (3) emits `extensions.stringified` on errors that
+`gridmix/app/graphql/shared.js:29` reads to log query failures. Items 2 and 3
+moved from a bespoke `extensions` / `customFormatErrorFn` to `onOperation` /
+`formatError` callbacks, and `stringified` shifted from a top-level error key
+to `extensions.stringified` because `graphql-http` serializes errors via
+`GraphQLError.toJSON()` (spec fields only).
+
+**Steps:**
+
+1. In a Gridmix site, run `gridmix develop`.
+2. **Page query / context payload:** in a `.vue` page with a `<page-query>`
+   block, navigate to the page in the browser and confirm it renders with data.
+   Hot-edit the page; confirm the page-context-dependent bits still render
+   (proves `extensions.context` is delivered to the client).
+3. **Direct POST:**
+   `curl -s -X POST http://localhost:8080/___graphql -H 'content-type: application/json' -d '{"path":"/","dynamic":false}'`
+   (port per dev server output). The response should have a `data` field and
+   `extensions.context` should be an object (not undefined).
+4. **Error shape:** send a deliberately bad query, e.g.
+   `curl -s -X POST http://localhost:8080/___graphql -H 'content-type: application/json' -d '{"query":"{ nonExistentField }"}'`.
+   The JSON response should have `errors[0].message` set and
+   `errors[0].extensions.stringified` populated with the formatted error string.
+5. **Playground:** open `http://localhost:8080/___explore`. The
+   `graphql-playground-middleware-express` UI should load, introspect the
+   schema, and successfully run an arbitrary query against `/___graphql`.
+
+**Expected:** every step succeeds; no `Cannot find module 'express-graphql'`
+errors at boot; query errors carry `extensions.stringified` (not the legacy
+top-level `stringified`); `extensions.context` lands on successful page-query
+responses.
+
+**Future automation:** promote to `pnpm test:e2e` — start `develop` against a
+fixture site, hit `/___graphql` with both a valid page-context query and a
+malformed query, and assert the response shape end-to-end.
+
 ### `@gridmix/source-wordpress` paginated fetch — `p-map` 1 → 4
 
 **Why manual:** `packages/source-wordpress` has no unit or e2e tests; the only

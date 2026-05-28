@@ -26,11 +26,12 @@ export function formatError (err, route) {
   const matched = route.matched[0]
   const options = matched ? matched.components.default : {}
 
-  if (err.stringified && options.__file) {
+  const stringified = err.extensions && err.extensions.stringified
+  if (stringified && options.__file) {
     console.error(
       `An error occurred while executing ` +
       `query for ${options.__file}\n\n` +
-      `Error: ${err.stringified}`
+      `Error: ${stringified}`
     )
   }
 }
