@@ -1,4 +1,4 @@
-const Joi = require('@hapi/joi')
+const Joi = require('joi')
 
 const schemas = {
   route: Joi.object()
@@ -8,7 +8,7 @@ const schemas = {
       type: Joi.string().valid('static', 'dynamic').default('static'),
       name: Joi.string(),
       path: Joi.string()
-        .regex(/^\//, 'missing leading slash')
+        .pattern(/^\//, { name: 'missing leading slash' })
         .required(),
       component: Joi.string().required(),
       meta: Joi.object().default(null).allow(null)
@@ -18,7 +18,7 @@ const schemas = {
     .label('Page options')
     .keys({
       id: Joi.string(),
-      path: Joi.string().regex(/^\//, 'leading slash').required(),
+      path: Joi.string().pattern(/^\//, { name: 'leading slash' }).required(),
       component: Joi.string().required(),
       context: Joi.object().default({}),
       queryVariables: Joi.object().default(null).allow(null),
@@ -35,7 +35,7 @@ const schemas = {
     .label('Page options')
     .keys({
       id: Joi.string(),
-      path: Joi.string().regex(/^\//, 'leading slash').required(),
+      path: Joi.string().pattern(/^\//, { name: 'leading slash' }).required(),
       context: Joi.object().default({}),
       queryVariables: Joi.object().default(null).allow(null)
     }),
@@ -49,7 +49,7 @@ const schemas = {
 }
 
 function validate (schema, options) {
-  const { error, value } = Joi.validate(options, schemas[schema])
+  const { error, value } = schemas[schema].validate(options)
 
   if (error) {
     throw new Error(error.message)
