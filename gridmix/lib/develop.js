@@ -116,18 +116,14 @@ function setupGraphQLMiddleware(middlewares, app) {
   const express = require('express')
   const { GraphQLError } = require('graphql')
   const { createHandler } = require('graphql-http/lib/use/express')
-  const { default: playground } = require('graphql-playground-middleware-express')
+  const exploreMiddleware = require('./server/middlewares/explore')
   const graphqlMiddleware = require('./server/middlewares/graphql')
   const index = middlewares.findIndex((m) => m.name === 'connect-history-api-fallback')
 
   middlewares.splice(index, 0, {
     name: 'gridmix-explore',
     path: '/___explore',
-    middleware: playground({
-      endpoint: '/___graphql',
-      title: 'Gridmix GraphQL Explorer',
-      faviconUrl: 'https://avatars0.githubusercontent.com/u/17981963?s=200&v=4'
-    })
+    middleware: exploreMiddleware()
   })
 
   middlewares.splice(index, 0, {

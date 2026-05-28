@@ -121,9 +121,11 @@ to `extensions.stringified` because `graphql-http` serializes errors via
    `curl -s -X POST http://localhost:8080/___graphql -H 'content-type: application/json' -d '{"query":"{ nonExistentField }"}'`.
    The JSON response should have `errors[0].message` set and
    `errors[0].extensions.stringified` populated with the formatted error string.
-5. **Playground:** open `http://localhost:8080/___explore`. The
-   `graphql-playground-middleware-express` UI should load, introspect the
-   schema, and successfully run an arbitrary query against `/___graphql`.
+5. **GraphiQL UI:** open `http://localhost:8080/___explore`. The GraphiQL 5
+   UI (CDN-loaded via ESM importmap from `gridmix/lib/server/middlewares/explore.js`)
+   should load, introspect the schema, and successfully run an arbitrary query
+   against `/___graphql`. No console errors about importmap resolution or
+   missing modules.
 
 **Expected:** every step succeeds; no `Cannot find module 'express-graphql'`
 errors at boot; query errors carry `extensions.stringified` (not the legacy

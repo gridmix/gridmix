@@ -146,9 +146,6 @@ importers:
       graphql-http:
         specifier: ^1.22.4
         version: 1.22.4(graphql@16.14.0)
-      graphql-playground-middleware-express:
-        specifier: ^1.7.23
-        version: 1.7.23(express@4.22.2)
       hash-sum:
         specifier: ^1.0.2
         version: 1.0.2
@@ -3764,9 +3761,6 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  cssfilter@0.0.10:
-    resolution: {integrity: sha512-FAaLDaplstoRsDR8XGYH51znUN0UY7nMc6Z9/fvE8EXGwvJE9hu7W2vHwx1+bd6gCYnln9nLbzxFTrcO9YQDZw==}
-
   cssnano-preset-default@5.2.14:
     resolution: {integrity: sha512-t0SFesj/ZV2OTylqQVOrFgEh5uanxbO6ZAdeCrNsUQ6fVuXwYTxJPNAGvGTxHbD68ldIJNec7PyYZDBrfDQ+6A==}
     engines: {node: ^10 || ^12 || >=14.0}
@@ -5023,14 +5017,6 @@ packages:
     engines: {node: '>=12'}
     peerDependencies:
       graphql: '>=0.11 <=16'
-
-  graphql-playground-html@1.6.30:
-    resolution: {integrity: sha512-tpCujhsJMva4aqE8ULnF7/l3xw4sNRZcSHu+R00VV+W0mfp+Q20Plvcrp+5UXD+2yS6oyCXncA+zoQJQqhGCEw==}
-
-  graphql-playground-middleware-express@1.7.23:
-    resolution: {integrity: sha512-M/zbTyC1rkgiQjFSgmzAv6umMHOphYLNWZp6Ye5QrD77WfGOOoSqDsVmGUczc2pDkEPEzzGB/bvBO5rdzaTRgw==}
-    peerDependencies:
-      express: ^4.16.2
 
   graphql-type-json@0.3.2:
     resolution: {integrity: sha512-J+vjof74oMlCWXSvt0DOf2APEdZOCdubEvGDUAlqH//VBYcOYsGgRW7Xzorr44LvkjiuvecWc8fChxuZZbChtg==}
@@ -8986,11 +8972,6 @@ packages:
   xmlchars@2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
 
-  xss@1.0.15:
-    resolution: {integrity: sha512-FVdlVVC67WOIPvfOwhoMETV72f6GbW7aOabBC3WxN/oUdoEMDyLz4OgRv5/gck2ZeNqEQu+Tb0kloovXOfpYVg==}
-    engines: {node: '>= 0.10.0'}
-    hasBin: true
-
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
@@ -12712,8 +12693,6 @@ snapshots:
 
   cssesc@3.0.0: {}
 
-  cssfilter@0.0.10: {}
-
   cssnano-preset-default@5.2.14(postcss@8.5.15):
     dependencies:
       css-declaration-sorter: 6.4.1(postcss@8.5.15)
@@ -14263,15 +14242,6 @@ snapshots:
   graphql-http@1.22.4(graphql@16.14.0):
     dependencies:
       graphql: 16.14.0
-
-  graphql-playground-html@1.6.30:
-    dependencies:
-      xss: 1.0.15
-
-  graphql-playground-middleware-express@1.7.23(express@4.22.2):
-    dependencies:
-      express: 4.22.2
-      graphql-playground-html: 1.6.30
 
   graphql-type-json@0.3.2(graphql@16.14.0):
     dependencies:
@@ -18962,11 +18932,6 @@ snapshots:
   xmlbuilder@11.0.1: {}
 
   xmlchars@2.2.0: {}
-
-  xss@1.0.15:
-    dependencies:
-      commander: 2.20.3
-      cssfilter: 0.0.10
 
   xtend@4.0.2: {}
 
