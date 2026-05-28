@@ -79,7 +79,7 @@
     "potrace": "^2.1.8",
     "probe-image-size": "^4.0.0",
     "process": "^0.11.10",
-    "sharp": "^0.30.0",
+    "sharp": "^0.34.5",
     "slash": "^2.0.0",
     "sockjs": "^0.3.21",
     "sockjs-client": "^1.5.1",
