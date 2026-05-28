@@ -10,4 +10,4 @@ We have a quick list of common questions to get you started engaging with this p
 ---
 
 For this repo's release process — authoring changesets, cutting local releases, alpha/beta channels,
-migration notes from Lerna, and future CI — see [`../RELEASING.md`](../RELEASING.md).
+migration notes from Lerna, and future CI — see [`../docs/RELEASING.md`](../docs/RELEASING.md).

@@ -14,7 +14,11 @@ pnpm changeset
 
 Pick the affected packages, choose `patch` / `minor` / `major` per package, write a short user-facing summary, and commit the generated `.changeset/*.md` file with your code change.
 
-See [**RELEASING.md**](./RELEASING.md) for the full flow: cutting releases, alpha/beta prerelease channels, conventions, migration notes from Lerna, and the path to automated release CI.
+See [**RELEASING.md**](./docs/RELEASING.md) for the full flow: cutting releases, alpha/beta prerelease channels, conventions, migration notes from Lerna, and the path to automated release CI.
+
+## Testing
+
+Two automated suites — `pnpm test:unit` and `pnpm test:e2e` — cover most behavior. See [**TESTING.md**](./docs/TESTING.md) for what each suite covers and the list of manual verification recipes used until an entry can be promoted to e2e.
 
 <details>
 <summary><b>Gridsome README.md content</b></summary>
