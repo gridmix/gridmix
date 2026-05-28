@@ -213,6 +213,59 @@ the bump only moves our top-level dep. Both copies coexist because
 `express.json()` (and the other middleware factories) return plain
 connect-style functions that work in either express major.
 
+### Dev data refetch channel — `sockjs` → `ws`
+
+**Why manual:** the echo channel only exists under `gridmix develop`. Its server
+half is created in `createSocketServer()` (`gridmix/lib/develop.js`) on
+`webpack-dev-server`'s underlying HTTP server; its client half is the
+`app/entry.dev-socket.js` bundle, which webpack only adds in dev
+(`gridmix/lib/webpack/createClientConfig.js`, `else` branch). No unit suite
+touches either side, and `pages/watch.js` — the only producer of broadcast
+events — is skipped under `GRIDMIX_TEST` (`gridmix/lib/pages/pages.js`
+`createWatcher()`).
+
+**What it guards:** that the `/___echo` channel still delivers
+`{type:'fetch'}` from server → all open browsers when source data changes, so
+the client refetches GraphQL for the current route. Specifically: (1) the
+`ws@8` upgrade handler on `/___echo` coexists with WDS's own WS on `/ws`
+without one stealing the other's upgrades — both attach `upgrade` listeners
+to the same Node HTTP server and filter by `req.url`; (2) `App.clients` (now
+a `Set<WebSocket>`) collects connections and `broadcast()` calls
+`.send(payload)` (the `ws` API) on each, which the browser-native
+`WebSocket.onmessage` parses and switches on `data.type === 'fetch'`; (3)
+the WS URL the client connects to is derived from `window.location`
+(`ws://` / `wss://` per `location.protocol`, plus `location.host`) — there
+is no longer a `process.env.SOCKJS_ENDPOINT` DefinePlugin entry.
+
+**Steps:**
+
+1. In a Gridmix site with at least one page that consumes data via
+   `<page-query>` (e.g. `examples/main` or a fixture with `@gridmix/source-filesystem`),
+   run `gridmix develop`.
+2. **Channel handshake:** open the page in a browser. In DevTools → Network
+   → WS, confirm two WebSocket connections are open: one to `/ws` (WDS's
+   own HMR transport, status 101) and one to `/___echo` (Gridmix's data
+   channel, status 101). Neither should close immediately.
+3. **Data refetch round-trip:** with the page open, edit a content source
+   the page depends on (e.g. change a markdown front-matter title, or
+   change a value the `<page-query>` reads). Save.
+4. **HTTPS variant (optional):** re-run `gridmix develop -s` (or
+   equivalent) and repeat step 2. The `/___echo` connection should now be
+   `wss://` and still reach 101.
+
+**Expected:** in step 3, the page's rendered content updates without a full
+page reload — the GraphQL response was refetched and re-applied via
+`app/fetch.js` → `setResults()`. In the DevTools WS frames for `/___echo`,
+a server-sent frame `{"type":"fetch"}` appears immediately after save
+(debounced 16 ms by `pages/watch.js`). No `WebSocket connection to
+'ws://…/___echo' failed` errors in the console at any point.
+
+**Future automation:** promote to `pnpm test:e2e` — start `develop` against
+a fixture site, open a browser via puppeteer, mutate a watched source file,
+and assert that (a) the `/___echo` WS frame arrives and (b) the
+in-DOM-rendered value reflects the new source within a short timeout, with
+no full navigation having occurred.
+
 ### `@gridmix/source-wordpress` paginated fetch — `p-map` 1 → 4
 
 **Why manual:** `packages/source-wordpress` has no unit or e2e tests; the only

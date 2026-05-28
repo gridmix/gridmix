@@ -1,9 +1,9 @@
 import fetch from './fetch'
 import router from './router'
-import SockJS from 'sockjs-client'
 import { formatError, clearAllResults, setResults } from './graphql/shared'
 
-const sock = new SockJS(process.env.SOCKJS_ENDPOINT)
+const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
+const sock = new WebSocket(`${protocol}//${window.location.host}/___echo`)
 
 sock.onmessage = message => {
   const data = JSON.parse(message.data)

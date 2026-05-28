@@ -12,7 +12,7 @@ class App {
   constructor (context, options = {}) {
     process.GRIDMIX = this
 
-    this.clients = {}
+    this.clients = new Set()
     this.context = context
     this.options = options
     this.isInitialized = false
@@ -157,8 +157,9 @@ class App {
   }
 
   broadcast (message, hotReload = true) {
-    for (const client in this.clients) {
-      this.clients[client].write(JSON.stringify(message))
+    const payload = JSON.stringify(message)
+    for (const client of this.clients) {
+      client.send(payload)
     }
 
     return hotReload

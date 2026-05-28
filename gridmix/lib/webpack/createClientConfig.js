@@ -70,7 +70,7 @@ module.exports = async app => {
         .end()
       .merge({ moduleIds: 'deterministic' })
   } else {
-    config.entry('app').add(resolve('../../app/entry.sockjs.js'))
+    config.entry('app').add(resolve('../../app/entry.dev-socket.js'))
 
     config.plugin('no-emit-on-errors')
       .use(require('webpack/lib/NoEmitOnErrorsPlugin'))

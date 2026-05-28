@@ -340,7 +340,6 @@ module.exports = (app, { isProd, isServer }) => {
       'process.env.PUBLIC_PATH': JSON.stringify(publicPath),
       'process.env.DATA_URL': JSON.stringify(forwardSlash(path.join(publicPath, assetsDir, 'data', '/'))),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || ''),
-      'process.env.SOCKJS_ENDPOINT': JSON.stringify('/___echo'),
       'process.env.GRAPHQL_ENDPOINT': JSON.stringify('/___graphql'),
       'process.isClient': !isServer,
       'process.isServer': isServer,

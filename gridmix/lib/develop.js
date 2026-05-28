@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs-extra')
 const chalk = require('./utils/chalk')
-const sockjs = require('sockjs')
+const { WebSocketServer } = require('ws')
 const { hasWarnings, logAllWarnings } = require('./utils/deprecate')
 const { forwardSlash } = require('./utils')
 
@@ -98,17 +98,21 @@ async function createDevServer(app, compiler) {
 }
 
 function createSocketServer(app, server) {
-  const echo = sockjs.createServer({ log: () => null })
-  echo.on('connection', (connection) => {
-    if (connection) {
-      app.clients[connection.id] = connection
-      connection.on('close', () => {
-        delete app.clients[connection.id]
-      })
-    }
+  const echo = new WebSocketServer({ noServer: true })
+
+  // Coexists with webpack-dev-server's own WS on `/ws`: both register an
+  // `upgrade` listener on the same HTTP server and filter by path.
+  server.server.on('upgrade', (req, socket, head) => {
+    const { pathname } = new URL(req.url, 'http://localhost')
+    if (pathname !== '/___echo') return
+    echo.handleUpgrade(req, socket, head, (ws) => {
+      echo.emit('connection', ws, req)
+    })
   })
-  echo.installHandlers(server.server, {
-    prefix: '/___echo'
+
+  echo.on('connection', (ws) => {
+    app.clients.add(ws)
+    ws.on('close', () => app.clients.delete(ws))
   })
 }
 
