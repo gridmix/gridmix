@@ -19,36 +19,6 @@ here with a link to the test** so this list only ever holds what is still manual
 Template for new entries: _Why manual_ · _What it guards_ · _Steps_ · _Expected_
 · _Future automation_.
 
-### Renderer SSR cache — `maxCacheAge` → `ttl` (lru-cache 5 → 10)
-
-**Why manual:** the cache is a closure inside the `serve` middleware
-(`gridmix/lib/server/middlewares/renderer.js`), which needs a production build to
-run, so TTL expiry can't be asserted in a unit test without refactoring the
-middleware.
-
-**What it guards:** that `maxCacheAge` (default 1000 ms, overridable in
-`gridmix.config.js`, read at `gridmix/lib/app/loadConfig.js`) maps to lru-cache's
-`ttl`, so rendered pages are served from cache within the window and re-rendered
-after it expires.
-
-**Steps:**
-
-1. In a Gridmix site, optionally set `maxCacheAge: 5000` in `gridmix.config.js`
-   (a wider window is easier to observe than the 1000 ms default).
-2. `gridmix build && gridmix serve` (this middleware runs under `serve`, not
-   `develop`).
-3. Request any page twice within the window. The second request logs
-   `return cached <url>` in the serve console — a cache hit.
-4. Wait longer than `maxCacheAge`, then request the same page again. No
-   `return cached` log appears — the entry expired via `ttl` and the page was
-   re-rendered.
-
-**Expected:** cache hit on step 3, miss (re-render, no log) on step 4.
-
-**Future automation:** promote to `pnpm test:e2e` — build a fixture site, start
-the serve middleware, and assert the `return cached` log (or response timing)
-across the TTL boundary.
-
 ### Dev hot-reload file watching (chokidar 3 → 4)
 
 **Why manual:** the live file watchers run only under `gridmix develop`
@@ -160,9 +130,7 @@ shapes; (4) routes SPA paths through `connect-history-api-fallback` so
 `/___explore` and arbitrary client routes both reach the right handler; (5)
 runs through the bumped path-to-regexp@8 inside express 5 without the
 removed-`*`-wildcard regression (Gridmix uses literal paths and one regex —
-no `'*'` patterns in live code; `lib/serve.js` still has `server.get('*', …)`
-but it's dead code: its `./server/Server` / `./server/utils` requires resolve
-to non-existent files and its CLI command is commented out in `index.js`).
+no `'*'` patterns in live code).
 
 **Steps:**
 

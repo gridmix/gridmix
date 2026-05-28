@@ -158,9 +158,6 @@ module.exports = async (context, options = {}) => {
     ? localConfig.transpileDependencies.slice()
     : []
 
-  // max cache age for html markup in serve mode
-  config.maxCacheAge = localConfig.maxCacheAge || 1000
-
   config.siteUrl = localConfig.siteUrl || ''
   config.siteName = localConfig.siteName || path.parse(context).name
   config.titleTemplate = localConfig.titleTemplate || `%s - ${config.siteName}`

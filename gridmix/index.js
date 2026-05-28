@@ -30,16 +30,6 @@ module.exports = ({ context, program }) => {
     .action(args => {
       wrapCommand(require('./lib/explore'))(context, args)
     })
-
-  // TODO
-  // program
-  //   .command('serve')
-  //   .description('start a production node.js server')
-  //   .option('-p, --port <port>', 'use specified port (default: 8080)')
-  //   .option('-h, --host <host>', 'use specified host (default: 0.0.0.0)')
-  //   .action(args => {
-  //     wrapCommand(require('./lib/serve'))(context, args)
-  //   })
 }
 
 function wrapCommand (fn) {
