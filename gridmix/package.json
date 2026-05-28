@@ -71,7 +71,7 @@
     "mime-types": "^3.0.0",
     "mini-css-extract-plugin": "^1.6.0",
     "moment": "^2.24.0",
-    "p-map": "^2.0.0",
+    "p-map": "^4.0.0",
     "path-to-regexp": "^2.2.1",
     "portfinder": "^1.0.38",
     "postcss": "^8.4.5",

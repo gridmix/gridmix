@@ -85,3 +85,48 @@ dev console (the chokidar 4 CJS build loads cleanly under Node's require).
 **Future automation:** promote to `pnpm test:e2e` — start `develop` against a
 fixture site, mutate files on disk, and poll the dev server for the route
 appearing/disappearing and the changed content being served.
+
+### `@gridmix/source-wordpress` paginated fetch — `p-map` 1 → 4
+
+**Why manual:** `packages/source-wordpress` has no unit or e2e tests; the only
+caller of `pMap` in that package is `WordPressSource.fetchPaged()`
+(`packages/source-wordpress/index.js:235`), which only runs when a Gridmix site
+declares `@gridmix/source-wordpress` and the source's REST endpoint returns more
+than one page (`X-WP-TotalPages > 1`). Nothing in-repo exercises that path.
+
+**What it guards:** that `pMap(queue, fetcher, { concurrency })` still iterates
+the page queue and collects results in v4 the same way it did in v1. v4 is API-
+identical for this call shape (no `stopOnError`, no `AbortSignal`, just plain
+concurrency-limited mapping), so a successful end-to-end paginated fetch is the
+proof. The other three p-map call sites (`gridmix/lib/build.js:128`,
+`gridmix/lib/app/build/executeQueries.js:26`,
+`gridmix/lib/workers/image-processor.js:107`) are already covered:
+`image-processor.spec.js` exercises the worker directly, and the
+`project-*.build.e2e.js` suite drives `build.js` + `executeQueries.js` end to
+end.
+
+**Steps:**
+
+1. In a Gridmix site, install `@gridmix/source-wordpress` and configure it
+   against a WordPress REST endpoint that returns more than `perPage` items for
+   at least one collection (e.g. posts) — anything that forces
+   `X-WP-TotalPages >= 2`. A public demo endpoint or local WP install both
+   work.
+2. `gridmix build`. The source plugin calls `fetchPaged()` for each configured
+   route, which triggers the `pMap` paginated fetch when more than one page is
+   needed.
+3. Inspect the built `dist/` (or query the in-memory store via a small page-
+   query that lists the collection) to confirm the total item count matches the
+   endpoint's `X-WP-Total`.
+
+**Expected:** all items across all pages are present in the build output —
+proves `pMap` iterated the page queue, awaited all fetches, and collected
+results before the build moved on. No `Cannot use import statement` /
+module-load errors during `gridmix build` (p-map 4 is CJS; the v4 default
+export is the function itself, matching the existing `const pMap = require('p-map')`
+import shape).
+
+**Future automation:** promote to `pnpm test:e2e` — stand up a tiny mock
+WordPress REST server (nock or a local Express stub returning the right
+`X-WP-Total` / `X-WP-TotalPages` headers across 2–3 pages), drive a build of a
+fixture Gridmix site that consumes it, and assert the collected item count.
