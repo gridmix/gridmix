@@ -1,25 +1,12 @@
+// Deprecation shim: lib/server/Server.js was removed upstream in gridsome
+// PR #1470 (Aug 2021); the playground now lives on `gridmix develop` at
+// /___explore. Kept as an alias to preserve the documented CLI surface.
 const chalk = require('./utils/chalk')
-const createApp = require('./app')
-const Server = require('./server/Server')
-const resolvePort = require('./server/resolvePort')
-const { BOOTSTRAP_PAGES } = require('./utils/constants')
-const { prepareUrls } = require('./server/utils')
 
 module.exports = async (context, args) => {
-  process.env.NODE_ENV = 'development'
-  process.env.GRIDMIX_MODE = 'serve'
-
-  const app = await createApp(context, { args }, BOOTSTRAP_PAGES)
-  const port = await resolvePort(app.config.port)
-  const hostname = app.config.host
-  const urls = prepareUrls(hostname, port)
-  const server = new Server(app, urls)
-
-  server.listen(port, hostname, err => {
-    if (err) throw err
-
-    console.log()
-    console.log(`  Explore GraphQL data at: ${chalk.cyan(urls.explore.pretty)}`)
-    console.log()
-  })
+  console.log()
+  console.log(`  ${chalk.yellow('Notice:')} ${chalk.cyan('gridmix explore')} is deprecated.`)
+  console.log(`  Starting the dev server — open ${chalk.cyan('/___explore')} to use the playground.`)
+  console.log()
+  return require('./develop')(context, args)
 }

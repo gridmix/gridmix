@@ -21,9 +21,10 @@ module.exports = ({ context, program }) => {
       wrapCommand(require('./lib/build'))(context, {})
     })
 
+  // Deprecated alias for `develop`; see lib/explore.js for context.
   program
     .command('explore')
-    .description('explore GraphQL data')
+    .description('explore GraphQL data (deprecated — alias for `develop`)')
     .option('-p, --port <port>', 'use specified port (default: 8080)')
     .option('-h, --host <host>', 'use specified host (default: 0.0.0.0)')
     .action(args => {
