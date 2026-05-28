@@ -136,6 +136,83 @@ responses.
 fixture site, hit `/___graphql` with both a valid page-context query and a
 malformed query, and assert the response shape end-to-end.
 
+### Dev middleware chain — `express` 4 → 5
+
+**Why manual:** the live express middleware chain runs only under
+`gridmix develop`, behind webpack-dev-server's `setupMiddlewares` hook in
+`gridmix/lib/develop.js`. No unit suite touches it; the `project-*.build.e2e.js`
+suite exercises a fresh `express()` of its own (over a built `dist/`), not the
+dev-server chain. Express 5's behavior changes that matter for Gridmix —
+`req.params` from a regex-route middleware (`assetsRE` in `develop.js`,
+consumed at `gridmix/lib/server/middlewares/assets.js:11` as `req.params[1]`),
+async-middleware error propagation in `graphql.js`, and the
+connect-history-api-fallback splice point — all sit on this code path.
+
+**What it guards:** that the express 5 dev server still (1) parses JSON POST
+bodies via `express.json()` so the graphql middleware's
+`const { body = {}, query = {} } = req` and the downstream
+`req.body = { query, variables }` reassignment (`graphql.js:68`) work
+unchanged (express 5 keeps `req.body` as a normal property — only `req.query`
+became a getter); (2) matches `assetsRE` and populates `req.params[1]` with
+the captured `(files|static)/...` path so image/file assets resolve; (3)
+sends OPTIONS / sendStatus / json / status().send() responses with the same
+shapes; (4) routes SPA paths through `connect-history-api-fallback` so
+`/___explore` and arbitrary client routes both reach the right handler; (5)
+runs through the bumped path-to-regexp@8 inside express 5 without the
+removed-`*`-wildcard regression (Gridmix uses literal paths and one regex —
+no `'*'` patterns in live code; `lib/serve.js` still has `server.get('*', …)`
+but it's dead code: its `./server/Server` / `./server/utils` requires resolve
+to non-existent files and its CLI command is commented out in `index.js`).
+
+**Steps:**
+
+1. In a Gridmix site, run `gridmix develop`.
+2. **JSON body + page-context POST:**
+   `curl -s -X POST http://localhost:8080/___graphql -H 'content-type: application/json' -d '{"path":"/","dynamic":false}'`
+   — the response has a `data` field and `extensions.context` is an object
+   (proves `express.json()` parsed the body and the graphql middleware's
+   `req.body` reassignment reached `graphql-http`'s handler).
+3. **Direct GraphQL query:**
+   `curl -s -X POST http://localhost:8080/___graphql -H 'content-type: application/json' -d '{"query":"{ allPage { totalCount } }"}'`
+   — returns `data.allPage.totalCount` (proves the `next()` branch when
+   `body.query` is set, and the `graphql-http` handler).
+4. **OPTIONS preflight:**
+   `curl -s -o /dev/null -w '%{http_code}\n' -X OPTIONS http://localhost:8080/___graphql`
+   — returns `200` (graphql.js `sendStatus(200)`).
+5. **Asset regex route (`req.params[1]`):** in a page or template, reference
+   an image from `src/` via the standard
+   `<g-image src="~/assets/foo.png" />` (or any built-in image transform).
+   Load the page in the browser; the transformed image renders (200, correct
+   `Content-Type`). This is the highest-risk path: it proves that the
+   `assetsRE` regex still populates `req.params[1]` under express 5's
+   path-to-regexp@8 — if it broke, `assets.js:11` would throw
+   `Cannot read properties of undefined (reading 'replace')`.
+6. **SPA fallback (`connect-history-api-fallback`):** open
+   `http://localhost:8080/some/nonexistent/client-route` in the browser. The
+   Vue SPA loads (the fallback redirects to `index.html` before our
+   middlewares get a 404), proving the splice index for `gridmix-graphql` /
+   `gridmix-explore` middlewares is still found and ordering is preserved.
+7. **Plugin-registered middleware:** if any installed plugin uses
+   `api.configureServer(app => app.get('/__plugin', ...))`, hit it and
+   confirm it responds (proves `app.plugins.configureServer(server.app)` is
+   still passed a working express-like app).
+
+**Expected:** every step succeeds; no `TypeError: Missing parameter name` or
+`Unexpected ?` errors at boot (those would signal a path-to-regexp@8 syntax
+break); no `Cannot read properties of undefined` from `assets.js`; the
+GraphiQL UI at `/___explore` still loads (covered by the
+[express-graphql → graphql-http](#dev-graphql-endpoint--express-graphql--graphql-http)
+recipe above — re-run it as a side-check).
+
+**Future automation:** promote to `pnpm test:e2e` — start `develop` against a
+fixture site, hit `/___graphql` (valid + OPTIONS), request a transformed
+asset URL, and request an unknown client route, asserting status codes and
+payload shapes for each. Note that `webpack-dev-server@4.15.2` still pins
+its own internal `express@^4` in `node_modules/webpack-dev-server/node_modules/express`;
+the bump only moves our top-level dep. Both copies coexist because
+`express.json()` (and the other middleware factories) return plain
+connect-style functions that work in either express major.
+
 ### `@gridmix/source-wordpress` paginated fetch — `p-map` 1 → 4
 
 **Why manual:** `packages/source-wordpress` has no unit or e2e tests; the only
