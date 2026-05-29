@@ -20,6 +20,10 @@ See [**RELEASING.md**](./docs/RELEASING.md) for the full flow: cutting releases,
 
 Two automated suites — `pnpm test:unit` and `pnpm test:e2e` — cover most behavior. See [**TESTING.md**](./docs/TESTING.md) for what each suite covers and the list of manual verification recipes used until an entry can be promoted to e2e.
 
+## Dependency updates
+
+Renovate runs in dashboard-approval mode and Socket.dev gates per-PR supply-chain risk; updates and CVE triage are driven through the [Dependency Dashboard issue](https://github.com/gridmix/gridmix/issues/1). See [**RENOVATE.md**](./docs/RENOVATE.md) for the workflow, the three exits for each item (resolve / override+defer / defer cleanly), and the end-of-stage override sweep tied to the staged renewal.
+
 <details>
 <summary><b>Gridsome README.md content</b></summary>
 <p align="center">
