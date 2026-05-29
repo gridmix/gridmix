@@ -1,0 +1,49 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "minimumReleaseAge": "7 days",
+  "dependencyDashboard": true,
+  "dependencyDashboardApproval": true,
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 5,
+  "rangeStrategy": "replace",
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "vulnerabilityAlerts": {
+    "minimumReleaseAge": "0 days",
+    "labels": ["security"],
+    "prPriority": 10
+  },
+  "packageRules": [
+    {
+      "matchPackageNames": ["@babel/**", "babel-**"],
+      "groupName": "babel"
+    },
+    {
+      "matchPackageNames": ["jest", "jest-**", "@jest/**", "babel-jest", "ts-jest"],
+      "groupName": "jest"
+    },
+    {
+      "matchPackageNames": ["eslint", "eslint-**", "@eslint/**", "@typescript-eslint/**"],
+      "groupName": "eslint"
+    },
+    {
+      "matchPackageNames": ["@changesets/**"],
+      "groupName": "changesets"
+    },
+    {
+      "matchPackageNames": ["vue", "@vue/**", "vue-**"],
+      "groupName": "vue"
+    },
+    {
+      "matchPackageNames": ["@types/**"],
+      "groupName": "type definitions"
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": false
+    }
+  ]
+}
