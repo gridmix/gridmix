@@ -15,7 +15,7 @@
     "css"
   ],
   "dependencies": {
-    "critical": "^4.0.1",
+    "critical": "^8.0.0",
     "fs-extra": "^11.2.0",
     "get-stream": "^6.0.0",
     "jest-worker": "^30.4.1",
@@ -28,6 +28,6 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22.13.0"
   }
 }

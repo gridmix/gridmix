@@ -1,10 +1,10 @@
 const fs = require('fs-extra')
 const oust = require('oust')
-const critical = require('critical')
 const { createPolyfillScript, inlineCriticalCSS } = require('./inline')
 
 exports.processHtmlFile = async function (filename, options = {}) {
   const { publicPath, baseDir, polyfill, ...criticalOptions } = options
+  const { generate } = await import('critical')
   const sourceHTML = await fs.readFile(filename, 'utf-8')
 
   // Extract stylesheet paths manually to prevent duplicate CSS.
@@ -21,7 +21,7 @@ exports.processHtmlFile = async function (filename, options = {}) {
     })
   }
 
-  const result = await critical.generate({
+  const result = await generate({
     ...criticalOptions,
     base: baseDir,
     html: sourceHTML,

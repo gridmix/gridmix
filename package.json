@@ -7,8 +7,8 @@
     "projects/*"
   ],
   "scripts": {
-    "test:unit": "GRIDMIX_TEST=unit jest --runInBand",
-    "test:e2e": "GRIDMIX_TEST=e2e jest --runInBand",
+    "test:unit": "NODE_OPTIONS=--experimental-vm-modules GRIDMIX_TEST=unit jest --runInBand",
+    "test:e2e": "NODE_OPTIONS=--experimental-vm-modules GRIDMIX_TEST=e2e jest --runInBand",
     "lint": "eslint \"@(gridmix|packages)/**/*.js\"",
     "changeset:status": "changeset status --verbose",
     "changeset:version": "changeset version",
