@@ -18,7 +18,7 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22.18.0"
   },
   "dependencies": {
     "axios": "^0.21.1",
