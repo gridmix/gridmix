@@ -38,6 +38,9 @@ class RemarkTransformer {
     const { localOptions, resolveNodeFilePath } = context
 
     this.options = defaultsDeep(localOptions, options)
+    // Keep the consuming project context so user-provided remark plugins can
+    // be resolved from the project that declared them.
+    this.context = context.context
     this.processor = this.createProcessor(localOptions)
     this.resolveNodeFilePath = resolveNodeFilePath
     this.assets = context.assets || context.queue
@@ -154,7 +157,7 @@ class RemarkTransformer {
 
   createProcessor (options = {}) {
     const processor = unified().data('transformer', this)
-    const plugins = createPlugins(this.options, options)
+    const plugins = createPlugins(this.options, options, this.context)
     const config = this.options.config || {}
 
     return processor

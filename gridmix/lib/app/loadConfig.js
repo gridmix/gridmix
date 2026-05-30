@@ -107,7 +107,7 @@ module.exports = async (context, options = {}) => {
   config.https = args.https
   config.plugins = normalizePlugins(context, plugins)
   config.redirects = normalizeRedirects(localConfig)
-  config.transformers = resolveTransformers(config.pkg, localConfig)
+  config.transformers = resolveTransformers(context, config.pkg, localConfig)
   config.pathPrefix = normalizePathPrefix(config.mode === 'production' ? localConfig.pathPrefix : '')
   config._pathPrefix = normalizePathPrefix(localConfig.pathPrefix)
   config.publicPath = config.pathPrefix ? `${config.pathPrefix}/` : '/'
@@ -482,7 +482,7 @@ function resolvePluginEntries (id, context) {
   })
 }
 
-function resolveTransformers (pkg, config) {
+function resolveTransformers (context, pkg, config) {
   const { dependencies = {}, devDependencies = {}} = pkg
   const deps = Object.keys({
     ...dependencies,
@@ -508,7 +508,14 @@ function resolveTransformers (pkg, config) {
 
     const [, suffix] = matches
     const name = camelCase(suffix)
-    const TransformerClass = require(id)
+    // Transformers are declared by the consuming project, so resolve normal
+    // package ids from that project instead of relying on package-manager
+    // hoisting to make them visible from Gridmix's own package directory.
+    const TransformerClass = require(
+      matches.length
+        ? require.resolve(id, { paths: [context] })
+        : id
+    )
     const options = (config.transformers || {})[name] || {}
 
     for (const mimeType of TransformerClass.mimeTypes()) {

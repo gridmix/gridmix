@@ -11,6 +11,21 @@ exports.cacheKey = function (node, key) {
   })
 }
 
+function resolvePlugin (entry, context) {
+  if (context) {
+    try {
+      // User-provided remark plugins belong to the consuming project. Resolving
+      // from that root keeps linked/pnpm installs working without hoisting.
+      return require.resolve(entry, { paths: [context] })
+    } catch (err) {
+      // Fall back to the transformer's own dependencies for built-in remark
+      // plugins such as remark-slug and remark-html.
+    }
+  }
+
+  return entry
+}
+
 exports.createFile = function (node) {
   return vfile({
     contents: node.content,
@@ -19,12 +34,12 @@ exports.createFile = function (node) {
   })
 }
 
-exports.createPlugins = function (options, localOptions) {
+exports.createPlugins = function (options, localOptions, context) {
   const userPlugins = (options.plugins || []).concat(localOptions.plugins || [])
   const plugins = []
 
   if (options.useBuiltIns === false) {
-    return normalizePlugins(userPlugins || [])
+    return normalizePlugins(userPlugins || [], context)
   }
 
   if (options.processFiles !== false) {
@@ -77,7 +92,7 @@ exports.createPlugins = function (options, localOptions) {
 
   plugins.push(...userPlugins)
 
-  return normalizePlugins(plugins)
+  return normalizePlugins(plugins, context)
 }
 
 exports.findHeadings = function (ast) {
@@ -103,10 +118,10 @@ exports.findHeadings = function (ast) {
   return headings
 }
 
-function normalizePlugins (arr = []) {
+function normalizePlugins (arr = [], context) {
   const normalize = entry => {
     return typeof entry === 'string'
-      ? require(entry)
+      ? require(resolvePlugin(entry, context))
       : entry
   }
 

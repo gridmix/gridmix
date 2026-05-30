@@ -1,4 +1,6 @@
 const path = require('path')
+const os = require('os')
+const fs = require('fs-extra')
 const App = require('../App')
 const createApp = require('../index')
 const PluginAPI = require('../PluginAPI')
@@ -31,6 +33,34 @@ test('setup basic config', async () => {
   expect(config.icon.touchicon).toHaveProperty('sizes')
   expect(config.icon.touchicon).toHaveProperty('precomposed')
   expect(config.icon.touchicon).toHaveProperty('src', './src/favicon.png')
+})
+
+test('resolves transformers from project context', async () => {
+  const projectContext = fs.mkdtempSync(path.join(os.tmpdir(), 'gridmix-transformer-'))
+  const transformerDir = path.join(projectContext, 'node_modules/gridmix-transformer-project-only')
+
+  fs.outputJsonSync(path.join(projectContext, 'package.json'), {
+    dependencies: {
+      gridmix: '*',
+      'gridmix-transformer-project-only': '*'
+    }
+  })
+
+  fs.outputFileSync(path.join(transformerDir, 'index.js'), `
+    class ProjectOnlyTransformer {
+      static mimeTypes () {
+        return ['text/project-only']
+      }
+    }
+
+    module.exports = ProjectOnlyTransformer
+  `)
+
+  const config = await loadConfig(projectContext)
+
+  expect(config.transformers['text/project-only']).toMatchObject({
+    name: 'projectOnly'
+  })
 })
 
 test('setup basic config for path prefix', async () => {
