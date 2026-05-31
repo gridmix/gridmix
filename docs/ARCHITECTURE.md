@@ -129,133 +129,190 @@ The action objects passed into plugin hooks are created in `gridmix/lib/app/acti
 - Page actions expose `createPage()`, `createRoute()`, collection lookup, slugification, GraphQL execution, and page management methods for managed pages.
 Client plugin entries are not executed by the Node plugin manager. Instead, code generation writes `plugins-client.js` and `plugins-server.js` into the app cache. Despite the filenames, both generated files contain browser/SSR runtime plugin entries built from `gridmix.client.js` files: `plugins-server.js` contains entries whose normalized plugin `server` flag is `true` and is imported by the shared app module, while `plugins-client.js` contains entries whose `server` flag is `false` and is imported only by the browser entry. Runtime entry files execute each generated entry with `(Vue, options, context)`.
 ## Built-in plugins
-The core plugin writes site metadata into the store during `loadSource`, creates the `/404` page, marks 404 pages in page context, and adjusts the render queue so the 404 page is emitted as `/404.html` and `/assets/data/404.json`.
-The Vue components plugin wires Vue single-file component custom blocks into webpack:
-- `<page-query>` blocks are parsed from `.vue` files for route/page query generation.
-- `<static-query>` and `<page-query>` custom blocks are loaded through dedicated loaders.
-- External page query files referenced with `src` are resolved through the compiler resolver and added to page watch dependencies.
-The Vue pages plugin scans `src/pages/**/*.vue`, converts file paths into route paths, creates managed pages, and watches the pages directory in development for added and removed `.vue` files.
-The templates plugin turns collection nodes into pages. It reads template definitions from `gridmix.config.js` and collection options, computes node public paths, adds `path(to:)` schema resolvers, creates managed pages for matching template components, and subscribes to collection add/update/remove events to keep pages in sync.
-The redirects plugin participates in route/render behavior for configured redirects.
+The built-in plugin set is prepended to project plugins during config loading:
+- Core plugin:
+  - Writes site metadata into the store during `loadSource`.
+  - Creates the `/404` page.
+  - Marks 404 pages in page context.
+  - Adjusts the render queue so the 404 page is emitted as `/404.html` and `/assets/data/404.json`.
+- Vue components plugin:
+  - Wires Vue single-file component custom blocks into webpack.
+  - Parses `<page-query>` blocks from `.vue` files for route/page query generation.
+  - Loads `<static-query>` and `<page-query>` custom blocks through dedicated loaders.
+  - Resolves external page query files referenced with `src` through the compiler resolver and adds them to page watch dependencies.
+- Vue pages plugin:
+  - Scans `src/pages/**/*.vue`.
+  - Converts file paths into route paths.
+  - Creates managed pages.
+  - Watches the pages directory in development for added and removed `.vue` files.
+- Templates plugin:
+  - Turns collection nodes into pages.
+  - Reads template definitions from `gridmix.config.js` and collection options.
+  - Computes node public paths.
+  - Adds `path(to:)` schema resolvers.
+  - Creates managed pages for matching template components.
+  - Subscribes to collection add/update/remove events to keep pages in sync.
+- Redirects plugin:
+  - Participates in route/render behavior for configured redirects.
 ## Store and content model
 `gridmix/lib/store/Store.js` is the top-level data store. It owns:
-- `collections`: a map of type name to `Collection`.
-- `metadata`: a Loki collection keyed by metadata key.
-- `nodeIndex`: a separate index used for cross-type lookup and belongs-to relationships.
-- Store hooks for `addCollection` and `addNode`.
+- Data containers:
+  - `collections`: a map of type name to `Collection`.
+  - `metadata`: a Loki collection keyed by metadata key.
+  - `nodeIndex`: a separate index used for cross-type lookup and belongs-to relationships.
+- Store hooks:
+  - `addCollection`
+  - `addNode`
 Each content collection is a `gridmix/lib/store/Collection.js` instance backed by a Loki collection. Collections track:
-- The GraphQL type name.
-- Collection options such as references, fields, date field, sorting defaults, unique/index fields, camel-casing, and asset path resolution behavior.
-- MIME-type transformers attached to the collection.
-- Event listeners for add/update/remove.
+- Identity and options:
+  - The GraphQL type name.
+  - Collection options such as references, fields, date field, sorting defaults, unique/index fields, camel-casing, and asset path resolution behavior.
+- Processing integrations:
+  - MIME-type transformers attached to the collection.
+  - Event listeners for add/update/remove.
 Adding or updating a node runs normalization and store hooks before the node is inserted into Loki. The default add-node hooks transform node content and process node fields. Store-level collection events update the global node index and update the store timestamp. In development, a changed timestamp can trigger app broadcasts after bootstrap.
 `PluginStore` is the store facade used by plugins and source packages. It creates transformer instances for the plugin, resolves node file paths, creates references, adds metadata, adds collections, and exposes deprecated aliases used by older Gridsome plugins.
 ## Transformers and content parsing
 Transformers are selected by MIME type. Source plugins usually create nodes with:
-- `internal.mimeType`
-- `internal.content`
-- `internal.origin`
+- Internal content metadata:
+  - `internal.mimeType`
+  - `internal.content`
+  - `internal.origin`
 The store hooks use the matching transformer to parse raw content and merge parsed fields into the node. Transformers can also expose `extendNodeType()` to add GraphQL fields for nodes of collections that include their MIME type.
 Examples:
-- `@gridmix/transformer-json` parses JSON into object fields or wraps non-object JSON as `{ data }`.
-- `@gridmix/transformer-yaml` does the same for YAML.
-- `@gridmix/transformer-csv` parses CSV content.
-- `@gridmix/transformer-remark` parses Markdown with gray-matter and Remark, adds fields such as `content`, `headings`, `timeToRead`, and `excerpt`, and can enqueue referenced files/images through Remark plugins.
+- Structured-data transformers:
+  - `@gridmix/transformer-json` parses JSON into object fields or wraps non-object JSON as `{ data }`.
+  - `@gridmix/transformer-yaml` does the same for YAML.
+  - `@gridmix/transformer-csv` parses CSV content.
+- Markdown transformer:
+  - `@gridmix/transformer-remark` parses Markdown with gray-matter and Remark.
+  - It adds fields such as `content`, `headings`, `timeToRead`, and `excerpt`.
+  - It can enqueue referenced files/images through Remark plugins.
 ## Source plugins
 Source packages are normal server-side plugins. They typically call `api.loadSource()` and use the provided actions to create collections and add nodes.
 `@gridmix/source-filesystem` is the local-file source. It:
-- Creates a collection with a configured `typeName`.
-- Glob-matches files from a configured base directory.
-- Reads file contents and MIME type.
-- Creates a node with file info, generated path, and `internal` content metadata.
-- Optionally creates referenced nodes.
-- Watches matching files in development and adds, updates, or removes collection nodes on filesystem changes.
+- Collection setup:
+  - Creates a collection with a configured `typeName`.
+- File loading:
+  - Glob-matches files from a configured base directory.
+  - Reads file contents and MIME type.
+  - Creates a node with file info, generated path, and `internal` content metadata.
+- References and development updates:
+  - Optionally creates referenced nodes.
+  - Watches matching files in development and adds, updates, or removes collection nodes on filesystem changes.
 Remote source packages follow the same store model but fetch data from external APIs. `@gridmix/source-graphql` is different from node-based source plugins: it introspects a remote GraphQL endpoint and adds a wrapped remote schema during `api.createSchema()`, exposing it under a configured field name.
 ## GraphQL schema
 `gridmix/lib/app/Schema.js` wraps schema construction and query execution. It stores pending custom schemas, SDL/types, resolvers, and field extensions until `buildSchema()` is called.
 Schema construction is implemented in `gridmix/lib/graphql/createSchema.js` using `graphql-compose`. The generated schema includes:
-- Must-have internal types and directives.
-- Built-in directives such as pagination, proxy, and reference directives.
-- Custom SDL/types from plugins.
-- Collection-derived node types.
-- Metadata query type.
-- Page query fields.
-- External schemas added by plugins.
-- Custom resolvers added by plugins.
-- Processed references and belongs-to relationships.
+- Base schema pieces:
+  - Must-have internal types and directives.
+  - Built-in directives such as pagination, proxy, and reference directives.
+- Project/plugin additions:
+  - Custom SDL/types from plugins.
+  - External schemas added by plugins.
+  - Custom resolvers added by plugins.
+- Gridmix-generated fields:
+  - Collection-derived node types.
+  - Metadata query type.
+  - Page query fields.
+  - Processed references and belongs-to relationships.
 For each collection, `gridmix/lib/graphql/nodes/index.js` creates:
-- A GraphQL object type implementing `Node`.
-- Connection and edge types.
-- `Query.{typeName}` and `Query.all{TypeName}` fields.
-- Filter input types.
-- Find-one, paginated find-many, reference-one, reference-many, and advanced reference resolvers.
-- Inferred fields from collection node data unless a custom type disables inference.
-- Extra fields from transformers and collection schema fields.
+- Type and query shape:
+  - A GraphQL object type implementing `Node`.
+  - Connection and edge types.
+  - `Query.{typeName}` and `Query.all{TypeName}` fields.
+  - Filter input types.
+- Resolvers and fields:
+  - Find-one, paginated find-many, reference-one, reference-many, and advanced reference resolvers.
+  - Inferred fields from collection node data unless a custom type disables inference.
+  - Extra fields from transformers and collection schema fields.
 The schema context exposes:
-- `store`: collection and node lookup helpers.
-- `pages`: page lookup helpers.
-- `config`: the normalized config.
-- `assets`: asset queues.
+- `store`:
+  - Collection and node lookup helpers.
+- `pages`:
+  - Page lookup helpers.
+- `config`:
+  - The normalized config.
+- `assets`:
+  - Asset queues.
 Queries can run through `app.graphql()` or `app.schema.runQuery()`. During development, `/___graphql` uses `graphql-http` with the current schema and context.
 ## Pages, routes, and queries
 `gridmix/lib/pages/pages.js` owns the route and page model. It stores routes and pages in Loki collections.
 A route contains:
-- `id`, `type`, `name`, `path`, and `component`.
-- Internal metadata such as parsed query, route regexp, dynamic keys, dependencies, priority, digest, and page/template metadata.
+- Public route fields:
+  - `id`, `type`, `name`, `path`, and `component`.
+- Internal metadata:
+  - Parsed query, route regexp, dynamic keys, dependencies, priority, digest, and page/template metadata.
 A page contains:
-- `id`, `path`, `publicPath`, and `context`.
-- Internal data such as route id, digest, query variables, managed flag, dynamic flag, and parsed page query variables/filters/pagination.
+- Public page fields:
+  - `id`, `path`, `publicPath`, and `context`.
+- Internal data:
+  - Route id, digest, query variables, managed flag, dynamic flag, and parsed page query variables/filters/pagination.
 Pages can be created directly with `createPage()`, indirectly through routes with `createRoute().addPage()`, from files in `src/pages`, or from collection templates.
 When a route is created, Gridmix:
-- Resolves the component path.
-- Parses component custom blocks through registered component parsers.
-- Extracts the page query.
-- Parses the GraphQL query against the current schema.
-- Applies permalink/trailing-slash behavior.
-- Builds a route regexp with `path-to-regexp`.
-- Registers component/query file dependencies for development watching.
+- Resolves and parses the component:
+  - Resolves the component path.
+  - Parses component custom blocks through registered component parsers.
+  - Extracts the page query.
+- Builds route/query metadata:
+  - Parses the GraphQL query against the current schema.
+  - Applies permalink/trailing-slash behavior.
+  - Builds a route regexp with `path-to-regexp`.
+  - Registers component/query file dependencies for development watching.
 Page queries support pagination. During build, paginated static routes expand into multiple render queue entries based on total pages calculated from the store and GraphQL schema.
 ## Generated app files
 `gridmix/lib/app/codegen/index.js` writes generated modules into `config.appCacheDir`, usually under `node_modules/.cache/gridmix/app`.
 Generated files include:
-- `icons.js`: icon metadata.
-- `config.js`: client-consumable config.
-- `routes.js`: Vue Router route definitions and lazy component imports.
-- `constants.js`: runtime constants.
-- `plugins-server.js`: runtime client-entry plugins whose normalized plugin `server` flag is `true`; this file is imported by the shared app module used by both SSR and browser bundles.
-- `plugins-client.js`: runtime client-entry plugins whose normalized plugin `server` flag is `false`; this file is imported only by the browser entry.
-- `now.js`: the current store update timestamp used by development updates.
+- Runtime configuration:
+  - `icons.js`: icon metadata.
+  - `config.js`: client-consumable config.
+  - `constants.js`: runtime constants.
+- Routing and plugins:
+  - `routes.js`: Vue Router route definitions and lazy component imports.
+  - `plugins-server.js`: runtime client-entry plugins whose normalized plugin `server` flag is `true`; this file is imported by the shared app module used by both SSR and browser bundles.
+  - `plugins-client.js`: runtime client-entry plugins whose normalized plugin `server` flag is `false`; this file is imported only by the browser entry.
+- Development updates:
+  - `now.js`: the current store update timestamp used by development updates.
 Webpack resolves the `#gridmix` alias to this app cache directory. The app runtime imports generated modules through that alias.
 ## Runtime Vue app
 The browser and server runtime live in `gridmix/app/`.
 `gridmix/app/app.js` creates the shared Vue app factory:
-- Imports generated `plugins-server.js` runtime entries.
-- Imports project `src/main` and `src/App.vue`, with fallback files configured by webpack when they are missing.
-- Installs the GraphQL mixin.
-- Registers global `GLink`, `GImage`, and `ClientOnly` components.
-- Adds `$url` and `$fetch` to `Vue.prototype`.
-- Installs a router guard that fetches page data.
-- Runs generated `plugins-server.js` entries at module initialization.
-- Exports `runPlugins()`, `runMain()`, and `createApp()`, where `createApp()` returns `{ app, router }`.
+- Imports:
+  - Generated `plugins-server.js` runtime entries.
+  - Project `src/main` and `src/App.vue`, with fallback files configured by webpack when they are missing.
+- Vue setup:
+  - Installs the GraphQL mixin.
+  - Registers global `GLink`, `GImage`, and `ClientOnly` components.
+  - Adds `$url` and `$fetch` to `Vue.prototype`.
+  - Installs a router guard that fetches page data.
+- Runtime execution and exports:
+  - Runs generated `plugins-server.js` entries at module initialization.
+  - Exports `runPlugins()`, `runMain()`, and `createApp()`, where `createApp()` returns `{ app, router }`.
 `entry.client.js` is the browser entry:
-- Installs directives for `g-link`, `g-image`, and link catching.
-- Runs generated browser client plugins and project main.
-- Creates the app and router.
-- In production, adds a route guard that reloads the page if an async component chunk cannot be loaded.
-- Installs global click catching when enabled.
-- Mounts to `#app` when the router is ready.
+- Vue/browser setup:
+  - Installs directives for `g-link`, `g-image`, and link catching.
+  - Runs generated browser client plugins and project main.
+  - Creates the app and router.
+- Browser navigation behavior:
+  - In production, adds a route guard that reloads the page if an async component chunk cannot be loaded.
+  - Installs global click catching when enabled.
+  - Mounts to `#app` when the router is ready.
 `entry.server.js` is the SSR entry:
-- Runs project main.
-- Creates a fresh app/router pair for each render.
-- Pushes the requested location into the router.
-- Rejects unresolved routes.
-- Resolves with the Vue app for `vue-server-renderer`.
+- Per-render setup:
+  - Runs project main.
+  - Creates a fresh app/router pair for each render.
+  - Pushes the requested location into the router.
+- Render result:
+  - Rejects unresolved routes.
+  - Resolves with the Vue app for `vue-server-renderer`.
 `app/router.js` creates a Vue Router instance in history mode with generated routes and `process.env.PUBLIC_PATH` as the base. Routes added later through `router.addRoutes()` are marked as custom so the GraphQL guard skips automatic page-data fetching for them.
 ## Client data fetching
 Each generated page has a JSON data file containing:
-- `hash`: the current webpack/build hash.
-- `data`: GraphQL page query results, or `null`.
-- `context`: page context.
+- Validation:
+  - `hash`: the current webpack/build hash.
+- Page payload:
+  - `data`: GraphQL page query results, or `null`.
+  - `context`: page context.
 In static mode, `gridmix/app/fetch.js` fetches JSON from `process.env.DATA_URL`, validates that the JSON hash matches the document’s initial hash, and returns page data/context. Dynamic routes use `route.meta.dataPath`.
 In development mode, `fetch.js` posts to `/___graphql` instead of reading static JSON. The dev GraphQL middleware executes the matched page query and attaches page context in the response extensions.
 The GraphQL route guard stores fetched results in a shared client cache. The `$page` and `$context` computed properties from `app/graphql/mixin.js` read from SSR state on the server and from the client cache in the browser.
@@ -263,25 +320,34 @@ The GraphQL route guard stores fetched results in a shared client cache. The `$p
 ## Webpack compilation
 `gridmix/lib/app/Compiler.js` owns webpack config generation and compiler creation.
 It creates:
-- A client config for both development and production.
-- A server config only in production.
+- Client build:
+  - A client config for both development and production.
+- Server build:
+  - A server config only in production.
 The compiler exposes Tapable hooks:
-- `cacheIdentifier`: allows plugins to affect filesystem cache versioning.
-- `chainWebpack`: allows plugins and project config to mutate the webpack-chain config.
-- `done`: declared for compiler completion integrations.
+- Cache/versioning:
+  - `cacheIdentifier`: allows plugins to affect filesystem cache versioning.
+- Webpack customization:
+  - `chainWebpack`: allows plugins and project config to mutate the webpack-chain config.
+- Completion:
+  - `done`: declared for compiler completion integrations.
 Config generation starts with `gridmix/lib/webpack/createBaseConfig.js` and then applies client/server-specific settings.
 The base config defines:
-- Output path, filenames, chunk filenames, and public path.
-- Aliases for `~`, `@`, `#gridmix`, and `gridmix$`.
-- Fallbacks for missing project `src/main` and `src/App.vue`.
-- Vue 2 loader setup with custom compiler modules for HTML/assets.
-- Babel handling for JavaScript and TypeScript handling through esbuild-loader.
-- CSS/PostCSS/preprocessor rules with either vue-style-loader in development or extracted CSS in production.
-- Asset modules for images, SVG, media, and fonts.
-- Special loaders for `g-image` and `g-link` resource queries.
-- YAML loading.
-- DefinePlugin values for public path, data URL, Node environment, GraphQL endpoint, client/server/static booleans, and `GRIDMIX_` environment variables.
-- Filesystem cache configuration when enabled.
+- Output and resolution:
+  - Output path, filenames, chunk filenames, and public path.
+  - Aliases for `~`, `@`, `#gridmix`, and `gridmix$`.
+  - Fallbacks for missing project `src/main` and `src/App.vue`.
+- Source loaders:
+  - Vue 2 loader setup with custom compiler modules for HTML/assets.
+  - Babel handling for JavaScript and TypeScript handling through esbuild-loader.
+  - CSS/PostCSS/preprocessor rules with either vue-style-loader in development or extracted CSS in production.
+  - YAML loading.
+- Assets and component asset helpers:
+  - Asset modules for images, SVG, media, and fonts.
+  - Special loaders for `g-image` and `g-link` resource queries.
+- Runtime injections and cache:
+  - DefinePlugin values for public path, data URL, Node environment, GraphQL endpoint, client/server/static booleans, and `GRIDMIX_` environment variables.
+  - Filesystem cache configuration when enabled.
 The client config adds `gridmix/app/entry.client.js`. In development it also adds `entry.dev-socket.js`, friendly errors, and no-emit-on-errors. In production it adds the Vue SSR client manifest plugin, CSS extraction/minimization, esbuild minimization, runtime chunking, deterministic module ids, and vendor/style chunk splitting.
 The server config adds `gridmix/app/entry.server.js`, targets Node, externalizes Vue runtime packages, disables minification, emits a CommonJS2 bundle, and writes the Vue SSR server bundle manifest.
 After webpack-chain hooks run, `configureWebpack` handlers and an optional project `webpack.config.js` are merged/applied. Gridmix rejects direct changes to `output.publicPath`; the configured `pathPrefix` is the source of that value.
@@ -291,53 +357,74 @@ After webpack-chain hooks run, `configureWebpack` handlers and an optional proje
 - `GRIDMIX_MODE=serve`
 It creates and bootstraps the app, empties the images directory, creates a webpack compiler from the client config, and starts webpack-dev-server.
 The dev server:
-- Serves the project `static` directory.
-- Registers `/___explore` for the GraphQL explorer UI.
-- Registers `/___graphql` for page query and GraphQL API requests.
-- Registers an assets middleware for generated file/image assets.
-- Lets plugins and project config customize the Express app through `configureServer`.
-- Creates a WebSocket server on `/___echo` for Gridmix app broadcasts alongside webpack-dev-server’s own websocket endpoint.
+- Static and generated asset serving:
+  - Serves the project `static` directory.
+  - Registers an assets middleware for generated file/image assets.
+- GraphQL endpoints:
+  - Registers `/___explore` for the GraphQL explorer UI.
+  - Registers `/___graphql` for page query and GraphQL API requests.
+- Extensibility and live updates:
+  - Lets plugins and project config customize the Express app through `configureServer`.
+  - Creates a WebSocket server on `/___echo` for Gridmix app broadcasts alongside webpack-dev-server’s own websocket endpoint.
 During development, pages and filesystem sources install watchers. Store changes update the app timestamp, and `app.broadcast()` sends messages to connected clients and regenerates `now.js`.
 ## Production build flow
 `gridmix/lib/build.js` sets:
 - `NODE_ENV=production`
 - `GRIDMIX_MODE=static`
 It then:
-- Creates and bootstraps the app.
-- Runs `beforeBuild` plugin hooks.
-- Empties the output directory unless disabled.
-- Runs webpack with both client and server configs.
-- Creates a static render queue from the registered pages/routes.
-- Lets hooks adjust redirects and the render queue.
-- Executes page GraphQL queries and writes JSON data files.
-- Renders HTML files through worker processes and Vue SSR manifests.
-- Copies queued files.
-- Processes queued images.
-- Copies the project `static` directory into the output directory.
-- Runs `afterBuild` plugin hooks with context, config, queue, and redirects.
-- Removes the manifest directory from the final output.
+- Bootstrap and compile:
+  - Creates and bootstraps the app.
+  - Runs `beforeBuild` plugin hooks.
+  - Empties the output directory unless disabled.
+  - Runs webpack with both client and server configs.
+- Queue and render:
+  - Creates a static render queue from the registered pages/routes.
+  - Lets hooks adjust redirects and the render queue.
+  - Executes page GraphQL queries and writes JSON data files.
+  - Renders HTML files through worker processes and Vue SSR manifests.
+- Asset output and cleanup:
+  - Copies queued files.
+  - Processes queued images.
+  - Copies the project `static` directory into the output directory.
+  - Runs `afterBuild` plugin hooks with context, config, queue, and redirects.
+  - Removes the manifest directory from the final output.
 The render queue is created in `gridmix/lib/app/build/createRenderQueue.js`. Each render entry includes the router location, page path, HTML output path, JSON data output path, public path, current page number, route id, page id, and route type.
 `executeQueries` validates each unique component page query once, executes it with variables derived from page context/current path/current page, writes `{ hash, data, context }` JSON files, and runs with physical-CPU concurrency.
 HTML rendering is delegated to `gridmix/lib/workers/html-writer.js`, which creates a Vue bundle renderer from the server bundle and client manifest. `createRenderFn` renders the app to string, injects vue-meta output, resource hints, styles, scripts, and serialized state into the configured HTML template.
 ## Assets and images
 The `AssetsQueue` owned by the app contains file and image queues. Loaders, components, and transformers can enqueue assets.
 During production build:
-- Queued files are copied from source paths to destination paths.
-- Queued images are processed in chunks by the `image-processor` worker with concurrency based on logical CPU count.
-- Existing images in the output images directory can be purged when they are no longer in the queue and `config.images.purge` is enabled.
+- File assets:
+  - Queued files are copied from source paths to destination paths.
+- Image assets:
+  - Queued images are processed in chunks by the `image-processor` worker with concurrency based on logical CPU count.
+  - Existing images in the output images directory can be purged when they are no longer in the queue and `config.images.purge` is enabled.
 During development, the assets middleware serves queued file/image assets from their generated asset paths.
 ## Optional plugin package patterns
 Optional packages use the same plugin contract as project plugins.
 Server-only plugins usually export `index.js` or `gridmix.server.js`. For example:
-- `@gridmix/plugin-sitemap` registers page/build hooks in production and writes a sitemap during `afterBuild`.
-- `@gridmix/plugin-critical` participates in build output processing for critical CSS.
+- `@gridmix/plugin-sitemap`:
+  - Registers page/build hooks in production.
+  - Writes a sitemap during `afterBuild`.
+- `@gridmix/plugin-critical`:
+  - Participates in build output processing for critical CSS.
 Client/runtime plugins include a server entry to pass options into generated client plugin metadata and a client entry to install Vue behavior. For example:
-- `@gridmix/plugin-google-analytics/gridmix.server.js` calls `api.setClientOptions(options)`.
-- `@gridmix/plugin-google-analytics/gridmix.client.js` installs `vue-analytics` with the router and SSR/client flags.
-Hybrid packages can combine source loading, schema customization, webpack rules, page creation, and client runtime behavior. `@gridmix/vue-remark` is the largest example: it creates Markdown file nodes, transforms Markdown to Vue SFC content, adds webpack rules for `.md`, extracts page queries from Markdown, creates pages, and can pass client options through generated plugin files.
+- `@gridmix/plugin-google-analytics/gridmix.server.js`:
+  - Calls `api.setClientOptions(options)`.
+- `@gridmix/plugin-google-analytics/gridmix.client.js`:
+  - Installs `vue-analytics` with the router and SSR/client flags.
+Hybrid packages can combine source loading, schema customization, webpack rules, page creation, and client runtime behavior. `@gridmix/vue-remark` is the largest example:
+- Creates Markdown file nodes.
+- Transforms Markdown to Vue SFC content.
+- Adds webpack rules for `.md`.
+- Extracts page queries from Markdown.
+- Creates pages.
+- Can pass client options through generated plugin files.
 ## Testing and maintainer commands
 The root package defines:
-- `pnpm test:unit` for unit tests.
-- `pnpm test:e2e` for end-to-end tests.
-- `pnpm lint` for ESLint across `gridmix` and `packages`.
+- Tests:
+  - `pnpm test:unit` for unit tests.
+  - `pnpm test:e2e` for end-to-end tests.
+- Linting:
+  - `pnpm lint` for ESLint across `gridmix` and `packages`.
 Tests live near the code they cover, especially under `gridmix/lib/**/__tests__` and `packages/cli/__tests__`. End-to-end project build tests live under `gridmix/lib/__tests__`.
