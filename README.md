@@ -28,6 +28,10 @@ See [**ARCHITECTURE.md**](./docs/ARCHITECTURE.md) for a current-state overview o
 
 Renovate runs in dashboard-approval mode and Socket.dev gates per-PR supply-chain risk; updates and CVE triage are driven through the [Dependency Dashboard issue](https://github.com/gridmix/gridmix/issues/1). See [**RENOVATE.md**](./docs/RENOVATE.md) for the workflow, the three exits for each item (resolve / override+defer / defer cleanly), and the end-of-stage override sweep tied to the staged renewal.
 
+## Migration issues
+
+Errors found during migrating Gridsome consumers to Gridmix can be found in [**ERRATA.md**](./docs/ERRATA.md) and should be taken into account during following codebase polishing/updates.
+
 <details>
 <summary><b>Gridsome README.md content</b></summary>
 <p align="center">
