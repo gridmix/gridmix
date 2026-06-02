@@ -146,6 +146,10 @@ class VueRemark {
 
     this.remark = new RemarkTransformer({}, {
       assets: api._app.assets,
+      // Pass the consuming project's root so user-provided remark plugins
+      // (e.g. @gridmix/remark-prismjs) resolve from the project that declared
+      // them — required for linked/pnpm installs without hoisting.
+      context: api.context,
       localOptions: {
         ...remarkOptions,
         processFiles: false,

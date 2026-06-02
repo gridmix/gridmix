@@ -59,8 +59,11 @@ exports.createCacheIdentifier = function (context, options, attachers = []) {
   const remarkPlugins = Object.keys({ ...deps1, ...deps2 })
     .filter(name => /remark-(?!cli$)/.test(name))
     .map(name => ({
-      fn: require(name),
-      pkg: require(`${name}/package.json`)
+      // Resolve from the consuming project (which declared the dependency in
+      // its package.json) rather than vue-remark's own location — required for
+      // linked/pnpm installs without hoisting.
+      fn: require(require.resolve(name, { paths: [context] })),
+      pkg: require(require.resolve(`${name}/package.json`, { paths: [context] }))
     }))
 
   const plugins = attachers
