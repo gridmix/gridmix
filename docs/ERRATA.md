@@ -96,3 +96,49 @@ this.remark = new RemarkTransformer({}, {
 ```
 
 No project-side workaround is required once Gridmix carries these fixes. General lesson: **every** code path that resolves a user-declared package (transformer instantiation *and* cache-key/metadata scans) must resolve from the consuming project's `context`, since Gridsome-era plugins assumed a hoisted `node_modules` that pnpm/linked installs deliberately do not provide.
+
+---
+
+## Transient `ENOENT` overlay errors for generated `app/*.js` during `develop`
+
+**Discovered in:** the `gridmix-website` (gridsome.org docs) migration  
+**Affects:** development mode, intermittently, after navigating between routes
+
+### Symptom
+
+While `gridmix develop` is running, navigating around the site sporadically fills the webpack overlay with build failures for the generated app bundle, e.g.:
+
+```
+Compiled with problems:
+×
+ERROR in ./node_modules/.cache/gridmix/app/config.js
+Module build failed (from .../babel-loader/lib/index.js):
+Error: ENOENT: no such file or directory, open '.../node_modules/.cache/gridmix/app/config.js'
+ERROR in ./node_modules/.cache/gridmix/app/routes.js
+Error: ENOENT: no such file or directory, open '.../node_modules/.cache/gridmix/app/routes.js'
+  ...same for constants.js, icons.js, plugins-client.js, plugins-server.js
+```
+
+The named files almost always exist on disk by the time you go looking — the errors are stale, and a hard browser reload (or the next clean recompile) clears the overlay.
+
+### Root cause
+
+The generated app bundle (`config.js`, `constants.js`, `icons.js`, `routes.js`, `plugins-client.js`, `plugins-server.js`) is code-generated at boot and regenerated whenever the graph changes (route added/visited, config touched, plugin/HMR reload). Gridmix writes these by unlink + rewrite rather than an atomic swap, so there is a brief window where the file is absent. webpack's watcher can fire a rebuild inside that window, and babel-loader's `open()` hits `ENOENT`. Because the dev server runs with `client.overlay: true`, the last failed compilation is shown on every page until a successful recompile replaces it — so the failure looks like it is "coming from cache."
+
+The window is widened by **where** the bundle lives. `loadConfig.js` (`config.cacheDir` / `config.appCacheDir`) defaults the generated app to **`node_modules/.cache/gridmix/app`**:
+
+```js
+// gridmix/lib/app/loadConfig.js
+} else {
+  config.cacheDir = resolve('node_modules/.cache/gridmix')
+}
+config.appCacheDir = path.join(config.cacheDir, 'app')
+```
+
+`node_modules/.cache` is the conventional **disposable** cache location — babel-loader's own `cacheDirectory` defaults next door to `node_modules/.cache/babel-loader`, and assorted clean steps / package managers assume anything under `node_modules/.cache` is throwaway. Putting load-bearing webpack entry modules there means any unrelated cache invalidation or clean can momentarily remove them, enlarging the ENOENT race. (Upstream Gridsome keeps this under `src/.temp` for exactly this reason.)
+
+### Fix
+
+Mostly benign — the transient overlay self-clears on the next clean recompile; a hard reload dismisses a stale one. If files go genuinely missing, stop the server, `rm -rf node_modules/.cache/gridmix`, and re-run `gridmix develop` to force a full regen.
+
+To stop it recurring, move the generated app out of `node_modules/.cache`. There is already an escape hatch: `loadConfig.js` honors `localConfig._tmpDir` (resolved against the project root) before falling back to the `node_modules/.cache` default, so a project can set it to a project-local dir (e.g. `src/.temp`). The proper fix is upstream — default `cacheDir` to a non-`node_modules/.cache` location so the generated bundle no longer shares a directory the toolchain treats as disposable. General lesson: **generated webpack entry modules must not live under `node_modules/.cache`** — that path is owned by cache-cleaning tooling, not by the build graph.
