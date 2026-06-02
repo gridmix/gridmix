@@ -160,10 +160,21 @@ class RemarkTransformer {
     const plugins = createPlugins(this.options, options, this.context)
     const config = this.options.config || {}
 
-    return processor
+    processor
       .use(remarkParse, config)
       .use(plugins)
-      .use(options.stringifier || remarkHtml)
+
+    // remark-html@13 sanitizes (drops) raw HTML by default. remark-prismjs emits
+    // highlighted code blocks as raw `html` mdast nodes, so without this they are
+    // stripped and code blocks render empty. Content here is author-trusted, so
+    // disable sanitization. Custom stringifiers (e.g. vue-remark's toSFC) are used as-is.
+    if (options.stringifier) {
+      processor.use(options.stringifier)
+    } else {
+      processor.use(remarkHtml, { sanitize: false })
+    }
+
+    return processor
   }
 
   _nodeToAST (node) {

@@ -142,3 +142,47 @@ config.appCacheDir = path.join(config.cacheDir, 'app')
 Mostly benign — the transient overlay self-clears on the next clean recompile; a hard reload dismisses a stale one. If files go genuinely missing, stop the server, `rm -rf node_modules/.cache/gridmix`, and re-run `gridmix develop` to force a full regen.
 
 To stop it recurring, move the generated app out of `node_modules/.cache`. There is already an escape hatch: `loadConfig.js` honors `localConfig._tmpDir` (resolved against the project root) before falling back to the `node_modules/.cache` default, so a project can set it to a project-local dir (e.g. `src/.temp`). The proper fix is upstream — default `cacheDir` to a non-`node_modules/.cache` location so the generated bundle no longer shares a directory the toolchain treats as disposable. General lesson: **generated webpack entry modules must not live under `node_modules/.cache`** — that path is owned by cache-cleaning tooling, not by the build graph.
+
+---
+
+## Fenced code blocks render empty (`remark-prismjs` output stripped by `remark-html@13`)
+
+**Discovered in:** the `gridmix-website` (gridsome.org docs) migration  
+**Affects:** any markdown rendered via `@gridmix/transformer-remark` using `@gridmix/remark-prismjs` — code blocks silently disappear from `node.content`. Worst for code-only documents, which render completely empty.
+
+### Symptom
+
+A collection of pure code-block markdown (the site's `examples/*.md`, queried by `Examples.vue`) returns empty `content`:
+
+```graphql
+{ allExample { edges { node { title content timeToRead } } } }
+# -> every node: content "", timeToRead 0   (title/frontmatter are fine)
+```
+
+Blog posts (prose + code) appear to work but silently lose their code samples — only the prose survives.
+
+### Root cause
+
+`@gridmix/remark-prismjs` highlights code and emits the result as a raw `html` mdast node (`u('html', toHTML(preNode))`). `@gridmix/transformer-remark` stringifies with `remark-html@13`, which **sanitizes (drops) raw HTML by default**. So every highlighted code block is stripped during HTML generation. Plain code (no prismjs) survives because `remark-html` renders the native `code` node itself.
+
+The dependency set is a mismatch from modernization — `remark-parse@6` + `unified@7` (old) alongside `remark-html@13` (new, sanitizes by default). The transformer called `.use(options.stringifier || remarkHtml)` with **no options**.
+
+Reproduction (in `packages/transformer-remark`):
+```js
+unified().use(remarkParse).use(require('@gridmix/remark-prismjs')).use(remarkHtml)            // ``` block -> ""  (dropped)
+unified().use(remarkParse).use(require('@gridmix/remark-prismjs')).use(remarkHtml,{sanitize:false}) // -> <pre class="language-js">…
+```
+
+### Fix
+
+Applied in Gridmix source (`packages/transformer-remark/index.js`, `createProcessor`). Content here is author-trusted, so disable sanitization for the default HTML stringifier (custom stringifiers such as vue-remark's `toSFC` are left untouched):
+
+```js
+if (options.stringifier) {
+  processor.use(options.stringifier)
+} else {
+  processor.use(remarkHtml, { sanitize: false })
+}
+```
+
+This restores code blocks in `content`, `excerpt`, and `timeToRead` for every remark collection. General lesson: when a remark plugin emits raw HTML (prismjs, embeds), the `remark-html` stringifier must run with `sanitize: false` or the output is silently discarded.
