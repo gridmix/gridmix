@@ -84,7 +84,8 @@ async function renderHTML (renderQueue, app, hash) {
         clientManifestPath,
         serverBundlePath,
         prefetch,
-        preload
+        preload,
+        context: app.context
       })
     } catch (err) {
       worker.end()

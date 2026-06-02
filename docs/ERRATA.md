@@ -186,3 +186,47 @@ if (options.stringifier) {
 ```
 
 This restores code blocks in `content`, `excerpt`, and `timeToRead` for every remark collection. General lesson: when a remark plugin emits raw HTML (prismjs, embeds), the `remark-html` stringifier must run with `sanitize: false` or the output is silently discarded.
+
+---
+
+## SSR can't resolve externalized node modules under linked/pnpm installs (`basedir`)
+
+**Discovered in:** the `gridmix-website` (gridsome.org docs) migration  
+**Affects:** `gridmix build` (HTML generation phase), any project that externalizes its `node_modules` in the SSR webpack config (the default `webpack-node-externals` setup) while Gridmix is linked or otherwise outside the project's `node_modules`.
+
+### Symptom
+
+Bootstrap, asset compilation, and GraphQL all succeed, then HTML generation fails:
+
+```
+Could not generate HTML for "/blog/.../say-hello-to-gridsome/":
+Error: Cannot find module 'vue-lazy-hydration' from '/…/gridmix/gridmix/lib/server'
+    at Function.resolveSync [as sync] (…/resolve/lib/sync.js)
+    at …/vue-server-renderer/build.prod.js  (external commonjs "vue-lazy-hydration")
+```
+
+`vue-lazy-hydration` is a direct dependency of the consuming project and is installed — but resolution is attempted from **Gridmix's** `lib/server`, not the project.
+
+### Root cause
+
+The SSR webpack config externalizes `node_modules` (via `webpack-node-externals`), so packages like `vue-lazy-hydration` are emitted as `require()` calls in the server bundle instead of being bundled. At render time, `vue-server-renderer`'s `createBundleRenderer` resolves those externals relative to its `basedir`. Gridmix hard-coded:
+
+```js
+// gridmix/lib/server/createRenderFn.js
+const renderer = createBundleRenderer(serverBundle, { /* … */ basedir: __dirname })
+```
+
+`__dirname` is Gridmix's own `lib/server`. Under a normal install Gridmix sits inside the project's `node_modules`, so walking up from `__dirname` reaches the project's dependencies and it works by accident. Under a linked/pnpm install Gridmix lives in a separate tree, so the project's externalized deps are unreachable and SSR throws. (Original Gridsome has the same `basedir: __dirname`.)
+
+### Fix
+
+Thread the consuming project's context to the renderer and use it as `basedir`, so externals resolve from the project's `node_modules`:
+
+```js
+// gridmix/lib/build.js -> worker.render({ …, context: app.context })
+// gridmix/lib/workers/html-writer.js -> createRenderFn({ …, context })
+// gridmix/lib/server/createRenderFn.js
+basedir: context || __dirname
+```
+
+General lesson (recurring): Gridsome-era code resolves modules relative to its own `__dirname`, which only reaches project dependencies when Gridmix is hoisted into the project's `node_modules`. Linked/pnpm installs require resolving from the **consuming project's context** instead — same root cause as the `vue-remark`/`transformer-remark` plugin-resolution fixes.

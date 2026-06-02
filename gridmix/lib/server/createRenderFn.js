@@ -9,7 +9,8 @@ module.exports = function createRenderFn ({
   clientManifestPath,
   serverBundlePath,
   shouldPrefetch,
-  shouldPreload
+  shouldPreload,
+  context
 }) {
   const renderHTML = createHTMLRenderer(htmlTemplate)
   const clientManifest = require(clientManifestPath)
@@ -20,7 +21,10 @@ module.exports = function createRenderFn ({
     runInNewContext: false,
     shouldPrefetch,
     shouldPreload,
-    basedir: __dirname
+    // Resolve the server bundle's externalized modules (webpack-node-externals)
+    // from the consuming project's node_modules, not Gridmix's own directory.
+    // Required for linked/pnpm installs where Gridmix lives outside the project.
+    basedir: context || __dirname
   })
 
   return async function render(page, hash) {

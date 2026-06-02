@@ -8,7 +8,8 @@ exports.render = async function ({
   clientManifestPath,
   serverBundlePath,
   prefetch,
-  preload
+  preload,
+  context
 }) {
   const regexpPrefetch = (prefetch && (typeof(prefetch.mask) === 'string')) ? new RegExp(prefetch.mask) : null
   const regexpPreload = (preload && (typeof(preload.mask) === 'string')) ? new RegExp(preload.mask) : null
@@ -16,6 +17,7 @@ exports.render = async function ({
     htmlTemplate,
     clientManifestPath,
     serverBundlePath,
+    context,
     shouldPrefetch: regexpPrefetch ? file => regexpPrefetch.test(file) : null,
     shouldPreload: regexpPreload ? file => regexpPreload.test(file) : null
   })
