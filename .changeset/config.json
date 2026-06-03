@@ -7,5 +7,20 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["playground"]
+  "ignore": [
+    "playground",
+    "@gridmix/plugin-sitemap",
+    "@gridmix/source-airtable",
+    "@gridmix/source-contentful",
+    "@gridmix/source-datocms",
+    "@gridmix/source-drupal",
+    "@gridmix/source-faker",
+    "@gridmix/source-ghost",
+    "@gridmix/source-graphql",
+    "@gridmix/source-strapi",
+    "@gridmix/source-wordpress",
+    "@gridmix/transformer-csv",
+    "@gridmix/transformer-json",
+    "@gridmix/transformer-yaml"
+  ]
 }
