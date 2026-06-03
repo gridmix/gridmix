@@ -9,9 +9,7 @@
   "keywords": [
     "gridsome",
     "gridmix",
-    "gridsome-plugin",
     "gridmix-plugin",
-    "gridsome-transformer",
     "gridmix-transformer",
     "csv"
   ],

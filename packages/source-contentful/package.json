@@ -8,9 +8,7 @@
   "keywords": [
     "gridsome",
     "gridmix",
-    "gridsome-plugin",
     "gridmix-plugin",
-    "gridsome-source",
     "gridmix-source",
     "contentful"
   ],
