@@ -78,7 +78,8 @@ git commit -m "chore(release): version packages"
 pnpm changeset:publish
 
 # 6. Push commit + tags
-git push --follow-tags
+git push
+git push origin --tags
 ```
 
 `changeset:publish` skips packages whose new version is already on the registry, so re-running it is safe if step 5 partially failed.
