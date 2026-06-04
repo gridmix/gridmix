@@ -1,5 +1,5 @@
 {
-  "version": "0.2.6",
+  "version": "0.3.0-alpha.0",
   "name": "@gridmix/vue-remark",
   "description": "Use Vue Components in Markdown",
   "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/vue-remark#readme",

@@ -1,5 +1,5 @@
 {
-  "version": "0.5.0",
+  "version": "0.6.0-alpha.0",
   "name": "@gridmix/remark-prismjs",
   "description": "Syntax highlighter for markdown code blocks",
   "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/remark-prismjs#readme",

@@ -1,5 +1,5 @@
 {
-  "version": "0.6.4",
+  "version": "0.7.0-alpha.0",
   "name": "@gridmix/transformer-remark",
   "description": "Markdown transformer for Gridmix",
   "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/transformer-remark#readme",

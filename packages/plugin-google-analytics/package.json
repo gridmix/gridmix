@@ -1,5 +1,5 @@
 {
-  "version": "0.1.2",
+  "version": "0.2.0-alpha.0",
   "name": "@gridmix/plugin-google-analytics",
   "description": "Google Analytics plugin for Gridsome",
   "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/plugin-google-analytics#readme",
