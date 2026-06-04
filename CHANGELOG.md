@@ -2,7 +2,7 @@
 
 This repository is a [monorepo](https://en.wikipedia.org/wiki/Monorepo). You will find the changelogs (for each of the published packages) here:
 
-- [gridsome](./gridmix/CHANGELOG.md)
+- [gridmix](./gridmix/CHANGELOG.md)
 - [@gridmix/cli](./packages/cli/CHANGELOG.md)
 - [@gridmix/plugin-critical](./packages/plugin-critical/CHANGELOG.md)
 - [@gridmix/plugin-google-analytics](./packages/plugin-google-analytics/CHANGELOG.md)
