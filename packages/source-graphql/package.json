@@ -1,5 +1,6 @@
 {
   "version": "0.1.0",
+  "private": true,
   "name": "@gridmix/source-graphql",
   "description": "GraphQL source for Gridmix",
   "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/source-graphql#readme",

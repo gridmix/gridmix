@@ -1,6 +1,7 @@
 {
   "name": "@gridmix/source-airtable",
   "version": "0.2.0",
+  "private": true,
   "description": "Airtable source for Gridmix",
   "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/source-airtable",
   "repository": "https://github.com/gridmix/gridmix/tree/main/packages/source-airtable#readme",

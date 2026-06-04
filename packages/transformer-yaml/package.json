@@ -1,5 +1,6 @@
 {
   "version": "0.2.1",
+  "private": true,
   "name": "@gridmix/transformer-yaml",
   "description": "Yaml transformer for Gridmix",
   "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/transformer-yaml",

@@ -1,5 +1,6 @@
 {
   "version": "0.4.0",
+  "private": true,
   "name": "@gridmix/source-ghost",
   "description": "ghost source for Gridmix",
   "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/source-ghost#readme",

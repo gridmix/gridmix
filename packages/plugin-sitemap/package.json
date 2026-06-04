@@ -1,5 +1,6 @@
 {
   "version": "0.4.0",
+  "private": true,
   "name": "@gridmix/plugin-sitemap",
   "description": "Generate sitemap for Gridmix sites",
   "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/plugin-sitemap#readme",

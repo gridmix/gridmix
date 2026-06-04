@@ -1,5 +1,6 @@
 {
   "version": "0.6.0",
+  "private": true,
   "name": "@gridmix/source-contentful",
   "description": "Contentful source for Gridmix",
   "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/source-contentful#readme",

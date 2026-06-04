@@ -1,5 +1,6 @@
 {
   "version": "0.2.0",
+  "private": true,
   "name": "@gridmix/source-strapi",
   "description": "Strapi source for Gridmix",
   "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/source-strapi#readme",

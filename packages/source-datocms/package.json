@@ -1,5 +1,6 @@
 {
   "version": "0.3.0",
+  "private": true,
   "name": "@gridmix/source-datocms",
   "description": "DatoCMS source for Gridmix",
   "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/source-datocms#readme",

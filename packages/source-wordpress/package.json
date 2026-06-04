@@ -1,5 +1,6 @@
 {
   "version": "0.5.3",
+  "private": true,
   "name": "@gridmix/source-wordpress",
   "description": "WordPress source for Gridmix",
   "homepage": "https://github.com/gridmix/gridmix/tree/main/packages/source-wordpress#readme",
