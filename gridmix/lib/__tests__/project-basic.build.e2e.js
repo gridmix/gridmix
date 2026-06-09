@@ -3,7 +3,6 @@ const fs = require('fs-extra')
 const build = require('../build')
 const cheerio = require('cheerio')
 const express = require('express')
-const puppeteer = require('puppeteer')
 const { trim, uniq } = require('lodash')
 
 const context = path.join(__dirname, '__fixtures__', 'project-basic')
@@ -15,6 +14,8 @@ const app = express()
 let browser, page, server
 
 beforeAll(async () => {
+  const { default: puppeteer } = await import('puppeteer')
+
   await build(context, { cache: false })
 
   app.use(express.static(path.join(context, 'dist')))

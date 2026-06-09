@@ -3,7 +3,6 @@ const fs = require('fs-extra')
 const build = require('../build')
 const cheerio = require('cheerio')
 const express = require('express')
-const puppeteer = require('puppeteer')
 
 const context = path.join(__dirname, '__fixtures__', 'project-path-prefix')
 const content = file => fs.readFileSync(path.join(context, file), 'utf8')
@@ -14,6 +13,8 @@ const app = express()
 let browser, page, server, publicPath
 
 beforeAll(async () => {
+  const { default: puppeteer } = await import('puppeteer')
+
   const { config } = await build(context, { cache: false })
 
   publicPath = config.publicPath
