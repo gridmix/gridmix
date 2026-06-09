@@ -28,3 +28,13 @@ Remaining packages are not published (yet, until necessary), even though updated
 * `@gridmix/transformer-yaml` — clean
 
 Publishing pipeline uses ignore list from `.changeset/config.json#ignore`.
+
+Additionally, there are starters from the Gridsome legacy that are forked and either resurrected or planned for resurrection. They include:
+
+* https://github.com/gridmix/gridmix-starter-default
+* https://github.com/gridmix/gridmix-starter-markdown-blog
+* https://github.com/gridmix/gridmix-starter-blog
+* https://github.com/gridmix/gridmix-starter-docs
+* https://github.com/gridmix/gridmix-starter-wordpress
+
+As the final piece of the puzzle, the plugin for eslint, https://github.com/gridmix/eslint-plugin-gridmix, which may require separate attention and a dedicated effort after updating the ESLint setup for the monorepository itself.
