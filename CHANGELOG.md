@@ -1,6 +1,6 @@
 # Changelog
 
-This repository is a [monorepo](https://en.wikipedia.org/wiki/Monorepo). You will find the changelogs (for each of the published packages) here:
+This repository is a [monorepo](https://en.wikipedia.org/wiki/Monorepo). You will find the changelogs (for each of [the published packages](./docs/ECOSYSTEM.md)) here:
 
 - [gridmix](./gridmix/CHANGELOG.md)
 - [@gridmix/cli](./packages/cli/CHANGELOG.md)
